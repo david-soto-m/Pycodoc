@@ -1,25 +1,17 @@
 #!/usr/bin/python3
+
 import sys
 import PyQt5.QtWidgets as QW
 import PyQt5.QtGui as QG
 import PyQt5.QtCore as QC
 
-#class centralWidget(QW.QWidget):
-	#def __init__(self):
-		#super().__init__()
-		#self.defineElements()
-		#self.defineLayout()
-	
-	#def defineElements(self):
-		#pass
-	#def defineLayout(self):
-		#pass
+import centwidg as CW
 
 class GuiApp(QW.QMainWindow):
 	def __init__(self):
 		super().__init__()
 		self.defineMenuBar()
-		#self.cwidg=centralWidget()
+		#self.cwidg=CW.centralWidget()
 		#self.setCentralWidget(self.cwidg)
 		self.show()
 		#a=auxsz();
