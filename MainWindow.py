@@ -6,20 +6,47 @@ import centwidg as CW
 class GuiApp(QW.QMainWindow):
 	def __init__(self):
 		super().__init__()
+		self.setWindowTitle("Pycobrowser")
 		self.defineMenuBar()
+		self.defineToolBar()
 		self.setWindowIcon(QG.QIcon('AppIcon/AppIcon.svg'))
 		self.cwidg=CW.centralWidget()
 		self.setCentralWidget(self.cwidg)
 		self.show()
 		a=auxsz();
 		a.toscalescreen(self,center=1)
+	
+	def defineToolBar(self):
+		self.toolBar=QW.QToolBar(self)
+		
+		self.qacts=backnextact()
+		
+		self.combosearch=searchWidg()
+		
+		self.toolBar.addAction(self.qacts.back)
+		self.toolBar.addAction(self.qacts.ahead)
+		
+		self.addToolBar(self.toolBar)
+	
 	def defineMenuBar(self):
 		exitAct = QW.QAction(QG.QIcon().fromTheme("application-exit"),'&Quit', self)
 		exitAct.setShortcut('Ctrl+Q')
-		exitAct
 		exitAct.triggered.connect(QW.qApp.quit)
 		fileMenu = self.menuBar().addMenu('&File')
 		fileMenu.addAction(exitAct)
+
+class searchWidg():
+	def __init__(self):
+
+class backnextact():
+	def __init__(self):
+		self.back=QW.QAction()
+		self.back.setIcon(QG.QIcon().fromTheme("go-previous"))
+		self.back.setToolTip('Back')
+		
+		self.ahead=QW.QAction()
+		self.ahead.setIcon(QG.QIcon().fromTheme("go-next"))
+		self.ahead.setToolTip("Forward")
 
 class auxsz():
 	def toscalescreen(self,Widg,scale=0.2,center=0):
