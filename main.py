@@ -2,7 +2,7 @@
 
 import sys
 from PyQt5.QtWidgets import QApplication
-from MainWindow import GuiApp
+from MainWindow.MainWindow import GuiApp
 
 def main():
 	app=QApplication(sys.argv)
