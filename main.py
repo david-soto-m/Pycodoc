@@ -17,10 +17,11 @@ def pathToRootOfProject():
 
 def main():
 	os.chdir(pathToRootOfProject())
-	
 	app=QApplication(sys.argv)
 	ex=GuiApp()
-	sys.exit(app.exec_())
-	
+	app.exec_()
+	sys.exit(exiter())
+def exiter():
+	print("End")
 if __name__=="__main__":
 	main()

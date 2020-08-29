@@ -2,6 +2,7 @@ import PyQt5.QtWidgets as QW
 import PyQt5.QtGui as QG
 import PyQt5.QtCore as QC
 import xml.etree.ElementTree as ET
+from ..glob_objects import globalxml as GXML
 
 class ToolBar():
 	def __init__(self,parent):
@@ -39,10 +40,9 @@ class searchWidg():
 		self.swid.activated.connect(self.comboChanged)
 		self.swid.setSizeAdjustPolicy(self.swid.SizeAdjustPolicy.AdjustToContents)
 		
-		tree = ET.parse('./config/Files.xml')
-		root = tree.getroot()
+		root=GXML.Files.getroot()
 		
-		for child in root.iter("Elem"):
+		for child in root.findall("Elem[@show='True']"):
 			Elem=fileElement(child);
 			self.swid.addItem(Elem.title.text,QC.QVariant([Elem.direc.text,Elem.name.text]))
 	

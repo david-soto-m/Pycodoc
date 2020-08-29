@@ -10,9 +10,4 @@
 		<dir>/home/david/Programming/Myternet/Docs/Mockup/</dir>
 		<name>Mockup.md</name>
 	</Elem>
-	<Elem show="True">
-		<title>Git stepo</title>
-		<dir>/home/david/Programming/Myternet/Docs/Git/</dir>
-		<name>git.html</name>
-	</Elem>
 </files>
