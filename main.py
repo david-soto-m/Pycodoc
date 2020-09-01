@@ -3,6 +3,8 @@ import os
 import sys
 from PyQt5.QtWidgets import QApplication
 from MainWindow.MainWindow import GuiApp
+from MainWindow.glob_objects import globalxml as GXML
+import xml.etree.ElementTree as ET
 
 def pathToRootOfProject():
 	direc=__file__
@@ -22,6 +24,6 @@ def main():
 	app.exec_()
 	sys.exit(exiter())
 def exiter():
-	print("End")
+	GXML.History.write(GXML.GConfigRoot.find("History/Path").text)
 if __name__=="__main__":
 	main()

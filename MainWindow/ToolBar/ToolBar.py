@@ -1,7 +1,6 @@
 import PyQt5.QtWidgets as QW
 import PyQt5.QtGui as QG
 import PyQt5.QtCore as QC
-import xml.etree.ElementTree as ET
 from ..glob_objects import globalxml as GXML
 
 class ToolBar():
@@ -26,28 +25,20 @@ class backnextact():
 		self.ahead.setIcon(QG.QIcon().fromTheme("go-next"))
 		self.ahead.setToolTip("Forward")
 
-class fileElement():
-	def __init__(self,singleElement):
-		self.title=singleElement.find("title")
-		self.direc=singleElement.find("dir")
-		self.name=singleElement.find("name")
-
 class searchWidg():
 	def __init__(self):
 		self.swid=QW.QComboBox()
 		self.swid.setEditable(True)
-		self.swid.setCurrentIndex(-1)
 		self.swid.activated.connect(self.comboChanged)
 		self.swid.setSizeAdjustPolicy(self.swid.SizeAdjustPolicy.AdjustToContents)
 		
-		root=GXML.Files.getroot()
-		
-		for child in root.findall("Elem[@show='True']"):
-			Elem=fileElement(child);
-			self.swid.addItem(Elem.title.text,QC.QVariant([Elem.direc.text,Elem.name.text]))
+		for child in GXML.filesRoot.findall("Elem[@show='True']"):
+			Elem=GXML.fileElement(child)
+			self.swid.addItem(Elem.title.text,QC.QVariant(Elem))
+		self.swid.setCurrentIndex(-1)
 	
 	def comboChanged(self,idx):
-		if idx==0:
-			print("idx 0:",self.swid.itemData(idx,0x100))
-		else:
-			print("idx 1:",self.swid.itemData(idx,0x100))
+		fielem=self.swid.itemData(idx,0x100)
+		GXML.histRoot.insert(0,fielem.createHistElement())
+		while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
+			GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
