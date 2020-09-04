@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<files>
+	<Elem show="False">
+		<title>Git steps</title>
+		<dir>/home/david/Programming/Myternet/Docs/Git/</dir>
+		<name>git.html</name>
+	</Elem>
+	<Elem show="True">
+		<title>Mocking Stupid people is Fun</title>
+		<dir>/home/david/Programming/Myternet/Docs/Mockup/</dir>
+		<name>Mockup.md</name>
+	</Elem>
+	<Elem show="True">
+		<title>Git stepo</title>
+		<dir>/home/david/Programming/Myternet/Docs/Git/</dir>
+		<name>git.html</name>
+	</Elem>
+</files>
