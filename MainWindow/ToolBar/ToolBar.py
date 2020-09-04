@@ -2,24 +2,26 @@ import PyQt5.QtWidgets as QW
 import PyQt5.QtGui as QG
 import PyQt5.QtCore as QC
 from ..glob_objects import globalxml as GXML
+from pathlib import Path
 
 class ToolBar():
 	def __init__(self,parent):
 		
 		self.toolBar=QW.QToolBar(parent)
+		
 		self.qacts=backnextact()
 		self.histmen=historystuff()
-		
+		self.fileopener=opener()
 		self.combosearch=searchWidg()
 		
 		self.toolBar.addAction(self.histmen.hist)
 		self.toolBar.addAction(self.qacts.back)
 		self.toolBar.addAction(self.qacts.ahead)
-		self.toolBar.addAction(self.qacts.openfile)
+		
+		self.toolBar.addAction(self.fileopener.openfile)
 		self.toolBar.addWidget(self.combosearch.swid)
 
 class backnextact():
-	
 	def __init__(self):
 		self.actions=[]
 		
@@ -30,12 +32,22 @@ class backnextact():
 		self.ahead=QW.QAction()
 		self.ahead.setIcon(QG.QIcon().fromTheme("go-next"))
 		self.ahead.setToolTip("Forward")
-		
+
+class opener():
+	def __init__(self):
 		self.openfile=QW.QAction()
 		self.openfile.setIcon(QG.QIcon().fromTheme("document-open"))
 		self.openfile.setToolTip("Open a file")
-		
-		
+		self.openfile.triggered.connect(self.OpenWidget)
+
+	def OpenWidget(self):
+		home_dir = str(Path.home())
+		fname = QW.QFileDialog.getOpenFileNames(caption='Open file',directory=home_dir)
+		if fname[0]:
+			for each in fname[0]:
+				if Path(each).is_file():
+					pass
+
 class historystuff(QW.QWidget):
 	def __init__(self):
 		super().__init__()
@@ -79,6 +91,7 @@ class searchWidg():
 		if fielem is not None:
 			GXML.histRoot.insert(0,fielem.createHistElement())
 		else:
-			pass
+			if Path(self.swid.itemText(idx)).is_file():
+				print(self.swid.itemText(idx))
 		while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
 			GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
