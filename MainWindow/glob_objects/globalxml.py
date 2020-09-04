@@ -1,21 +1,12 @@
 import xml.etree.ElementTree as ET
-
 #Master Config
-
 GConfig=ET.parse('/home/david/Programming/Python/Pycodoc/config/GlobalConfig.xml')
 GConfigRoot=GConfig.getroot()
 
-
-
-
-
-#Parsing
+#Parsing & Rooting
 Files= ET.parse(GConfigRoot.find("Files/Path").text)
-History=ET.parse(GConfigRoot.find("History/Path").text)
-
-
-#Rooting
 filesRoot=Files.getroot()
+History=ET.parse(GConfigRoot.find("History/Path").text)
 histRoot=History.getroot()
 
 #Helper Classes
