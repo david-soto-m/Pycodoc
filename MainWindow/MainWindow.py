@@ -30,7 +30,7 @@ class GuiApp(QW.QMainWindow):
 	
 	def defineCentralWidget(self):
 		self.cwidg=CW.centralWidget()
-		self.setCentralWidget(self.cwidg)
+		self.setCentralWidget(self.cwidg.tabBar)
 
 class auxsz():
 	def toscalescreen(self,Widg,scale=0.2,center=0):
