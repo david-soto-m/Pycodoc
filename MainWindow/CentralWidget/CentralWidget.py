@@ -12,11 +12,16 @@ class centralWidget(QW.QWidget):
 		self.tabBar.setCornerWidget(self.defineTabButton())
 		for i in range(4):
 			self.tabBar.addTab(QW.QTextEdit(),"tab"+str(i))
-	
 	def defineTabButton(self):
 		newTabButton=QW.QPushButton(QG.QIcon().fromTheme("tab-new"),"",self)
 		newTabButton.clicked.connect(self.tabAdder)
 		return newTabButton
-	
 	def tabAdder(self,pushed):
 		self.tabBar.addTab(QW.QTextEdit(),"added tab")
+	
+	def defineLayout():
+		pass
+	def splitRight():
+		pass
+	def splitLeft():
+		pass
