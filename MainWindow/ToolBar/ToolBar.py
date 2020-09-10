@@ -13,18 +13,19 @@ class ToolBar():
 		self.histmen=historystuff()
 		self.fileopener=opener()
 		self.combosearch=searchWidg()
+		self.spliter=splitButton(parent)
 		
 		self.toolBar.addAction(self.histmen.hist)
 		self.toolBar.addAction(self.qacts.back)
 		self.toolBar.addAction(self.qacts.ahead)
+		self.toolBar.addAction(self.spliter.split)
+		self.toolBar.addAction(self.spliter.unsplit)
 		
 		self.toolBar.addAction(self.fileopener.openfile)
 		self.toolBar.addWidget(self.combosearch.swid)
 
 class backnextact():
 	def __init__(self):
-		self.actions=[]
-		
 		self.back=QW.QAction()
 		self.back.setIcon(QG.QIcon().fromTheme("go-previous"))
 		self.back.setToolTip('Back')
@@ -51,15 +52,17 @@ class opener():
 class historystuff(QW.QWidget):
 	def __init__(self):
 		super().__init__()
-		
-		self.actions=[]
-		
 		self.hist=QW.QAction()
 		self.hist.setIcon(QG.QIcon().fromTheme("shallow-history"))
 		self.hist.setToolTip("History")
 		self.hist.setMenu(self.histMenu())
+		self.hist.hovered.connect(self.refreshMenu)
+		
+	def refreshMenu(self):
+		self.hist.setMenu(self.histMenu())
 	
 	def histMenu(self):
+		self.actions=[]
 		Menu=QW.QMenu()
 		for child,index in zip(GXML.histRoot,range(len(GXML.histRoot))):
 			Elem=GXML.fileElement(child)
@@ -68,7 +71,7 @@ class historystuff(QW.QWidget):
 			self.actions[index].triggered.connect(self.trigger)
 			Menu.addAction(self.actions[index])
 		return Menu
-	
+
 	def trigger(self,boolean):
 		File=self.sender().data()
 		print(File.title.text)
@@ -95,3 +98,15 @@ class searchWidg():
 				print(self.swid.itemText(idx))
 		while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
 			GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
+
+class splitButton():
+	def __init__(self,parent):
+		self.split=QW.QAction(parent)
+		self.split.setIcon(QG.QIcon().fromTheme("view-split-effect"))
+		self.split.setToolTip('Split')
+		self.split.triggered.connect(parent.cwidg.split)
+		
+		self.unsplit=QW.QAction(parent)
+		self.unsplit.setIcon(QG.QIcon().fromTheme("view-unsplit-effect"))
+		self.unsplit.setToolTip('Split')
+		self.unsplit.triggered.connect(parent.cwidg.unsplit)
