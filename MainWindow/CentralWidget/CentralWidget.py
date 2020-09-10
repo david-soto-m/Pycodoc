@@ -36,7 +36,7 @@ class centralWidget(QW.QWidget):
 			self.TabList.append([None,"str"])
 			for idx in range(self.CwidLayout.count()):
 				self.CwidLayout.itemAt(idx).widget().addTab(
-					TextEditor(self.CwidLayout.itemAt(idx).widget()), "Welcome")
+					TextEditor(GXML.fileElement()), "Welcome")
 		elif type(files)==GXML.fileElement:
 			self.TabList.append([files,None])
 			pass
@@ -62,7 +62,7 @@ class centralWidget(QW.QWidget):
 		for item in self.TabList:
 			if item[0] is None:
 				self.CwidLayout.itemAt(last).widget().addTab(
-				TextEditor(self.CwidLayout.itemAt(last).widget()), "Welcome")
+				TextEditor(GXML.fileElement()), "Welcome")
 			elif type(item[0])==GXML.fileElement:
 				pass
 	
@@ -73,14 +73,16 @@ class centralWidget(QW.QWidget):
 			self.CwidLayout.removeItem(self.CwidLayout.itemAt(last))
 
 class TextEditor(QW.QTextEdit):
-	def __init__(self,parent=None,files=None):
-		super().__init__(parent)
+	def __init__(self,files):
+		super().__init__()
 		self.setAcceptDrops(True)
 		self.setReadOnly(True)
+		if type(files) is GXML.fileElement:
+			print(dir(files))
+			f = open(files.direc.text+files.name.text, 'r')
+			with f:
+				data = f.read()
+				self.setText(data)
 	def dragEnterEvent(self, e):
 		if e.mimeData().hasUrls():
-			e.accept()
-			print("accepted")
-		else:
-			print("ignored")
-			e.ignore()
+			print(e.mimeData().urls())
