@@ -36,7 +36,7 @@ class centralWidget(QW.QWidget):
 			self.TabList.append([None,"str"])
 			for idx in range(self.CwidLayout.count()):
 				self.CwidLayout.itemAt(idx).widget().addTab(
-					TextEditor(GXML.fileElement()), "Welcome")
+					TextEditor(GXML.fileElement()), GXML.fileElement().title.text)
 		elif type(files)==GXML.fileElement:
 			self.TabList.append([files,None])
 			pass
@@ -62,7 +62,7 @@ class centralWidget(QW.QWidget):
 		for item in self.TabList:
 			if item[0] is None:
 				self.CwidLayout.itemAt(last).widget().addTab(
-				TextEditor(GXML.fileElement()), "Welcome")
+				TextEditor(GXML.fileElement()),GXML.fileElement().title.text)
 			elif type(item[0])==GXML.fileElement:
 				pass
 	
@@ -78,7 +78,6 @@ class TextEditor(QW.QTextEdit):
 		self.setAcceptDrops(True)
 		self.setReadOnly(True)
 		if type(files) is GXML.fileElement:
-			print(dir(files))
 			f = open(files.direc.text+files.name.text, 'r')
 			with f:
 				data = f.read()

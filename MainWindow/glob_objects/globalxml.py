@@ -29,19 +29,15 @@ class fileElement():
 			self.direc=direc
 			self.name=name
 		elif type(singleElement)==type(None):
-			elem=ET.Element("Elem")
-			elem.set("show","True")
-			title=ET.SubElement(elem,self.tup[0])
-			direc=ET.SubElement(elem,self.tup[1])
-			name=ET.SubElement(elem,self.tup[2])
-			title.text="Git steps"
-			direc.text="/home/david/Programming/Myternet/Docs/Git/"
-			name.text="Git.html"
-			self.title=title
-			self.direc=direc
-			self.name=name
+			defaultElement=filesRoot.find("Elem[@default='True']")
+			try:
+				self.title=defaultElement.find(self.tup[0])
+				self.direc=defaultElement.find(self.tup[1])
+				self.name=defaultElement.find(self.tup[2])
+			except:
+				pass
 	def beheader(self,stringy):
-		direc=__file__
+		direc=stringy
 		notthere=True
 		idx=len(direc)-1
 		while notthere:
@@ -49,7 +45,10 @@ class fileElement():
 			idx-=1
 			if  direc[idx]=='/'or direc[idx]=='\\':
 				notthere=False
-		return ("holo","hodor","smells")
+		print(stringy)
+		name=stringy[idx+1:len(stringy)]
+		print(name,";",direc)
+		return ("stupid",direc,name)
 	
 	def createHistElement(self):
 		elem=ET.Element("Elem")
