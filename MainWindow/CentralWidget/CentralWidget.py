@@ -9,7 +9,7 @@ class centralWidget(QW.QWidget):
 		
 		self.TabList=[]
 		
-		self.lastIdx=0
+		self.lastIdx=0	
 		
 		self.defineLayout()
 		self.tabAdder()
@@ -20,7 +20,7 @@ class centralWidget(QW.QWidget):
 		TabBar.setCornerWidget(self.defineTabButton())
 		TabBar.tabCloseRequested.connect(self.tabDestroyer)
 		TabBar.currentChanged.connect(self.idxactualizer)
-		TabBar.setAcceptDrops(True)
+		TabBar.setTabBarAutoHide(True)
 		return TabBar
 	
 	def defineTabButton(self):
@@ -33,13 +33,15 @@ class centralWidget(QW.QWidget):
 	
 	def tabAdder(self,files=None):
 		if type(files)==bool or files is None:
-			self.TabList.append([None,"str"])
+			self.TabList.append(None)
 			for idx in range(self.CwidLayout.count()):
 				self.CwidLayout.itemAt(idx).widget().addTab(
 					TextEditor(GXML.fileElement()), GXML.fileElement().title.text)
 		elif type(files)==GXML.fileElement:
-			self.TabList.append([files,None])
-			pass
+			self.TabList.append(files)
+			for idx in range(self.CwidLayout.count()):
+				self.CwidLayout.itemAt(idx).widget().addTab(
+					TextEditor(files), files.title.text)
 		
 	def tabDestroyer(self,index=None):
 		if  self.CwidLayout.itemAt(0).widget().count()>1:
@@ -60,11 +62,11 @@ class centralWidget(QW.QWidget):
 		self.CwidLayout.addWidget(self.defineTabBar())
 		last=self.CwidLayout.count()-1
 		for item in self.TabList:
-			if item[0] is None:
-				self.CwidLayout.itemAt(last).widget().addTab(
-				TextEditor(GXML.fileElement()),GXML.fileElement().title.text)
-			elif type(item[0])==GXML.fileElement:
-				pass
+			if item is None:
+				elem=GXML.fileElement()
+				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(elem),elem.title.text)
+			elif type(item)==GXML.fileElement:
+				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(item),item.title.text)
 	
 	def unsplit(self):
 		last=self.CwidLayout.count()-1

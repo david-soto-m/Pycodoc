@@ -37,19 +37,31 @@ class fileElement():
 			except:
 				pass
 	def beheader(self,stringy):
-		direc=stringy
-		notthere=True
-		idx=len(direc)-1
-		while notthere:
-			direc=direc[0:idx]
-			idx-=1
-			if  direc[idx]=='/'or direc[idx]=='\\':
-				notthere=False
-		print(stringy)
-		name=stringy[idx+1:len(stringy)]
-		print(name,";",direc)
-		return ("stupid",direc,name)
-	
+		idx=stringy.rfind("/")
+		idx1=stringy.rfind("\\")
+		if idx>0:
+			name=stringy[idx+1:len(stringy)]
+		elif idx1>0:
+			name=stringy[idx+1:len(stringy)]
+			idx=idx1
+		else:
+			name=stringy
+		direc=stringy[0:idx+1]
+		idx=name.find(".")
+		if idx>=1:
+			title=name[0:idx]
+		else:
+			title=name
+		return (title,direc,name)
+	def formater(self):
+		lists=self.name.text.rsplit(".")
+		lists=[var for var in lists if var]
+		if len(lists)>1:
+			return lists[len(lists)-1]
+		else:
+			return ""
+	def isformat(self,form):
+		return form==self.formater()
 	def createHistElement(self):
 		elem=ET.Element("Elem")
 		title=ET.SubElement(elem,self.tup[0])
