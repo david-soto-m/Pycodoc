@@ -13,7 +13,7 @@ def pathToRootOfProject():
 	while notthere:
 		direc=direc[0:idx]
 		idx-=1
-		if direc[idx]=='/':
+		if  direc[idx]=='/'or direc[idx]=='\\':
 			notthere=False
 	return direc
 
@@ -26,4 +26,4 @@ def main():
 def exiter():
 	GXML.History.write(GXML.GConfigRoot.find("History/Path").text)
 if __name__=="__main__":
-	main()
+        main()

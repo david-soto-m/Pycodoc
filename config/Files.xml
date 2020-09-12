@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <files>
-	<Elem show="False">
+	<Elem show="False" default="True">
 		<title>Git steps</title>
 		<dir>/home/david/Programming/Myternet/Docs/Git/</dir>
-		<name>git.html</name>
+		<name>Git.html</name>
 	</Elem>
 	<Elem show="True">
 		<title>Mocking Stupid people is Fun</title>
@@ -13,6 +13,6 @@
 	<Elem show="True">
 		<title>Git stepo</title>
 		<dir>/home/david/Programming/Myternet/Docs/Git/</dir>
-		<name>git.html</name>
+		<name>Git.html</name>
 	</Elem>
 </files>
