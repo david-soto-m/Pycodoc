@@ -40,8 +40,15 @@ class GuiApp(QW.QMainWindow):
 	
 	def defineShortcuts(self):
 		self.shcts=[]
+		
 		self.shcts.append(QW.QShortcut("Ctrl+W",self))
 		self.shcts[len(self.shcts)-1].activated.connect(self.cwidg.tabDestroyer)
+		
+		self.shcts.append(QW.QShortcut("Ctrl+Q",self))
+		self.shcts[len(self.shcts)-1].activated.connect(self.mnb.exitAct.trigger)
+		
+		self.shcts.append(QW.QShortcut("Ctrl+O",self))
+		self.shcts[len(self.shcts)-1].activated.connect(self.tlb.fileopener.openfile.trigger)
 
 class auxsz():
 	def toscalescreen(self,Widg,scale=0.2,center=0):

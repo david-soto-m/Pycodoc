@@ -10,7 +10,7 @@ class ToolBar():
 		self.toolBar=QW.QToolBar(parent)
 		
 		self.histmen=historystuff(parent)
-		self.fileopener=opener()
+		self.fileopener=opener(parent)
 		self.combosearch=searchWidg(parent)
 		self.spliter=splitButton(parent)
 		
@@ -22,20 +22,23 @@ class ToolBar():
 		self.toolBar.addWidget(self.combosearch.swid)
 
 class opener():
-	def __init__(self):
+	def __init__(self,parent,string=None):
+		self.parent=parent
 		self.openfile=QW.QAction()
 		self.openfile.setIcon(QG.QIcon().fromTheme("document-open"))
 		self.openfile.setToolTip("Open a file")
 		self.openfile.triggered.connect(self.OpenWidget)
-
+		
+		if type(string) is str:
+			self.openfile.setText(string)
 	def OpenWidget(self):
 		home_dir = str(Path.home())
 		fname = QW.QFileDialog.getOpenFileNames(caption='Open file',directory=home_dir)
 		if fname[0]:
 			for each in fname[0]:
 				if Path(each).is_file():
-					fielem=GXML.fileElement(fielem)
-					self.parent.cwidg.tabAdder(filem)
+					fielem=GXML.fileElement(each)
+					self.parent.cwidg.tabAdder(fielem)
 
 class historystuff(QW.QWidget):
 	def __init__(self,parent):
