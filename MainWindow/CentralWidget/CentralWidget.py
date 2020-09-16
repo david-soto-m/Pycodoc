@@ -9,7 +9,7 @@ class centralWidget(QW.QWidget):
 		
 		self.TabList=[]
 		
-		self.lastIdx=0	
+		self.lastIdx=0
 		
 		self.defineLayout()
 		self.tabAdder()
@@ -20,7 +20,7 @@ class centralWidget(QW.QWidget):
 		TabBar.setCornerWidget(self.defineTabButton())
 		TabBar.tabCloseRequested.connect(self.tabDestroyer)
 		TabBar.currentChanged.connect(self.idxactualizer)
-		TabBar.setTabBarAutoHide(True)
+		TabBar.setTabBarAutoHide (GXML.GConfigRoot.find("Behaviour/TabBarAutoHide").text not in ["Remain","remain","R","r"])
 		return TabBar
 	
 	def defineTabButton(self):
@@ -48,10 +48,25 @@ class centralWidget(QW.QWidget):
 			if index is not None:
 				for idx in range(self.CwidLayout.count()):
 					self.CwidLayout.itemAt(idx).widget().removeTab(index)
+				self.TabList.pop(index)
 			else:
 				self.tabDestroyer(self.lastIdx)
-		else:
-			QW.qApp.quit()
+		elif self.CwidLayout.itemAt(0).widget().count()==1:
+			Behave=GXML.GConfigRoot.find("Behaviour/LastTabRemoved").text
+			if (Behave in ["Welcome","welcome","W","w"]):
+				for idx in range(self.CwidLayout.count()):
+					self.CwidLayout.itemAt(idx).widget().removeTab(0)
+				self.TabList.pop(0)
+				self.tabAdder()
+			elif (Behave in ["None","none","N","n"]):
+				for idx in range(self.CwidLayout.count()):
+					self.CwidLayout.itemAt(idx).widget().removeTab(0)
+				self.TabList.pop(0)
+				pass
+			elif (Behave in ["Persist","persist","P","p"]):
+				pass
+			else:
+				QW.qApp.quit()
 
 	def defineLayout(self):
 		self.CwidLayout=QW.QHBoxLayout()

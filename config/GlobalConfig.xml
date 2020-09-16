@@ -7,5 +7,15 @@
 		<Path>/home/david/Programming/Python/Pycodoc/config/Files.xml</Path>
 	</Files>
 	<Shortcuts>
+		<Split></Split>
+		<Quit></Quit>
+		<QuitTab></QuitTab>
+		<OpenFile></OpenFile>
 	</Shortcuts>
+	<Behaviour>
+		<TabBarAutoHide></TabBarAutoHide>
+			<!--["Remain","remain","R","r"]|(.*)AutoHide-->
+		<LastTabRemoved>N</LastTabRemoved>
+			<!--["Welcome","welcome","W","w"]|["None","none","N","n"]|["Persist","persist","P","p"]|(.*)Quits-->
+	</Behaviour>
 </Root>
