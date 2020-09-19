@@ -8,9 +8,10 @@
 	</Files>
 	<Shortcuts>
 		<Split></Split>
-		<Quit></Quit>
-		<QuitTab></QuitTab>
-		<OpenFile></OpenFile>
+		<Unsplit></Unsplit>
+		<Quit>Ctrl+Q</Quit>
+		<QuitTab>Ctrl+W</QuitTab>
+		<OpenFile>Ctrl+O</OpenFile>
 	</Shortcuts>
 	<Behaviour>
 		<TabBarAutoHide></TabBarAutoHide>
