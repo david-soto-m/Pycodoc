@@ -7,8 +7,9 @@
 		<Path>/home/david/Programming/Python/Pycodoc/config/Files.xml</Path>
 	</Files>
 	<Shortcuts>
-		<Split></Split>
-		<Unsplit></Unsplit>
+		<NewTab>Ctrl+T</NewTab>
+		<Split>Ctrl+Right</Split>
+		<Unsplit>Ctrl+Left</Unsplit>
 		<Quit>Ctrl+Q</Quit>
 		<QuitTab>Ctrl+W</QuitTab>
 		<OpenFile>Ctrl+O</OpenFile>

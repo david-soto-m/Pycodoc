@@ -52,6 +52,7 @@ class historystuff(QW.QWidget):
 		self.hist.triggered.connect(self.triggerlast)
 		
 	def refreshMenu(self):
+		print("hovering")
 		self.hist.setMenu(self.histMenu())
 	
 	def histMenu(self):
