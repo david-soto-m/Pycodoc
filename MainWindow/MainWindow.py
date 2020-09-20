@@ -5,7 +5,7 @@ import MainWindow.CentralWidget.CentralWidget as CW
 import MainWindow.ToolBar.ToolBar as TB
 import MainWindow.MenuBar.MenuBar as MB
 import MainWindow.Shortcuts.Shortcuts as SH
-import MainWindow.glob_objects.globalxml as GXML
+import glob_objects.globalxml as GXML
 
 class GuiApp(QW.QMainWindow):
 	def __init__(self):

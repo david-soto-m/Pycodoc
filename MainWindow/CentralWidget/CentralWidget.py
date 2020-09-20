@@ -1,7 +1,7 @@
 import PyQt5.QtWidgets as QW
 import PyQt5.QtGui as QG
 import PyQt5.QtCore as QC
-from ..glob_objects import globalxml as GXML
+import glob_objects.globalxml as GXML
 
 class centralWidget(QW.QWidget):
 	def __init__(self):

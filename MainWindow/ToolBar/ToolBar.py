@@ -1,7 +1,7 @@
 import PyQt5.QtWidgets as QW
 import PyQt5.QtGui as QG
 import PyQt5.QtCore as QC
-from ..glob_objects import globalxml as GXML
+import glob_objects.globalxml as GXML
 from pathlib import Path
 
 class ToolBar():

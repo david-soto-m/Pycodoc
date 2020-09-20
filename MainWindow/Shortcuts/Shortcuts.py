@@ -1,4 +1,4 @@
-from ..glob_objects import globalxml as GXML
+from glob_objects import globalxml as GXML
 import PyQt5.QtWidgets as QW
 
 class Shortcutter():
