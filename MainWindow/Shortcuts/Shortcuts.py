@@ -4,36 +4,36 @@ import PyQt5.QtWidgets as QW
 class Shortcutter():
 	def __init__(self,parent):
 		self.shcts=[]
-		shct=GXML.GConfigRoot.find("Shortcuts/QuitTab").text
 		
+		shct=GXML.ShortRoot.find("QuitTab").text
 		if shct is not None:
 			self.shcts.append(QW.QShortcut(shct,parent))
 			self.shcts[len(self.shcts)-1].activated.connect(parent.cwidg.tabDestroyer)
 		
-		shct=GXML.GConfigRoot.find("Shortcuts/Quit").text
+		shct=GXML.ShortRoot.find("Quit").text
 		if shct is not None:
 			self.shcts.append(QW.QShortcut(shct,parent))
 			self.shcts[len(self.shcts)-1].activated.connect(parent.mnb.exitAct.trigger)
 		
-		shct=GXML.GConfigRoot.find("Shortcuts/OpenFile").text
+		shct=GXML.ShortRoot.find("OpenFile").text
 		if shct is not None :
 			self.shcts.append(QW.QShortcut(shct,parent))
 			self.shcts[len(self.shcts)-1].activated.connect(parent.tlb.fileopener.openfile.trigger)
 		
-		shct=GXML.GConfigRoot.find("Shortcuts/Split").text
+		shct=GXML.ShortRoot.find("Split").text
 		if shct is not None:
 			self.shcts.append(QW.QShortcut(shct,parent))
 			self.shcts[len(self.shcts)-1].activated.connect(parent.cwidg.split)
 		
-		shct=GXML.GConfigRoot.find("Shortcuts/Unsplit").text
+		shct=GXML.ShortRoot.find("Unsplit").text
 		if shct is not None:
 			self.shcts.append(QW.QShortcut(shct,parent))
 			self.shcts[len(self.shcts)-1].activated.connect(parent.cwidg.unsplit)
-		shct=GXML.GConfigRoot.find("Shortcuts/NewTab").text
+		shct=GXML.ShortRoot.find("NewTab").text
 		if shct is not None:
 			self.shcts.append(QW.QShortcut(shct,parent))
 			self.shcts[len(self.shcts)-1].activated.connect(parent.tlb.combosearch.swid.setFocus)
-		shct=GXML.GConfigRoot.find("Shortcuts/TriggerHistory").text
+		shct=GXML.ShortRoot.find("TriggerHistory").text
 		if shct is not None:
 			self.shcts.append(QW.QShortcut(shct,parent))
 			self.shcts[len(self.shcts)-1].activated.connect(parent.tlb.histmen.hist.trigger)

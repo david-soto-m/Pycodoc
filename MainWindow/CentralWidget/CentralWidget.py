@@ -2,6 +2,7 @@ import PyQt5.QtWidgets as QW
 import PyQt5.QtGui as QG
 import PyQt5.QtCore as QC
 import glob_objects.globalxml as GXML
+from FileManage.fileElement import fileElement
 
 class centralWidget(QW.QWidget):
 	def __init__(self):
@@ -36,8 +37,8 @@ class centralWidget(QW.QWidget):
 			self.TabList.append(None)
 			for idx in range(self.CwidLayout.count()):
 				self.CwidLayout.itemAt(idx).widget().addTab(
-					TextEditor(GXML.fileElement()), GXML.fileElement().title.text)
-		elif type(files)==GXML.fileElement:
+					TextEditor(fileElement()),fileElement().title.text)
+		elif type(files)==fileElement:
 			self.TabList.append(files)
 			for idx in range(self.CwidLayout.count()):
 				self.CwidLayout.itemAt(idx).widget().addTab(
@@ -78,9 +79,9 @@ class centralWidget(QW.QWidget):
 		last=self.CwidLayout.count()-1
 		for item in self.TabList:
 			if item is None:
-				elem=GXML.fileElement()
+				elem=fileElement()
 				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(elem),elem.title.text)
-			elif type(item)==GXML.fileElement:
+			elif type(item)==fileElement:
 				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(item),item.title.text)
 	
 	def unsplit(self):
@@ -94,7 +95,7 @@ class TextEditor(QW.QTextEdit):
 		super().__init__()
 		self.setAcceptDrops(True)
 		self.setReadOnly(True)
-		if type(files) is GXML.fileElement:
+		if type(files) is fileElement:
 			f = open(files.direc.text+files.name.text, 'r')
 			with f:
 				data = f.read()
