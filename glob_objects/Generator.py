@@ -3,7 +3,7 @@ from pathlib import Path
 
 def MainConfigGenerator(string):
 	with open(string,"w+") as f:
-		f.write("<Root>\n</Root>")
+		f.write("<Root></Root>")
 	
 	Config= ET.parse(string)
 	ConfigRoot=Config.getroot()
@@ -15,35 +15,23 @@ def MainConfigGenerator(string):
 	Behaviour=ET.Element("Behaviour")
 	
 	HistPath=ET.SubElement(Hist,"Path")
-	HistPath=ET.SubElement(Hist,"Max")
-	HistPath.text=str(Path.home())+"/.config/Pycodoc/History"
+	HistMax=ET.SubElement(Hist,"Max")
+	HistMax.text=str(30)
+	HistPath.text=str(Path.home())+"/.config/Pycodoc/History.xml"
+	
+	FilesPath=ET.SubElement(Files,"Path")
+	FilesPath.text=str(Path.home())+"/.config/Pycodoc/Files.xml"
 	
 	
+	ShortcutsPath=ET.SubElement(Shortcuts,"Path")
+	ShortcutsPath.text=str(Path.home())+"/.config/Pycodoc/Shortcuts.xml"
 	
-	Config.close()
 	
-	'''Base='<Root>
-	<History>
-		<Path>/home/david/Programming/Python/Pycodoc/config/History.xml</Path>
-		<Max>10</Max>
-	</History>
-	<Files>
-		<Path>/home/david/Programming/Python/Pycodoc/config/Files.xml</Path>
-	</Files>
-	<Shortcuts>
-		<TriggerHistory>Ctrl+H,H</TriggerHistory>
-		<MarkHistory>Ctrl+H</MarkHistory>
-		<NewTab>Ctrl+T</NewTab>gs
-		<Split>Ctrl+Right</Split>
-		<Unsplit>Ctrl+Left</Unsplit>
-		<Quit>Ctrl+Q</Quit>
-		<QuitTab>Ctrl+W</QuitTab>
-		<OpenFile>Ctrl+O</OpenFile>
-	</Shortcuts>
-	<Behaviour>
-		<TabBarAutoHide></TabBarAutoHide>
-			<!--["Remain","remain","R","r"]|(.*)AutoHide-->
-		<LastTabRemoved>N</LastTabRemoved>
-			<!--["Welcome","welcome","W","w"]|["None","none","N","n"]|["Persist","persist","P","p"]|(.*)Quits-->
-	</Behaviour>
-</Root>'''
+	AH=ET.SubElement(Behaviour,"TabBarAutoHide")
+	LTR=ET.SubElement(Behaviour,"LastTabRemoved")
+	
+	ConfigRoot.append(Hist)
+	ConfigRoot.append(Files)
+	ConfigRoot.append(Shortcuts)
+	ConfigRoot.append(Behaviour)
+	Config.write(string)

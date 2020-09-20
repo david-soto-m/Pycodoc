@@ -7,7 +7,6 @@ import glob_objects.Generator as GEN
 def mainconfig():
 	configloc='/home/david/Programming/Python/Pycodoc/config/GlobalConfig.xml'
 	if Path(configloc).is_file():
-		#GEN.MainConfigGenerator()
 		GConfig=ET.parse(configloc)
 		GConfigRoot=GConfig.getroot()
 		return(GConfig,GConfigRoot)
