@@ -4,7 +4,8 @@ import PyQt5.QtCore as QC
 import MainWindow.CentralWidget.CentralWidget as CW
 import MainWindow.ToolBar.ToolBar as TB
 import MainWindow.MenuBar.MenuBar as MB
-from MainWindow.glob_objects import globalxml as GXML
+import MainWindow.Shortcuts.Shortcuts as SH
+import MainWindow.glob_objects.globalxml as GXML
 
 class GuiApp(QW.QMainWindow):
 	def __init__(self):
@@ -40,22 +41,7 @@ class GuiApp(QW.QMainWindow):
 		self.setCentralWidget(self.cwidg)
 	
 	def defineShortcuts(self):
-		self.shcts=[]
-		shct=GXML.GConfigRoot.find("Shortcuts/QuitTab").text
-		
-		if shct is not None:
-			self.shcts.append(QW.QShortcut(shct,self))
-			self.shcts[len(self.shcts)-1].activated.connect(self.cwidg.tabDestroyer)
-		
-		shct=GXML.GConfigRoot.find("Shortcuts/Quit").text
-		if shct is not None:
-			self.shcts.append(QW.QShortcut(shct,self))
-			self.shcts[len(self.shcts)-1].activated.connect(self.mnb.exitAct.trigger)
-		
-		shct=GXML.GConfigRoot.find("Shortcuts/OpenFile").text
-		if shct is not None :
-			self.shcts.append(QW.QShortcut(shct,self))
-			self.shcts[len(self.shcts)-1].activated.connect(self.tlb.fileopener.openfile.trigger)
+		self.shctobj=SH.Shortcutter(self)
 
 class auxsz():
 	def toscalescreen(self,Widg,scale=0.2,center=0):

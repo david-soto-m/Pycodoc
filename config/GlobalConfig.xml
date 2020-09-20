@@ -7,7 +7,9 @@
 		<Path>/home/david/Programming/Python/Pycodoc/config/Files.xml</Path>
 	</Files>
 	<Shortcuts>
-		<NewTab>Ctrl+T</NewTab>
+		<TriggerHistory>Ctrl+H,H</TriggerHistory>
+		<MarkHistory>Ctrl+H</MarkHistory>
+		<NewTab>Ctrl+T</NewTab>gs
 		<Split>Ctrl+Right</Split>
 		<Unsplit>Ctrl+Left</Unsplit>
 		<Quit>Ctrl+Q</Quit>

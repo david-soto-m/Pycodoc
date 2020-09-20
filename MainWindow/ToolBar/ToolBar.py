@@ -43,6 +43,7 @@ class opener():
 class historystuff(QW.QWidget):
 	def __init__(self,parent):
 		super().__init__()
+		self.counter=0
 		self.parent=parent
 		self.hist=QW.QAction()
 		self.hist.setIcon(QG.QIcon().fromTheme("shallow-history"))
@@ -52,7 +53,7 @@ class historystuff(QW.QWidget):
 		self.hist.triggered.connect(self.triggerlast)
 		
 	def refreshMenu(self):
-		print("hovering")
+		self.counter=0
 		self.hist.setMenu(self.histMenu())
 	
 	def histMenu(self):
@@ -67,9 +68,12 @@ class historystuff(QW.QWidget):
 		return Menu
 	
 	def triggerlast(self,boolean):
-		File=GXML.fileElement(GXML.histRoot.find("Elem"))
+		self.counter+=1
+		if self.counter>int(GXML.GConfigRoot.find("History/Max").text):
+			self.counter=1
+		File=GXML.fileElement(GXML.histRoot.find("Elem"+"["+str(self.counter)+"]"))
 		self.parent.cwidg.tabAdder(File)
-		
+	
 	def trigger(self,boolean):
 		File=self.sender().data()
 		GXML.histRoot.insert(0,File.createHistElement())
