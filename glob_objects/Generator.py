@@ -35,3 +35,24 @@ def MainConfigGenerator(string):
 	ConfigRoot.append(Shortcuts)
 	ConfigRoot.append(Behaviour)
 	Config.write(string)
+
+def ShortcutsConfig(string):
+	with open(string,"w+") as f:
+		f.write("<Shortcuts></Shortcuts>")
+	
+	Short= ET.parse(string)
+	ShortRoot=Short.getroot()
+	
+	shorts=[]
+	
+	shorts.append(ET.Element("TriggerHistory"))
+	shorts.append(ET.Element("MarkHistory"))
+	shorts.append(ET.Element("NewTab"))
+	shorts.append(ET.Element("Split"))
+	shorts.append(ET.Element("Unsplit"))
+	shorts.append(ET.Element("Quit"))
+	shorts.append(ET.Element("OpenFile"))
+	
+	for el in shorts:
+		ShortRoot.append(el)
+	Short.write(string)
