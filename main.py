@@ -5,24 +5,15 @@ from PyQt5.QtWidgets import QApplication
 from MainWindow.MainWindow import GuiApp
 import glob_objects.globalxml as GXML
 import xml.etree.ElementTree as ET
-
-def pathToRootOfProject():
-	direc=__file__
-	notthere=True
-	idx=len(direc)-1
-	while notthere:
-		direc=direc[0:idx]
-		idx-=1
-		if  direc[idx]=='/'or direc[idx]=='\\':
-			notthere=False
-	return direc
+from pathlib import Path
 
 def main():
-	os.chdir(pathToRootOfProject())
+	os.chdir(str(Path(__file__).parent)+"/")
 	app=QApplication(sys.argv)
 	ex=GuiApp()
 	app.exec_()
 	sys.exit(exiter())
+	
 def exiter():
 	GXML.History.write(GXML.GConfigRoot.find("History/Path").text)
 if __name__=="__main__":

@@ -102,9 +102,9 @@ class searchWidg():
 			GXML.histRoot.insert(0,fielem.createHistElement())
 			self.parent.cwidg.tabAdder(fielem)
 		elif Path(self.swid.itemText(idx)).is_file():
-			fielem=fileElement(fielem)
+			fielem=fileElement(self.swid.itemText(idx))
 			GXML.histRoot.insert(0,fielem.createHistElement())
-			self.parent.cwidg.tabAdder(filem)
+			self.parent.cwidg.tabAdder(fielem)
 		while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
 			GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
 
