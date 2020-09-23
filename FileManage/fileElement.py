@@ -1,15 +1,8 @@
 import xml.etree.ElementTree as ET
-#Master Config
-GConfig=ET.parse('/home/david/Programming/Python/Pycodoc/config/GlobalConfig.xml')
-GConfigRoot=GConfig.getroot()
+import glob_objects.globalxml as GXML
+import glob_objects.Generator as GEN
+from pathlib import Path
 
-#Parsing & Rooting
-Files= ET.parse(GConfigRoot.find("Files/Path").text)
-filesRoot=Files.getroot()
-History=ET.parse(GConfigRoot.find("History/Path").text)
-histRoot=History.getroot()
-
-#Helper Classes
 class fileElement():
 	tup=("title","dir","name")
 	
@@ -29,14 +22,16 @@ class fileElement():
 			self.direc=direc
 			self.name=name
 		elif type(singleElement)==type(None):
-			defaultElement=filesRoot.find("Elem[@default='True']")
+			defaultElement=GXML.filesRoot.find("Elem[@default='True']")
 			try:
 				self.title=defaultElement.find(self.tup[0])
 				self.direc=defaultElement.find(self.tup[1])
 				self.name=defaultElement.find(self.tup[2])
 			except:
-				pass
+				GEN.defaultfileGenerator(str(Path.home())+"/.config/Pycodoc/Default")
+				self.__init__()
 	def beheader(self,stringy):
+		"Change this for utilities from path.Pathlib"
 		idx=stringy.rfind("/")
 		idx1=stringy.rfind("\\")
 		if idx>0:
@@ -53,6 +48,7 @@ class fileElement():
 		else:
 			title=name
 		return (title,direc,name)
+	
 	def formater(self):
 		lists=self.name.text.rsplit(".")
 		lists=[var for var in lists if var]
@@ -72,3 +68,4 @@ class fileElement():
 		dire.text=self.direc.text
 		name.text=self.name.text
 		return elem
+ 

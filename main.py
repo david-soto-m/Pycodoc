@@ -3,7 +3,7 @@ import os
 import sys
 from PyQt5.QtWidgets import QApplication
 from MainWindow.MainWindow import GuiApp
-from MainWindow.glob_objects import globalxml as GXML
+import glob_objects.globalxml as GXML
 import xml.etree.ElementTree as ET
 
 def pathToRootOfProject():

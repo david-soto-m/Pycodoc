@@ -1,8 +1,9 @@
 import PyQt5.QtWidgets as QW
 import PyQt5.QtGui as QG
 import PyQt5.QtCore as QC
-from ..glob_objects import globalxml as GXML
+import glob_objects.globalxml as GXML
 from pathlib import Path
+from FileManage.fileElement import fileElement
 
 class ToolBar():
 	def __init__(self,parent):
@@ -37,7 +38,7 @@ class opener():
 		if fname[0]:
 			for each in fname[0]:
 				if Path(each).is_file():
-					fielem=GXML.fileElement(each)
+					fielem=fileElement(each)
 					self.parent.cwidg.tabAdder(fielem)
 
 class historystuff(QW.QWidget):
@@ -60,7 +61,7 @@ class historystuff(QW.QWidget):
 		self.actions=[]
 		Menu=QW.QMenu()
 		for child,index in zip(GXML.histRoot,range(len(GXML.histRoot))):
-			Elem=GXML.fileElement(child)
+			Elem=fileElement(child)
 			self.actions.append(QW.QAction(Elem.title.text))
 			self.actions[index].setData(Elem)
 			self.actions[index].triggered.connect(self.trigger)
@@ -71,7 +72,7 @@ class historystuff(QW.QWidget):
 		self.counter+=1
 		if self.counter>int(GXML.GConfigRoot.find("History/Max").text):
 			self.counter=1
-		File=GXML.fileElement(GXML.histRoot.find("Elem"+"["+str(self.counter)+"]"))
+		File=fileElement(GXML.histRoot.find("Elem"+"["+str(self.counter)+"]"))
 		self.parent.cwidg.tabAdder(File)
 	
 	def trigger(self,boolean):
@@ -91,7 +92,7 @@ class searchWidg():
 		self.swid.setSizePolicy(expand,expand)
 		self.Elem=[]
 		for child in GXML.filesRoot.findall("Elem[@show='True']"):
-			self.Elem.append(GXML.fileElement(child))
+			self.Elem.append(fileElement(child))
 			self.swid.addItem(self.Elem[len(self.Elem)-1].title.text, QC.QVariant(self.Elem[len(self.Elem)-1]))
 		self.swid.setCurrentIndex(-1)
 	
@@ -101,7 +102,7 @@ class searchWidg():
 			GXML.histRoot.insert(0,fielem.createHistElement())
 			self.parent.cwidg.tabAdder(fielem)
 		elif Path(self.swid.itemText(idx)).is_file():
-			fielem=GXML.fileElement(fielem)
+			fielem=fileElement(fielem)
 			GXML.histRoot.insert(0,fielem.createHistElement())
 			self.parent.cwidg.tabAdder(filem)
 		while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
