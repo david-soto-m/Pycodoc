@@ -22,4 +22,4 @@ Still it would be cool to have the zeal documentation stack integrated with this
 * pyqt5 (python)
 * xml.etree (python)
 * pathlib.Path (python)
-* chdir from os path and exit from sys (python)
+* chdir from os and exit from sys (python)
