@@ -1,5 +1,7 @@
 import xml.etree.ElementTree as ET
 import glob_objects.globalxml as GXML
+import glob_objects.Generator as GEN
+from pathlib import Path
 
 class fileElement():
 	tup=("title","dir","name")
@@ -26,8 +28,10 @@ class fileElement():
 				self.direc=defaultElement.find(self.tup[1])
 				self.name=defaultElement.find(self.tup[2])
 			except:
-				pass
+				GEN.defaultfileGenerator(str(Path.home())+"/.config/Pycodoc/Default")
+				self.__init__()
 	def beheader(self,stringy):
+		"Change this for utilities from path.Pathlib"
 		idx=stringy.rfind("/")
 		idx1=stringy.rfind("\\")
 		if idx>0:
@@ -44,6 +48,7 @@ class fileElement():
 		else:
 			title=name
 		return (title,direc,name)
+	
 	def formater(self):
 		lists=self.name.text.rsplit(".")
 		lists=[var for var in lists if var]
