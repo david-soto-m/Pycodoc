@@ -3,6 +3,7 @@ import PyQt5.QtGui as QG
 import PyQt5.QtCore as QC
 import glob_objects.globalxml as GXML
 from FileManage.fileElement import fileElement
+from pathlib import Path
 
 class centralWidget(QW.QWidget):
 	def __init__(self):
@@ -18,16 +19,10 @@ class centralWidget(QW.QWidget):
 	def defineTabBar(self):
 		TabBar=QW.QTabWidget()
 		TabBar.setTabsClosable(True)
-		TabBar.setCornerWidget(self.defineTabButton())
 		TabBar.tabCloseRequested.connect(self.tabDestroyer)
 		TabBar.currentChanged.connect(self.idxactualizer)
 		TabBar.setTabBarAutoHide (GXML.GConfigRoot.find("Behaviour/TabBarAutoHide").text not in ["Remain","remain","R","r"])
 		return TabBar
-	
-	def defineTabButton(self):
-		newTabButton=QW.QPushButton(QG.QIcon().fromTheme("tab-new"),"",self)
-		newTabButton.clicked.connect(self.tabAdder)
-		return newTabButton
 	
 	def idxactualizer(self,index):
 		self.lastIdx=index
@@ -36,13 +31,12 @@ class centralWidget(QW.QWidget):
 		if type(files)==bool or files is None:
 			self.TabList.append(None)
 			for idx in range(self.CwidLayout.count()):
-				self.CwidLayout.itemAt(idx).widget().addTab(
-					TextEditor(fileElement()),fileElement().title.text)
+				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(fileElement(),self), fileElement().title.text)
 		elif type(files)==fileElement:
 			self.TabList.append(files)
 			for idx in range(self.CwidLayout.count()):
-				self.CwidLayout.itemAt(idx).widget().addTab(
-					TextEditor(files), files.title.text)
+				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(files,self), files.title.text)
+			self.CwidLayout.itemAt(0).widget().setCurrentIndex(len(self.TabList)-1)
 		
 	def tabDestroyer(self,index=None):
 		if  self.CwidLayout.itemAt(0).widget().count()>1:
@@ -63,9 +57,8 @@ class centralWidget(QW.QWidget):
 				for idx in range(self.CwidLayout.count()):
 					self.CwidLayout.itemAt(idx).widget().removeTab(0)
 				self.TabList.pop(0)
-				pass
 			elif (Behave in ["Persist","persist","P","p"]):
-				pass
+				pass #Not an error!!
 			else:
 				QW.qApp.quit()
 
@@ -80,9 +73,9 @@ class centralWidget(QW.QWidget):
 		for item in self.TabList:
 			if item is None:
 				elem=fileElement()
-				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(elem),elem.title.text)
+				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(elem,self),elem.title.text)
 			elif type(item)==fileElement:
-				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(item),item.title.text)
+				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(item,self),item.title.text)
 	
 	def unsplit(self):
 		last=self.CwidLayout.count()-1
@@ -91,15 +84,39 @@ class centralWidget(QW.QWidget):
 			self.CwidLayout.removeItem(self.CwidLayout.itemAt(last))
 
 class TextEditor(QW.QTextEdit):
-	def __init__(self,files):
+	def __init__(self,files,papa):
 		super().__init__()
+		self.parent=papa
 		self.setAcceptDrops(True)
-		self.setReadOnly(True)
-		if type(files) is fileElement:
-			f = open(files.direc.text+files.name.text, 'r')
-			with f:
+		self.setReadOnly(GXML.GConfigRoot.find("Behaviour/AllowEdits") not in ["Yes","yes","Y","y"])
+		if files.isFile():
+			with open(files.direc.text+files.name.text, 'r') as f:
 				data = f.read()
 				self.setText(data)
+			GXML.histRoot.insert(0,files.createHistElement())
+			while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
+				GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
+		else :
+			errfile=GXML.filesRoot.find("Elem[@error='True']")
+			if errfile is not None and errfile:
+				files=fileElement(errfile)
+			else:
+				files=fileElement()
+			if files.isFile():
+				with open(files.fileStrPath(), 'r') as f:
+					data = f.read()
+					self.setText(data)
 	def dragEnterEvent(self, e):
 		if e.mimeData().hasUrls():
-			print(e.mimeData().urls())
+			e.accept()
+		else:
+			e.ignore()
+	def dragMoveEvent(self,evie):
+		pass
+		#I don't have the slightest idea why but it doesn't work without the event override.
+		#Maybe the implementation cancels the event by default, but that is quite messed up.
+	def dropEvent(self,e):
+		for url in e.mimeData().urls():
+			if Path(url.path()).is_file():
+				fielem=fileElement(url.path())
+				self.parent.tabAdder(fielem)

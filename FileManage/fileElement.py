@@ -34,15 +34,14 @@ class fileElement():
 				GEN.defaultfileGenerator(str(Path.home())+"/.config/Pycodoc/Default")
 				self.__init__()
 	
-	def formater(self):
-		lists=self.name.text.rsplit(".")
-		lists=[var for var in lists if var]
-		if len(lists)>1:
-			return lists[len(lists)-1]
-		else:
-			return ""
-	def isformat(self,form):
-		return form==self.formater()
+	def isFormat(self,form):
+		return form==Path(name).suffix
+	
+	def isFile(self):
+		return Path(self.direc.text+self.name.text).is_file()
+	
+	def fileStrPath(self):
+		return self.direc.text+self.name.text
 	def createHistElement(self):
 		elem=ET.Element("Elem")
 		title=ET.SubElement(elem,self.tup[0])

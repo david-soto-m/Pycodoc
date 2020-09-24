@@ -77,10 +77,7 @@ class historystuff(QW.QWidget):
 	
 	def trigger(self,boolean):
 		File=self.sender().data()
-		GXML.histRoot.insert(0,File.createHistElement())
 		self.parent.cwidg.tabAdder(File)
-		while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
-			GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
 
 class searchWidg():
 	def __init__(self,parent):
@@ -101,12 +98,9 @@ class searchWidg():
 		if fielem is not None:
 			GXML.histRoot.insert(0,fielem.createHistElement())
 			self.parent.cwidg.tabAdder(fielem)
-		elif Path(self.swid.itemText(idx)).is_file():
+		else:
 			fielem=fileElement(self.swid.itemText(idx))
-			GXML.histRoot.insert(0,fielem.createHistElement())
 			self.parent.cwidg.tabAdder(fielem)
-		while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
-			GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
 
 class splitButton():
 	def __init__(self,parent):

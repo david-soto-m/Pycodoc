@@ -35,6 +35,7 @@ def mainCfgGenerator(string):
 	
 	AH=ET.SubElement(Behaviour,"TabBarAutoHide")
 	LTR=ET.SubElement(Behaviour,"LastTabRemoved")
+	AE=ET.SubElement(Behaviour,"AllowEdits")
 	
 	ConfigRoot.append(Hist)
 	ConfigRoot.append(Files)
@@ -95,8 +96,9 @@ def defaultfileGenerator(string):
 	
 	
 	defFile=ET.Element("Elem")
-	defFile.set("show","False")
+	defFile.set("show","True")
 	defFile.set("default","True")
+	defFile.set("error","True")
 	path=ET.SubElement(defFile,"dir")
 	path.text=str(direc)+"/"
 	name=ET.SubElement(defFile,"name")
