@@ -84,8 +84,8 @@ class centralWidget(QW.QWidget):
 			self.CwidLayout.removeItem(self.CwidLayout.itemAt(last))
 
 class TextEditor(QW.QTextEdit):
-	def __init__(self,files,papa,NoHist):
-		super().__init__()
+	def __init__(self,files,papa,NoHist,cssFile=None):
+		super().__init__(),
 		self.parent=papa
 		self.setAcceptDrops(True)
 		self.setReadOnly(GXML.GConfigRoot.find("Behaviour/AllowEdits") not in ["Yes","yes","Y","y"])
@@ -107,6 +107,10 @@ class TextEditor(QW.QTextEdit):
 				with open(files.fileStrPath(), 'r') as f:
 					data = f.read()
 					self.setText(data)
+		self.stylize(cssFile)
+	def stylize(self,cssFile):
+		#Check extension, implementstyle
+		pass
 	def dragEnterEvent(self, e):
 		if e.mimeData().hasUrls():
 			e.accept()

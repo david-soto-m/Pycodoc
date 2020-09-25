@@ -14,11 +14,12 @@ class ToolBar():
 		self.fileopener=opener(parent)
 		self.combosearch=searchWidg(parent)
 		self.spliter=splitButton(parent)
+		self.styler=cssButton(parent)
 		
 		self.toolBar.addAction(self.histmen.hist)
+		self.toolBar.addAction(self.styler.style)
 		self.toolBar.addAction(self.spliter.split)
 		self.toolBar.addAction(self.spliter.unsplit)
-		
 		self.toolBar.addAction(self.fileopener.openfile)
 		self.toolBar.addWidget(self.combosearch.swid)
 
@@ -54,7 +55,6 @@ class historystuff(QW.QWidget):
 		self.hist.triggered.connect(self.triggerlast)
 		
 	def refreshMenu(self):
-		print("here")
 		self.counter=0
 		self.hist.setMenu(self.histMenu())
 	
@@ -113,3 +113,33 @@ class splitButton():
 		self.unsplit.setIcon(QG.QIcon().fromTheme("view-unsplit-effect"))
 		self.unsplit.setToolTip('Split')
 		self.unsplit.triggered.connect(parent.cwidg.unsplit)
+class cssButton(QW.QWidget):
+	def __init__(self,parent):
+		super().__init__()
+		self.parent=parent
+		self.style=QW.QAction()
+		self.style.setIcon(QG.QIcon().fromTheme("text-css"))
+		self.style.setToolTip("Style")
+		self.style.setMenu(self.styleMenu())
+		self.style.hovered.connect(self.refreshMenu)
+		self.style.triggered.connect(self.triggerOpen)
+		
+	def refreshMenu(self):
+		self.style.setMenu(self.styleMenu())
+	
+	def styleMenu(self):
+		self.actions=[]
+		Menu=QW.QMenu()
+		for child,index in zip(GXML.cssLocsRoot.findall("Elem[@show='True']"),range(len(GXML.cssLocsRoot))):
+			Elem=fileElement(child)
+			self.actions.append(QW.QAction(Elem.title.text))
+			self.actions[index].setData(Elem)
+			self.actions[index].triggered.connect(self.trigger)
+			Menu.addAction(self.actions[index])
+		return Menu
+	def triggerOpen(self,boolean):
+		pass
+	
+	def trigger(self,boolean):
+		File=self.sender().data()
+		#self.parent.cwidg.tabAdder(File)
