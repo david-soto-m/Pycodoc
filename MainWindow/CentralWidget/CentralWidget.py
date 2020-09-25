@@ -14,7 +14,7 @@ class centralWidget(QW.QWidget):
 		self.lastIdx=0
 		
 		self.defineLayout()
-		self.tabAdder()
+		self.tabAdder(NoHist=True)
 	
 	def defineTabBar(self):
 		TabBar=QW.QTabWidget()
@@ -27,15 +27,15 @@ class centralWidget(QW.QWidget):
 	def idxactualizer(self,index):
 		self.lastIdx=index
 	
-	def tabAdder(self,files=None):
+	def tabAdder(self,files=None,NoHist=False):
 		if type(files)==bool or files is None:
 			self.TabList.append(None)
 			for idx in range(self.CwidLayout.count()):
-				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(fileElement(),self), fileElement().title.text)
+				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(fileElement(),self,NoHist), fileElement().title.text)
 		elif type(files)==fileElement:
 			self.TabList.append(files)
 			for idx in range(self.CwidLayout.count()):
-				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(files,self), files.title.text)
+				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(files,self,NoHist), files.title.text)
 			self.CwidLayout.itemAt(0).widget().setCurrentIndex(len(self.TabList)-1)
 		
 	def tabDestroyer(self,index=None):
@@ -73,9 +73,9 @@ class centralWidget(QW.QWidget):
 		for item in self.TabList:
 			if item is None:
 				elem=fileElement()
-				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(elem,self),elem.title.text)
+				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(elem,self,True),elem.title.text)
 			elif type(item)==fileElement:
-				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(item,self),item.title.text)
+				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(item,self,True),item.title.text)
 	
 	def unsplit(self):
 		last=self.CwidLayout.count()-1
@@ -84,7 +84,7 @@ class centralWidget(QW.QWidget):
 			self.CwidLayout.removeItem(self.CwidLayout.itemAt(last))
 
 class TextEditor(QW.QTextEdit):
-	def __init__(self,files,papa):
+	def __init__(self,files,papa,NoHist):
 		super().__init__()
 		self.parent=papa
 		self.setAcceptDrops(True)
@@ -93,9 +93,10 @@ class TextEditor(QW.QTextEdit):
 			with open(files.direc.text+files.name.text, 'r') as f:
 				data = f.read()
 				self.setText(data)
-			GXML.histRoot.insert(0,files.createHistElement())
-			while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
-				GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
+			if not NoHist:
+				GXML.histRoot.insert(0,files.createHistElement())
+				while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
+					GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
 		else :
 			errfile=GXML.filesRoot.find("Elem[@error='True']")
 			if errfile is not None and errfile:

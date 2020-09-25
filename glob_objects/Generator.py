@@ -16,8 +16,9 @@ def mainCfgGenerator(string):
 	
 	Hist=ET.Element("History")
 	Files=ET.Element("Files")
-	
 	Shortcuts=ET.Element("Shortcuts")
+	CssLocs=ET.Element("CssLocs")
+	
 	Behaviour=ET.Element("Behaviour")
 	
 	HistPath=ET.SubElement(Hist,"Path")
@@ -32,6 +33,8 @@ def mainCfgGenerator(string):
 	ShortcutsPath=ET.SubElement(Shortcuts,"Path")
 	ShortcutsPath.text=location+"Shortcuts.xml"
 	
+	CssLocsPath=ET.SubElement(CssLocs,"Path")
+	CssLocsPath.text=location+"cssloc.xml"
 	
 	AH=ET.SubElement(Behaviour,"TabBarAutoHide")
 	LTR=ET.SubElement(Behaviour,"LastTabRemoved")
@@ -40,6 +43,7 @@ def mainCfgGenerator(string):
 	ConfigRoot.append(Hist)
 	ConfigRoot.append(Files)
 	ConfigRoot.append(Shortcuts)
+	ConfigRoot.append(CssLocs)
 	ConfigRoot.append(Behaviour)
 	Config.write(string)
 
@@ -78,7 +82,7 @@ def filesCfgGenerator(string):
 		f.write("<Files></Files>")
 	Files=ET.parse(string)
 	FilesRoot=Files.getroot()
-	
+
 def historyCfgGenerator(string):
 	p=Path(string)
 	direc=p.parent
@@ -86,6 +90,15 @@ def historyCfgGenerator(string):
 	p.touch(exist_ok=True)
 	with open(string,"w+") as f:
 		f.write("<Hist></Hist>")
+
+def cssLocsCfgGenerator(string):
+	p=Path(string)
+	direc=p.parent
+	direc.mkdir(exist_ok=True,parents=True)
+	p.touch(exist_ok=True)
+	with open(string,"w+") as f:
+		f.write("<CssLocs></CssLocs>")
+
 def defaultfileGenerator(string):
 	p=Path(string)
 	direc=p.parent
@@ -93,8 +106,6 @@ def defaultfileGenerator(string):
 	p.touch(exist_ok=True)
 	with open(string,"w+") as f:
 		f.write("This file will contain a short manual in future releases")
-	
-	
 	defFile=ET.Element("Elem")
 	defFile.set("show","True")
 	defFile.set("default","True")

@@ -54,6 +54,7 @@ class historystuff(QW.QWidget):
 		self.hist.triggered.connect(self.triggerlast)
 		
 	def refreshMenu(self):
+		print("here")
 		self.counter=0
 		self.hist.setMenu(self.histMenu())
 	
@@ -73,7 +74,7 @@ class historystuff(QW.QWidget):
 		if self.counter>int(GXML.GConfigRoot.find("History/Max").text):
 			self.counter=1
 		File=fileElement(GXML.histRoot.find("Elem"+"["+str(self.counter)+"]"))
-		self.parent.cwidg.tabAdder(File)
+		self.parent.cwidg.tabAdder(File,NoHist=True)
 	
 	def trigger(self,boolean):
 		File=self.sender().data()
@@ -96,7 +97,6 @@ class searchWidg():
 	def comboChanged(self,idx):
 		fielem=self.swid.itemData(idx,0x100)
 		if fielem is not None:
-			GXML.histRoot.insert(0,fielem.createHistElement())
 			self.parent.cwidg.tabAdder(fielem)
 		else:
 			fielem=fileElement(self.swid.itemText(idx))
