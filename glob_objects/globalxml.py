@@ -15,4 +15,4 @@ GConfig,GConfigRoot=metaConfig(str(Path.home())+"/.config/Pycodoc/GlobalConfig.x
 Shortcuts,ShortRoot=metaConfig(GConfigRoot.find("Shortcuts/Path").text, GEN.shortCfgGenerator)
 Files,filesRoot=metaConfig(GConfigRoot.find("Files/Path").text, GEN.filesCfgGenerator)
 History,histRoot=metaConfig(GConfigRoot.find("History/Path").text,GEN.historyCfgGenerator)
-CssLocs,cssLocsRoot=metaConfig(GConfigRoot.find("CssLocs/Path").text,GEN.cssLocsCfgGenerator)
+styleLocs,styleLocsRoot=metaConfig(GConfigRoot.find("StyleLocs/Path").text,GEN.styleLocsCfgGenerator)

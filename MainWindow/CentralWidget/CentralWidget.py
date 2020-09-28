@@ -13,6 +13,8 @@ class centralWidget(QW.QWidget):
 		
 		self.lastIdx=0
 		
+		self.currentStyle=None
+		
 		self.defineLayout()
 		self.tabAdder(NoHist=True)
 	
@@ -31,11 +33,13 @@ class centralWidget(QW.QWidget):
 		if type(files)==bool or files is None:
 			self.TabList.append(None)
 			for idx in range(self.CwidLayout.count()):
-				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(fileElement(),self,NoHist), fileElement().title.text)
+				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(fileElement(),self,NoHist,self.currentStyle), fileElement().title.text)
 		elif type(files)==fileElement:
 			self.TabList.append(files)
+			if files.isUnique():
+				pass
 			for idx in range(self.CwidLayout.count()):
-				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(files,self,NoHist), files.title.text)
+				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(files,self,NoHist,self.currentStyle), files.title.text)
 			self.CwidLayout.itemAt(0).widget().setCurrentIndex(len(self.TabList)-1)
 		
 	def tabDestroyer(self,index=None):
@@ -61,7 +65,13 @@ class centralWidget(QW.QWidget):
 				pass #Not an error!!
 			else:
 				QW.qApp.quit()
-
+	def stylize(self,styleFile):
+		if styleFile is not None and styleFile.isUnique():
+			pass
+		self.currentStyle=styleFile
+		for idx in range(self.CwidLayout.count()):
+			for  tabidx in range(self.CwidLayout.itemAt(idx).widget().count()):
+				self.CwidLayout.itemAt(idx).widget().widget(tabidx).stylize(styleFile)
 	def defineLayout(self):
 		self.CwidLayout=QW.QHBoxLayout()
 		self.setLayout(self.CwidLayout)
@@ -83,14 +93,14 @@ class centralWidget(QW.QWidget):
 			self.CwidLayout.itemAt(last).widget().hide()
 			self.CwidLayout.removeItem(self.CwidLayout.itemAt(last))
 
-class TextEditor(QW.QTextEdit):
-	def __init__(self,files,papa,NoHist,cssFile=None):
+class TextEditor(QW.QTextBrowser):
+	def __init__(self,files,papa,NoHist,styleFile=None):
 		super().__init__(),
 		self.parent=papa
 		self.setAcceptDrops(True)
 		self.setReadOnly(GXML.GConfigRoot.find("Behaviour/AllowEdits") not in ["Yes","yes","Y","y"])
 		if files.isFile():
-			with open(files.direc.text+files.name.text, 'r') as f:
+			with open(files.fileStrPath(), 'r') as f:
 				data = f.read()
 				self.setText(data)
 			if not NoHist:
@@ -107,19 +117,34 @@ class TextEditor(QW.QTextEdit):
 				with open(files.fileStrPath(), 'r') as f:
 					data = f.read()
 					self.setText(data)
-		self.stylize(cssFile)
-	def stylize(self,cssFile):
-		#Check extension, implementstyle
-		pass
+		self.stylize(styleFile)
+	
+	def stylize(self,styleFile):
+		if styleFile is not None and styleFile.isstyle():
+			with open(styleFile.fileStrPath(), 'r') as f:
+				data = f.read()
+				self.setStyleSheet(data)
+		else:
+			self.setStyleSheet('')
+			"""setFontFamily(const QString &fontFamily)
+			setFontItalic(bool italic)
+			setFontPointSize(qreal s)
+			setFontUnderline(bool underline)
+			setFontWeight(int weight)
+			setTextBackgroundColor()
+			setTextColor(const QColor &c)"""
+	
 	def dragEnterEvent(self, e):
 		if e.mimeData().hasUrls():
 			e.accept()
 		else:
 			e.ignore()
+	
 	def dragMoveEvent(self,evie):
 		pass
 		#I don't have the slightest idea why but it doesn't work without the event override.
 		#Maybe the implementation cancels the event by default, but that is quite messed up.
+	
 	def dropEvent(self,e):
 		for url in e.mimeData().urls():
 			if Path(url.path()).is_file():

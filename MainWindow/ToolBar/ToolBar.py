@@ -14,7 +14,7 @@ class ToolBar():
 		self.fileopener=opener(parent)
 		self.combosearch=searchWidg(parent)
 		self.spliter=splitButton(parent)
-		self.styler=cssButton(parent)
+		self.styler=styleButton(parent)
 		
 		self.toolBar.addAction(self.histmen.hist)
 		self.toolBar.addAction(self.styler.style)
@@ -91,7 +91,9 @@ class searchWidg():
 		self.Elem=[]
 		for child in GXML.filesRoot.findall("Elem[@show='True']"):
 			self.Elem.append(fileElement(child))
-			self.swid.addItem(self.Elem[len(self.Elem)-1].title.text, QC.QVariant(self.Elem[len(self.Elem)-1]))
+		self.Elem.sort(key=lambda indiv: indiv.fileStrPath())
+		for item in self.Elem:
+			self.swid.addItem(item.title.text, QC.QVariant(item))
 		self.swid.setCurrentIndex(-1)
 	
 	def comboChanged(self,idx):
@@ -113,12 +115,12 @@ class splitButton():
 		self.unsplit.setIcon(QG.QIcon().fromTheme("view-unsplit-effect"))
 		self.unsplit.setToolTip('Split')
 		self.unsplit.triggered.connect(parent.cwidg.unsplit)
-class cssButton(QW.QWidget):
+class styleButton(QW.QWidget):
 	def __init__(self,parent):
 		super().__init__()
 		self.parent=parent
 		self.style=QW.QAction()
-		self.style.setIcon(QG.QIcon().fromTheme("text-css"))
+		self.style.setIcon(QG.QIcon().fromTheme("text-style"))
 		self.style.setToolTip("Style")
 		self.style.setMenu(self.styleMenu())
 		self.style.hovered.connect(self.refreshMenu)
@@ -130,16 +132,27 @@ class cssButton(QW.QWidget):
 	def styleMenu(self):
 		self.actions=[]
 		Menu=QW.QMenu()
-		for child,index in zip(GXML.cssLocsRoot.findall("Elem[@show='True']"),range(len(GXML.cssLocsRoot))):
-			Elem=fileElement(child)
+		for child,index in zip(GXML.styleLocsRoot.findall("Elem[@show='True']"),range(len(GXML.styleLocsRoot))):
+			Elem=fileElement(child,style=True)
 			self.actions.append(QW.QAction(Elem.title.text))
 			self.actions[index].setData(Elem)
 			self.actions[index].triggered.connect(self.trigger)
 			Menu.addAction(self.actions[index])
+		index=len(self.actions)
+		self.actions.append(QW.QAction('Base'))
+		self.actions[index].setData(None)
+		self.actions[index].triggered.connect(self.trigger)
+		Menu.addAction(self.actions[index])
 		return Menu
 	def triggerOpen(self,boolean):
-		pass
-	
+		print("here")
+		home_dir = str(Path.home())
+		fname = QW.QFileDialog.getOpenFileNames(caption='Open file',directory=home_dir)
+		if fname[0]:
+			for each in fname[0]:
+				if Path(each).is_file() and Path(each).is_file():
+					styleElem=fileElement(each,style=True)
+					self.parent.cwidg.stylize(styleElem)
 	def trigger(self,boolean):
-		File=self.sender().data()
-		#self.parent.cwidg.tabAdder(File)
+		styleElem=self.sender().data()
+		self.parent.cwidg.stylize(styleElem)
