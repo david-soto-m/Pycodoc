@@ -12,6 +12,11 @@ class fileElement():
 			self.direc=singleElement.find(self.tup[1])
 			self.name=singleElement.find(self.tup[2])
 		elif type(singleElement) is str:
+			singleElement=singleElement.lstrip()
+			if singleElement[0:7]=="file://":
+				singleElement=singleElement[7:]
+			if singleElement[0]=="~":
+				singleElement=str(Path.home())+singleElement[1:]
 			p=Path(singleElement)
 			elem=ET.Element("Elem")
 			elem.set("show","True")

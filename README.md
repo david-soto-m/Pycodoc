@@ -10,8 +10,8 @@ Still it would be cool to have the zeal documentation stack integrated with this
 * Tabbing and splitting
 * History
 * Customizable shortcuts
-<!-- * style on your HTML files-->
-<!-- * Create different style easily-->
+* (Some (limited by qt itself)) Style your files
+<!-- * Create different styles easily-->
 <!-- * Get HTML from other file formats (when pandoc is enabled) -->
 <!-- * Easily add new docs-->
 

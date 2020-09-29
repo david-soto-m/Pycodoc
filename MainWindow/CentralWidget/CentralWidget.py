@@ -126,13 +126,6 @@ class TextEditor(QW.QTextBrowser):
 				self.setStyleSheet(data)
 		else:
 			self.setStyleSheet('')
-			"""setFontFamily(const QString &fontFamily)
-			setFontItalic(bool italic)
-			setFontPointSize(qreal s)
-			setFontUnderline(bool underline)
-			setFontWeight(int weight)
-			setTextBackgroundColor()
-			setTextColor(const QColor &c)"""
 	
 	def dragEnterEvent(self, e):
 		if e.mimeData().hasUrls():

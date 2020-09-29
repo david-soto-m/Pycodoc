@@ -32,7 +32,7 @@ class Shortcutter():
 		shct=GXML.ShortRoot.find("NewTab").text
 		if shct is not None:
 			self.shcts.append(QW.QShortcut(shct,parent))
-			self.shcts[len(self.shcts)-1].activated.connect(parent.tlb.combosearch.swid.setFocus)
+			self.shcts[len(self.shcts)-1].activated.connect(parent.tlb.combosearch.setFocus)
 		shct=GXML.ShortRoot.find("TriggerHistory").text
 		if shct is not None:
 			self.shcts.append(QW.QShortcut(shct,parent))

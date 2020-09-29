@@ -21,7 +21,7 @@ class ToolBar():
 		self.toolBar.addAction(self.spliter.split)
 		self.toolBar.addAction(self.spliter.unsplit)
 		self.toolBar.addAction(self.fileopener.openfile)
-		self.toolBar.addWidget(self.combosearch.swid)
+		self.toolBar.addWidget(self.combosearch)
 
 class opener():
 	def __init__(self,parent,string=None):
@@ -80,29 +80,49 @@ class historystuff(QW.QWidget):
 		File=self.sender().data()
 		self.parent.cwidg.tabAdder(File)
 
-class searchWidg():
+class searchWidg(QW.QComboBox):
 	def __init__(self,parent):
+		super().__init__()
 		self.parent=parent
-		self.swid=QW.QComboBox()
-		self.swid.setEditable(True)
-		self.swid.activated.connect(self.comboChanged)
+		self.setAcceptDrops(True)
+		self.setEditable(True)
+		self.activated.connect(self.comboChanged)
 		expand=QW.QSizePolicy().Policy.Expanding
-		self.swid.setSizePolicy(expand,expand)
+		self.setSizePolicy(expand,expand)
 		self.Elem=[]
 		for child in GXML.filesRoot.findall("Elem[@show='True']"):
 			self.Elem.append(fileElement(child))
 		self.Elem.sort(key=lambda indiv: indiv.fileStrPath())
 		for item in self.Elem:
-			self.swid.addItem(item.title.text, QC.QVariant(item))
-		self.swid.setCurrentIndex(-1)
+			self.addItem(item.title.text, QC.QVariant(item))
+		self.setCurrentIndex(-1)
 	
 	def comboChanged(self,idx):
-		fielem=self.swid.itemData(idx,0x100)
+		fielem=self.itemData(idx,0x100)
 		if fielem is not None:
 			self.parent.cwidg.tabAdder(fielem)
 		else:
-			fielem=fileElement(self.swid.itemText(idx))
+			fielem=fileElement(self.itemText(idx))
 			self.parent.cwidg.tabAdder(fielem)
+			
+	#def dragEnterEvent(self, e):
+		#if e.mimeData().hasUrls():
+			#e.accept()
+		#else:
+			#e.ignore()
+	
+	#def dragMoveEvent(self,evie):
+		#pass
+	
+	#def dragLeaveEvent(self,evie):
+		#pass
+	
+	#def dropEvent(self,e):
+		#print("here3")
+		#for url in e.mimeData().urls():
+			#if Path(url.path()).is_file():
+				#fielem=fileElement(url.path())
+				#self.parent.cwidg.tabAdder(fielem)
 
 class splitButton():
 	def __init__(self,parent):
