@@ -37,7 +37,10 @@ class centralWidget(QW.QWidget):
 		elif type(files)==fileElement:
 			self.TabList.append(files)
 			if files.isUnique():
-				pass
+				text,ok=QW.QInputDialog.getText(self,'Title','Enter the title of:',text=files.title.text)
+				if ok:
+					files.title.text=str(text)
+					GXML.filesRoot.append(files.createFileElement())
 			for idx in range(self.CwidLayout.count()):
 				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(files,self,NoHist,self.currentStyle), files.title.text)
 			self.CwidLayout.itemAt(0).widget().setCurrentIndex(len(self.TabList)-1)

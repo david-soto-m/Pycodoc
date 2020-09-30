@@ -16,5 +16,6 @@ def main():
 	
 def exiter():
 	GXML.History.write(GXML.GConfigRoot.find("History/Path").text)
+	GXML.Files.write(GXML.GConfigRoot.find("Files/Path").text)
 if __name__=="__main__":
         main()

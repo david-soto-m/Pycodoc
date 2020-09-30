@@ -19,7 +19,6 @@ class fileElement():
 				singleElement=str(Path.home())+singleElement[1:]
 			p=Path(singleElement)
 			elem=ET.Element("Elem")
-			elem.set("show","True")
 			title=ET.SubElement(elem,self.tup[0])
 			direc=ET.SubElement(elem,self.tup[1])
 			name=ET.SubElement(elem,self.tup[2])
@@ -71,4 +70,14 @@ class fileElement():
 		dire.text=self.direc.text
 		name.text=self.name.text
 		return elem
- 
+	
+	def createFileElement(self):
+		elem=ET.Element("Elem")
+		elem.set("show","True")
+		title=ET.SubElement(elem,self.tup[0])
+		dire=ET.SubElement(elem,self.tup[1])
+		name=ET.SubElement(elem,self.tup[2])
+		title.text=self.title.text
+		dire.text=self.direc.text
+		name.text=self.name.text
+		return elem

@@ -107,7 +107,7 @@ def defaultfileGenerator(string):
 	with open(string,"w+") as f:
 		f.write("This file will contain a short manual in future releases")
 	defFile=ET.Element("Elem")
-	defFile.set("show","True")
+	defFile.set("show","False")
 	defFile.set("default","True")
 	defFile.set("error","True")
 	path=ET.SubElement(defFile,"dir")
