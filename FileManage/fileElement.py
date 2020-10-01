@@ -5,19 +5,26 @@ from pathlib import Path
 
 class fileElement():
 	tup=("title","dir","name")
-	
-	def __init__(self,singleElement=None):
+	def __init__(self,singleElement=None, style=False):
+		self.style=style
 		if type(singleElement) is ET.Element:
 			self.title=singleElement.find(self.tup[0])
 			self.direc=singleElement.find(self.tup[1])
 			self.name=singleElement.find(self.tup[2])
 		elif type(singleElement) is str:
+			singleElement=singleElement.lstrip()
+			if singleElement[0:7]=="file://":
+				singleElement=singleElement[7:]
+			if singleElement[0]=="~":
+				singleElement=str(Path.home())+singleElement[1:]
+			p=Path(singleElement)
 			elem=ET.Element("Elem")
-			elem.set("show","True")
 			title=ET.SubElement(elem,self.tup[0])
 			direc=ET.SubElement(elem,self.tup[1])
 			name=ET.SubElement(elem,self.tup[2])
-			title.text,direc.text,name.text=self.beheader(singleElement)
+			title.text=p.stem
+			direc.text=str(p.parent)+"/"
+			name.text=p.name
 			self.title=title
 			self.direc=direc
 			self.name=name
@@ -30,42 +37,47 @@ class fileElement():
 			except:
 				GEN.defaultfileGenerator(str(Path.home())+"/.config/Pycodoc/Default")
 				self.__init__()
-	def beheader(self,stringy):
-		"Change this for utilities from path.Pathlib"
-		idx=stringy.rfind("/")
-		idx1=stringy.rfind("\\")
-		if idx>0:
-			name=stringy[idx+1:len(stringy)]
-		elif idx1>0:
-			name=stringy[idx+1:len(stringy)]
-			idx=idx1
-		else:
-			name=stringy
-		direc=stringy[0:idx+1]
-		idx=name.find(".")
-		if idx>=1:
-			title=name[0:idx]
-		else:
-			title=name
-		return (title,direc,name)
 	
-	def formater(self):
-		lists=self.name.text.rsplit(".")
-		lists=[var for var in lists if var]
-		if len(lists)>1:
-			return lists[len(lists)-1]
+	def isstyle(self):
+		return self.style
+	
+	def isFormat(self,form):
+		return form==Path(name).suffix
+	
+	def isFile(self):
+		return Path(self.fileStrPath()).is_file()
+	
+	def isUnique(self):
+		if self.style:
+			searchBasket=GXML.styleLocsRoot
 		else:
-			return ""
-	def isformat(self,form):
-		return form==self.formater()
+			searchBasket=GXML.filesRoot
+		a=searchBasket.findall("Elem[name='"+self.name.text+"'][dir='"+self.direc.text+"']")
+		return len(a)==0
+	
+	def asUrl(self):
+		return Path(self.fileStrPath()).as_uri()
+	
+	def fileStrPath(self):
+		return self.direc.text+self.name.text
+	
 	def createHistElement(self):
 		elem=ET.Element("Elem")
 		title=ET.SubElement(elem,self.tup[0])
 		dire=ET.SubElement(elem,self.tup[1])
-	
 		name=ET.SubElement(elem,self.tup[2])
 		title.text=self.title.text
 		dire.text=self.direc.text
 		name.text=self.name.text
 		return elem
- 
+	
+	def createFileElement(self):
+		elem=ET.Element("Elem")
+		elem.set("show","True")
+		title=ET.SubElement(elem,self.tup[0])
+		dire=ET.SubElement(elem,self.tup[1])
+		name=ET.SubElement(elem,self.tup[2])
+		title.text=self.title.text
+		dire.text=self.direc.text
+		name.text=self.name.text
+		return elem

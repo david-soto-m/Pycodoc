@@ -14,24 +14,25 @@ class ToolBar():
 		self.fileopener=opener(parent)
 		self.combosearch=searchWidg(parent)
 		self.spliter=splitButton(parent)
+		self.styler=styleButton(parent)
 		
-		self.toolBar.addAction(self.histmen.hist)
+		self.toolBar.addAction(self.histmen)
+		self.toolBar.addAction(self.styler)
 		self.toolBar.addAction(self.spliter.split)
 		self.toolBar.addAction(self.spliter.unsplit)
-		
-		self.toolBar.addAction(self.fileopener.openfile)
-		self.toolBar.addWidget(self.combosearch.swid)
+		self.toolBar.addAction(self.fileopener)
+		self.toolBar.addWidget(self.combosearch)
 
-class opener():
+class opener(QW.QAction):
 	def __init__(self,parent,string=None):
+		super().__init__()
 		self.parent=parent
-		self.openfile=QW.QAction()
-		self.openfile.setIcon(QG.QIcon().fromTheme("document-open"))
-		self.openfile.setToolTip("Open a file")
-		self.openfile.triggered.connect(self.OpenWidget)
-		
+		self.setIcon(QG.QIcon().fromTheme("document-open"))
+		self.setToolTip("Open a file")
+		self.triggered.connect(self.OpenWidget)
 		if type(string) is str:
-			self.openfile.setText(string)
+			self.setText(string)
+	
 	def OpenWidget(self):
 		home_dir = str(Path.home())
 		fname = QW.QFileDialog.getOpenFileNames(caption='Open file',directory=home_dir)
@@ -41,21 +42,20 @@ class opener():
 					fielem=fileElement(each)
 					self.parent.cwidg.tabAdder(fielem)
 
-class historystuff(QW.QWidget):
+class historystuff(QW.QAction):
 	def __init__(self,parent):
 		super().__init__()
 		self.counter=0
 		self.parent=parent
-		self.hist=QW.QAction()
-		self.hist.setIcon(QG.QIcon().fromTheme("shallow-history"))
-		self.hist.setToolTip("History")
-		self.hist.setMenu(self.histMenu())
-		self.hist.hovered.connect(self.refreshMenu)
-		self.hist.triggered.connect(self.triggerlast)
+		self.setIcon(QG.QIcon().fromTheme("shallow-history"))
+		self.setToolTip("History")
+		self.setMenu(self.histMenu())
+		self.hovered.connect(self.refreshMenu)
+		self.triggered.connect(self.triggerlast)
 		
 	def refreshMenu(self):
 		self.counter=0
-		self.hist.setMenu(self.histMenu())
+		self.setMenu(self.histMenu())
 	
 	def histMenu(self):
 		self.actions=[]
@@ -68,45 +68,82 @@ class historystuff(QW.QWidget):
 			Menu.addAction(self.actions[index])
 		return Menu
 	
-	def triggerlast(self,boolean):
+	def triggerlast(self,boolean=False):
 		self.counter+=1
 		if self.counter>int(GXML.GConfigRoot.find("History/Max").text):
 			self.counter=1
 		File=fileElement(GXML.histRoot.find("Elem"+"["+str(self.counter)+"]"))
-		self.parent.cwidg.tabAdder(File)
+		self.parent.cwidg.tabAdder(File,NoHist=True)
 	
-	def trigger(self,boolean):
+	def trigger(self,boolean=False):
 		File=self.sender().data()
-		GXML.histRoot.insert(0,File.createHistElement())
 		self.parent.cwidg.tabAdder(File)
-		while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
-			GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
 
-class searchWidg():
+class styleButton(QW.QAction):
 	def __init__(self,parent):
+		super().__init__()
 		self.parent=parent
-		self.swid=QW.QComboBox()
-		self.swid.setEditable(True)
-		self.swid.activated.connect(self.comboChanged)
+		self.setIcon(QG.QIcon().fromTheme("text-style"))
+		self.setToolTip("Style")
+		self.setMenu(self.styleMenu())
+		self.hovered.connect(self.refreshMenu)
+		self.triggered.connect(self.triggerOpen)
+		
+	def refreshMenu(self):
+		self.setMenu(self.styleMenu())
+	
+	def styleMenu(self):
+		self.actions=[]
+		Menu=QW.QMenu()
+		for child,index in zip(GXML.styleLocsRoot.findall("Elem[@show='True']"),range(len(GXML.styleLocsRoot))):
+			Elem=fileElement(child,style=True)
+			self.actions.append(QW.QAction(Elem.title.text))
+			self.actions[index].setData(Elem)
+			self.actions[index].triggered.connect(self.trigger)
+			Menu.addAction(self.actions[index])
+		index=len(self.actions)
+		self.actions.append(QW.QAction('Base'))
+		self.actions[index].setData(None)
+		self.actions[index].triggered.connect(self.trigger)
+		Menu.addAction(self.actions[index])
+		return Menu
+	def triggerOpen(self,boolean):
+		print("here")
+		home_dir = str(Path.home())
+		fname = QW.QFileDialog.getOpenFileNames(caption='Open file',directory=home_dir)
+		if fname[0]:
+			for each in fname[0]:
+				if Path(each).is_file() and Path(each).is_file():
+					styleElem=fileElement(each,style=True)
+					self.parent.cwidg.stylize(styleElem)
+	def trigger(self,boolean):
+		styleElem=self.sender().data()
+		self.parent.cwidg.stylize(styleElem)
+
+class searchWidg(QW.QComboBox):
+	def __init__(self,parent):
+		super().__init__()
+		self.parent=parent
+		self.setAcceptDrops(True)
+		self.setEditable(True)
+		self.activated.connect(self.comboChanged)
 		expand=QW.QSizePolicy().Policy.Expanding
-		self.swid.setSizePolicy(expand,expand)
+		self.setSizePolicy(expand,expand)
 		self.Elem=[]
 		for child in GXML.filesRoot.findall("Elem[@show='True']"):
 			self.Elem.append(fileElement(child))
-			self.swid.addItem(self.Elem[len(self.Elem)-1].title.text, QC.QVariant(self.Elem[len(self.Elem)-1]))
-		self.swid.setCurrentIndex(-1)
+		self.Elem.sort(key=lambda indiv: indiv.fileStrPath())
+		for item in self.Elem:
+			self.addItem(item.title.text, QC.QVariant(item))
+		self.setCurrentIndex(-1)
 	
 	def comboChanged(self,idx):
-		fielem=self.swid.itemData(idx,0x100)
+		fielem=self.itemData(idx,0x100)
 		if fielem is not None:
-			GXML.histRoot.insert(0,fielem.createHistElement())
 			self.parent.cwidg.tabAdder(fielem)
-		elif Path(self.swid.itemText(idx)).is_file():
-			fielem=fileElement(fielem)
-			GXML.histRoot.insert(0,fielem.createHistElement())
-			self.parent.cwidg.tabAdder(filem)
-		while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
-			GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
+		else:
+			fielem=fileElement(self.itemText(idx))
+			self.parent.cwidg.tabAdder(fielem)
 
 class splitButton():
 	def __init__(self,parent):

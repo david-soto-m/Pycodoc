@@ -18,7 +18,7 @@ class Shortcutter():
 		shct=GXML.ShortRoot.find("OpenFile").text
 		if shct is not None :
 			self.shcts.append(QW.QShortcut(shct,parent))
-			self.shcts[len(self.shcts)-1].activated.connect(parent.tlb.fileopener.openfile.trigger)
+			self.shcts[len(self.shcts)-1].activated.connect(parent.tlb.fileopener.trigger)
 		
 		shct=GXML.ShortRoot.find("Split").text
 		if shct is not None:
@@ -32,8 +32,8 @@ class Shortcutter():
 		shct=GXML.ShortRoot.find("NewTab").text
 		if shct is not None:
 			self.shcts.append(QW.QShortcut(shct,parent))
-			self.shcts[len(self.shcts)-1].activated.connect(parent.tlb.combosearch.swid.setFocus)
+			self.shcts[len(self.shcts)-1].activated.connect(parent.tlb.combosearch.setFocus)
 		shct=GXML.ShortRoot.find("TriggerHistory").text
 		if shct is not None:
 			self.shcts.append(QW.QShortcut(shct,parent))
-			self.shcts[len(self.shcts)-1].activated.connect(parent.tlb.histmen.hist.trigger)
+			self.shcts[len(self.shcts)-1].activated.connect(parent.tlb.histmen.triggerlast)

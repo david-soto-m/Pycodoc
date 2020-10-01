@@ -14,4 +14,4 @@ class MenuBar():
 		
 		fileMenu = self.MenuBar.addMenu('&File')
 		fileMenu.addAction(self.exitAct)
-		fileMenu.addAction(self.fileopener.openfile)
+		fileMenu.addAction(self.fileopener)
