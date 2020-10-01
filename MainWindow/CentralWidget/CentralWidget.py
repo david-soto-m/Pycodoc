@@ -70,7 +70,10 @@ class centralWidget(QW.QWidget):
 				QW.qApp.quit()
 	def stylize(self,styleFile):
 		if styleFile is not None and styleFile.isUnique():
-			pass
+			text,ok=QW.QInputDialog.getText(self,'Title','Enter the title of:',text=styleFile.title.text)
+			if ok:
+				styleFile.title.text=str(text)
+				GXML.styleLocsRoot.append(styleFile.createFileElement())
 		self.currentStyle=styleFile
 		for idx in range(self.CwidLayout.count()):
 			for  tabidx in range(self.CwidLayout.itemAt(idx).widget().count()):

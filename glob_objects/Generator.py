@@ -17,7 +17,7 @@ def mainCfgGenerator(string):
 	Hist=ET.Element("History")
 	Files=ET.Element("Files")
 	Shortcuts=ET.Element("Shortcuts")
-	styleLocs=ET.Element("styleLocs")
+	styleLocs=ET.Element("StyleLocs")
 	
 	Behaviour=ET.Element("Behaviour")
 	
