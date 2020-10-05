@@ -22,7 +22,7 @@ class GuiApp(QW.QMainWindow):
 		
 		self.show()
 		a=auxsz();
-		a.toscalescreen(self,center=True)
+		a.toscalescreen(self,center=False,scale=1)
 	
 	def defineTitleBar(self):
 		self.setWindowTitle("Pycobrowser")
@@ -37,7 +37,7 @@ class GuiApp(QW.QMainWindow):
 		self.addToolBar(self.tlb.toolBar)
 	
 	def defineCentralWidget(self):
-		self.cwidg=CW.centralWidget()
+		self.cwidg=CW.centralWidget(self)
 		self.setCentralWidget(self.cwidg)
 	
 	def defineShortcuts(self):

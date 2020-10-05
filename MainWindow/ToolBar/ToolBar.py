@@ -106,11 +106,15 @@ class styleButton(QW.QAction):
 		self.actions[index].setData(None)
 		self.actions[index].triggered.connect(self.trigger)
 		Menu.addAction(self.actions[index])
+		#index=len(self.actions)
+		#self.actions.append(QW.QAction('Create new'))
+		#self.actions[index].triggered.connect()
+		#Menu.addAction(self.actions[index])
 		return Menu
 	def triggerOpen(self,boolean):
 		print("here")
-		home_dir = str(Path.home())
-		fname = QW.QFileDialog.getOpenFileNames(caption='Open file',directory=home_dir)
+		home_dir=str(Path.home())
+		fname=QW.QFileDialog.getOpenFileNames(caption='Open file',directory=home_dir)
 		if fname[0]:
 			for each in fname[0]:
 				if Path(each).is_file() and Path(each).is_file():
@@ -126,17 +130,22 @@ class searchWidg(QW.QComboBox):
 		self.parent=parent
 		self.setAcceptDrops(True)
 		self.setEditable(True)
+		self.highlighted.connect(self.searchMenu)
 		self.activated.connect(self.comboChanged)
 		expand=QW.QSizePolicy().Policy.Expanding
 		self.setSizePolicy(expand,expand)
+		self.searchMenu()
+		self.setCurrentIndex(-1)
+	
+	def searchMenu(self):
 		self.Elem=[]
 		for child in GXML.filesRoot.findall("Elem[@show='True']"):
 			self.Elem.append(fileElement(child))
 		self.Elem.sort(key=lambda indiv: indiv.fileStrPath())
 		for item in self.Elem:
 			self.addItem(item.title.text, QC.QVariant(item))
-		self.setCurrentIndex(-1)
-	
+		self.setMaxVisibleItems(len(self.Elem))
+
 	def comboChanged(self,idx):
 		fielem=self.itemData(idx,0x100)
 		if fielem is not None:

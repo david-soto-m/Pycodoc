@@ -6,9 +6,9 @@ from FileManage.fileElement import fileElement
 from pathlib import Path
 
 class centralWidget(QW.QWidget):
-	def __init__(self):
+	def __init__(self,parent=None):
 		super().__init__()
-		
+		self.parent=parent
 		self.TabList=[]
 		
 		self.lastIdx=0
@@ -41,6 +41,7 @@ class centralWidget(QW.QWidget):
 				if ok:
 					files.title.text=str(text)
 					GXML.filesRoot.append(files.createFileElement())
+					self.parent.tlb.combosearch.searchMenu()
 			for idx in range(self.CwidLayout.count()):
 				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(files,self,NoHist,self.currentStyle), files.title.text)
 			self.CwidLayout.itemAt(0).widget().setCurrentIndex(len(self.TabList)-1)
