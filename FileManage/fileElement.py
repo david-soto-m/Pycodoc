@@ -71,9 +71,11 @@ class fileElement():
 		name.text=self.name.text
 		return elem
 	
-	def createFileElement(self):
+	def createFileElement(self,show=True,default=False,error=False):
 		elem=ET.Element("Elem")
-		elem.set("show","True")
+		if show==True: elem.set("show","True")
+		if default==True: elem.set("default","True")
+		if error==True: elem.set("error","True")
 		title=ET.SubElement(elem,self.tup[0])
 		dire=ET.SubElement(elem,self.tup[1])
 		name=ET.SubElement(elem,self.tup[2])
