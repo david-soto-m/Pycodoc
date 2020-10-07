@@ -34,9 +34,10 @@ class centralWidget(QW.QWidget):
 			self.TabList.append(None)
 			for idx in range(self.CwidLayout.count()):
 				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(fileElement(),self,NoHist,self.currentStyle), fileElement().title.text)
-		elif type(files)==fileElement:
+		elif type(files)==fileElement :
 			self.TabList.append(files)
-			if files.isUnique():
+			if files.isUnique() and files.isFile():
+				print("secretly here")
 				text,ok=QW.QInputDialog.getText(self,'Title','Enter the title of:',text=files.title.text)
 				if ok:
 					files.title.text=str(text)
@@ -105,7 +106,7 @@ class TextEditor(QW.QTextBrowser):
 		super().__init__(),
 		self.parent=papa
 		self.setAcceptDrops(True)
-		self.setReadOnly(GXML.GConfigRoot.find("Behaviour/AllowEdits") not in ["Yes","yes","Y","y"])
+		self.setReadOnly(GXML.GConfigRoot.find("Behaviour/AllowEdits").text not in ["Yes","yes","Y","y"])
 		if files.isFile():
 			with open(files.fileStrPath(), 'r') as f:
 				data = f.read()
@@ -114,7 +115,8 @@ class TextEditor(QW.QTextBrowser):
 				GXML.histRoot.insert(0,files.createHistElement())
 				while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
 					GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
-		else :
+		else:
+			self.setReadOnly(True)
 			errfile=GXML.filesRoot.find("Elem[@error='True']")
 			if errfile is not None and errfile:
 				files=fileElement(errfile)

@@ -135,7 +135,6 @@ class searchWidg(QW.QComboBox):
 	
 	def searchMenu(self):
 		self.clear()
-		
 		self.setAcceptDrops(True)
 		self.setEditable(True)
 		self.activated.connect(self.comboChanged)
