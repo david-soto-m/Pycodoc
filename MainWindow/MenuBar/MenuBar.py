@@ -23,7 +23,7 @@ class MenuBar():
 		
 		self.editStyles=QW.QAction(QG.QIcon().fromTheme("color-management"),'&Manage Styles', parent)
 		
-		self.FilesManager=FW.FilesWidget()
+		self.FilesManager=FW.FilesWidget(parent)
 		self.editFiles=QW.QAction(QG.QIcon().fromTheme("kt-queue-manager"),'&Manage Files', parent)
 		self.editFiles.triggered.connect(self.FilesManager.showWind)
 		

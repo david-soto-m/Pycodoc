@@ -5,8 +5,9 @@ import xml.etree.ElementTree as ET
 from FileManage.fileElement import fileElement
 
 class FilesWidget (QW.QWidget):
-	def __init__(self):
+	def __init__(self,parent=None):
 		super().__init__()
+		self.parent=parent
 		
 		self.setWindowTitle("Files settings")
 		self.setWindowIcon(QG.QIcon('AppIcon/AppIcon.svg'))
@@ -22,7 +23,7 @@ class FilesWidget (QW.QWidget):
 		self.scrollVert=QW.QVBoxLayout()
 	
 	def showWind(self):
-		self.__init__()
+		self.__init__(self.parent)
 		
 		files=GXML.filesRoot
 		
@@ -156,6 +157,7 @@ class FilesWidget (QW.QWidget):
 					elem.title.text=self.titleEdits[idx].text()
 					xellie=elem.createFileElement(show=self.showCBoxes[idx].isChecked(), default=self.defaultRBtns[idx].isChecked(), error=self.errorRBtns[idx].isChecked())
 					GXML.filesRoot.append(xellie)
+		self.parent.tlb.combosearch.searchMenu()
 		self.hide()
 	
 	def cancelHandle(self):

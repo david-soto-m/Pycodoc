@@ -128,16 +128,18 @@ class searchWidg(QW.QComboBox):
 	def __init__(self,parent):
 		super().__init__()
 		self.parent=parent
-		self.setAcceptDrops(True)
-		self.setEditable(True)
-		self.highlighted.connect(self.searchMenu)
-		self.activated.connect(self.comboChanged)
 		expand=QW.QSizePolicy().Policy.Expanding
 		self.setSizePolicy(expand,expand)
 		self.searchMenu()
 		self.setCurrentIndex(-1)
 	
 	def searchMenu(self):
+		self.clear()
+		
+		self.setAcceptDrops(True)
+		self.setEditable(True)
+		self.activated.connect(self.comboChanged)
+		
 		self.Elem=[]
 		for child in GXML.filesRoot.findall("Elem[@show='True']"):
 			self.Elem.append(fileElement(child))
