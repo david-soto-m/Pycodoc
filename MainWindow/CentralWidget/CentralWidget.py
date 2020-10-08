@@ -1,11 +1,9 @@
-import PyQt5.QtWidgets as QW
-import PyQt5.QtGui as QG
-import PyQt5.QtCore as QC
 import glob_objects.globalxml as GXML
+from PyQt5.QtWidgets import QWidget, QTabWidget, QInputDialog, QHBoxLayout, qApp
 from FileManage.fileElement import fileElement
-from pathlib import Path
+from .TextEditor import TextEditor
 
-class centralWidget(QW.QWidget):
+class centralWidget(QWidget):
 	def __init__(self,parent=None):
 		super().__init__()
 		self.parent=parent
@@ -19,7 +17,7 @@ class centralWidget(QW.QWidget):
 		self.tabAdder(NoHist=True)
 	
 	def defineTabBar(self):
-		TabBar=QW.QTabWidget()
+		TabBar=QTabWidget()
 		TabBar.setTabsClosable(True)
 		TabBar.tabCloseRequested.connect(self.tabDestroyer)
 		TabBar.currentChanged.connect(self.idxactualizer)
@@ -37,8 +35,7 @@ class centralWidget(QW.QWidget):
 		elif type(files)==fileElement :
 			self.TabList.append(files)
 			if files.isUnique() and files.isFile():
-				print("secretly here")
-				text,ok=QW.QInputDialog.getText(self,'Title','Enter the title of:',text=files.title.text)
+				text,ok=QInputDialog.getText(self,'Title','Enter the title of:',text=files.title.text)
 				if ok:
 					files.title.text=str(text)
 					GXML.filesRoot.append(files.createFileElement())
@@ -67,12 +64,12 @@ class centralWidget(QW.QWidget):
 					self.CwidLayout.itemAt(idx).widget().removeTab(0)
 				self.TabList.pop(0)
 			elif (Behave in ["Persist","persist","P","p"]):
-				pass #Not an error!!
+				pass #Not a mistake!!
 			else:
-				QW.qApp.quit()
+				qApp.quit()
 	def stylize(self,styleFile):
 		if styleFile is not None and styleFile.isUnique():
-			text,ok=QW.QInputDialog.getText(self,'Title','Enter the title of:',text=styleFile.title.text)
+			text,ok=QInputDialog.getText(self,'Title','Enter the title of:',text=styleFile.title.text)
 			if ok:
 				styleFile.title.text=str(text)
 				GXML.styleLocsRoot.append(styleFile.createFileElement())
@@ -81,7 +78,7 @@ class centralWidget(QW.QWidget):
 			for  tabidx in range(self.CwidLayout.itemAt(idx).widget().count()):
 				self.CwidLayout.itemAt(idx).widget().widget(tabidx).stylize(styleFile)
 	def defineLayout(self):
-		self.CwidLayout=QW.QHBoxLayout()
+		self.CwidLayout=QHBoxLayout()
 		self.setLayout(self.CwidLayout)
 		self.CwidLayout.addWidget(self.defineTabBar())
 	
@@ -91,9 +88,9 @@ class centralWidget(QW.QWidget):
 		for item in self.TabList:
 			if item is None:
 				elem=fileElement()
-				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(elem,self,True),elem.title.text)
+				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(elem, self, True, self.currentStyle), elem.title.text)
 			elif type(item)==fileElement:
-				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(item,self,True),item.title.text)
+				self.CwidLayout.itemAt(last).widget().addTab(TextEditor(item, self, True, self.currentStyle), item.title.text)
 	
 	def unsplit(self):
 		last=self.CwidLayout.count()-1
@@ -101,54 +98,3 @@ class centralWidget(QW.QWidget):
 			self.CwidLayout.itemAt(last).widget().hide()
 			self.CwidLayout.removeItem(self.CwidLayout.itemAt(last))
 
-class TextEditor(QW.QTextBrowser):
-	def __init__(self,files,papa,NoHist,styleFile=None):
-		super().__init__(),
-		self.parent=papa
-		self.setAcceptDrops(True)
-		self.setReadOnly(GXML.GConfigRoot.find("Behaviour/AllowEdits").text not in ["Yes","yes","Y","y"])
-		if files.isFile():
-			with open(files.fileStrPath(), 'r') as f:
-				data = f.read()
-				self.setText(data)
-			if not NoHist:
-				GXML.histRoot.insert(0,files.createHistElement())
-				while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
-					GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
-		else:
-			self.setReadOnly(True)
-			errfile=GXML.filesRoot.find("Elem[@error='True']")
-			if errfile is not None and errfile:
-				files=fileElement(errfile)
-			else:
-				files=fileElement()
-			if files.isFile():
-				with open(files.fileStrPath(), 'r') as f:
-					data = f.read()
-					self.setText(data)
-		self.stylize(styleFile)
-	
-	def stylize(self,styleFile):
-		if styleFile is not None and styleFile.isstyle():
-			with open(styleFile.fileStrPath(), 'r') as f:
-				data = f.read()
-				self.setStyleSheet(data)
-		else:
-			self.setStyleSheet('')
-	
-	def dragEnterEvent(self, e):
-		if e.mimeData().hasUrls():
-			e.accept()
-		else:
-			e.ignore()
-	
-	def dragMoveEvent(self,evie):
-		pass
-		#I don't have the slightest idea why but it doesn't work without the event override.
-		#Maybe the implementation cancels the event by default, but that is quite messed up.
-	
-	def dropEvent(self,e):
-		for url in e.mimeData().urls():
-			if Path(url.path()).is_file():
-				fielem=fileElement(url.path())
-				self.parent.tabAdder(fielem)

@@ -33,8 +33,8 @@ class GuiApp(QW.QMainWindow):
 		self.setMenuBar(self.mnb.MenuBar)
 		
 	def defineToolBar(self):
-		self.tlb=TB.ToolBar(self)
-		self.addToolBar(self.tlb.toolBar)
+		self.tlb=TB.toolBar(self)
+		self.addToolBar(self.tlb)
 	
 	def defineCentralWidget(self):
 		self.cwidg=CW.centralWidget(self)

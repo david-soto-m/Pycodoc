@@ -1,7 +1,7 @@
 import PyQt5.QtWidgets as QW
 import PyQt5.QtGui as QG
 import PyQt5.QtCore as QC
-import FileManage.FilesWidget as FW
+import AuxWindows.FilesWidget as FW
 from ..ToolBar import ToolBar as TB
 
 class MenuBar():
