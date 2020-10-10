@@ -10,5 +10,5 @@ class splitButton():
 		
 		self.unsplit=QAction(parent)
 		self.unsplit.setIcon(QIcon().fromTheme("view-unsplit-effect"))
-		self.unsplit.setToolTip('Split')
+		self.unsplit.setToolTip('Unsplit')
 		self.unsplit.triggered.connect(parent.cwidg.unsplit)
