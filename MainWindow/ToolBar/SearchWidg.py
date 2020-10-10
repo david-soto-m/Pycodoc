@@ -9,15 +9,14 @@ class searchWidg(QComboBox):
 		self.parent=parent
 		expand=QSizePolicy().Policy.Expanding
 		self.setSizePolicy(expand,expand)
+		self.setAcceptDrops(True)
+		self.setEditable(True)
+		self.activated.connect(self.comboChanged)
 		self.searchMenu()
 		self.setCurrentIndex(-1)
 	
 	def searchMenu(self):
 		self.clear()
-		self.setAcceptDrops(True)
-		self.setEditable(True)
-		self.activated.connect(self.comboChanged)
-		
 		self.Elem=[]
 		for child in GXML.filesRoot.findall("Elem[@show='True']"):
 			self.Elem.append(fileElement(child))
@@ -25,7 +24,8 @@ class searchWidg(QComboBox):
 		for item in self.Elem:
 			self.addItem(item.title.text, QVariant(item))
 		self.setMaxVisibleItems(len(self.Elem))
-
+		self.setCurrentIndex(-1)
+		
 	def comboChanged(self,idx):
 		fielem=self.itemData(idx,0x100)
 		if fielem is not None:
