@@ -8,7 +8,7 @@ class styleButton(QAction):
 	def __init__(self,parent):
 		super().__init__()
 		self.parent=parent
-		self.setIcon(QIcon().fromTheme("text-style"))
+		self.setIcon(QIcon().fromTheme("text-css"))
 		self.setToolTip("Style")
 		self.setMenu(self.styleMenu())
 		self.hovered.connect(self.refreshMenu)
@@ -31,10 +31,6 @@ class styleButton(QAction):
 		self.actions[index].setData(None)
 		self.actions[index].triggered.connect(self.trigger)
 		Menu.addAction(self.actions[index])
-		#index=len(self.actions)
-		#self.actions.append(QAction('Create new'))
-		#self.actions[index].triggered.connect()
-		#Menu.addAction(self.actions[index])
 		return Menu
 	def triggerOpen(self,boolean):
 		print("here")
