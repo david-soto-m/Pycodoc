@@ -1,0 +1,35 @@
+from PyQt5.QtWidgets import QComboBox, QSizePolicy 
+from PyQt5.QtCore import QVariant
+import glob_objects.globalxml as GXML
+from FileManage.fileElement import fileElement
+
+class searchWidg(QComboBox):
+	def __init__(self,parent):
+		super().__init__()
+		self.parent=parent
+		expand=QSizePolicy().Policy.Expanding
+		self.setSizePolicy(expand,expand)
+		self.setAcceptDrops(True)
+		self.setEditable(True)
+		self.activated.connect(self.comboChanged)
+		self.searchMenu()
+		self.setCurrentIndex(-1)
+	
+	def searchMenu(self):
+		self.clear()
+		self.Elem=[]
+		for child in GXML.filesRoot.findall("Elem[@show='True']"):
+			self.Elem.append(fileElement(child))
+		self.Elem.sort(key=lambda indiv: indiv.fileStrPath())
+		for item in self.Elem:
+			self.addItem(item.title.text, QVariant(item))
+		self.setMaxVisibleItems(len(self.Elem))
+		self.setCurrentIndex(-1)
+		
+	def comboChanged(self,idx):
+		fielem=self.itemData(idx,0x100)
+		if fielem is not None:
+			self.parent.cwidg.tabAdder(fielem)
+		else:
+			fielem=fileElement(self.itemText(idx))
+			self.parent.cwidg.tabAdder(fielem)

@@ -28,7 +28,7 @@ class fileElement():
 			self.title=title
 			self.direc=direc
 			self.name=name
-		elif type(singleElement)==type(None):
+		elif type(singleElement)==type(None)and style==False:
 			defaultElement=GXML.filesRoot.find("Elem[@default='True']")
 			try:
 				self.title=defaultElement.find(self.tup[0])
@@ -37,12 +37,21 @@ class fileElement():
 			except:
 				GEN.defaultfileGenerator(str(Path.home())+"/.config/Pycodoc/Default")
 				self.__init__()
+		elif type(singleElement)==type(None)and style==True:
+			defaultElement=GXML.styleLocsRoot.find("Elem[@default='True']")
+			try:
+				self.title=defaultElement.find(self.tup[0])
+				self.direc=defaultElement.find(self.tup[1])
+				self.name=defaultElement.find(self.tup[2])
+			except:
+				GEN.defaultStyleGenerator(str(Path.home())+"/.config/Pycodoc/System_Theme.css")
+				self.__init__(style=True)
 	
 	def isstyle(self):
 		return self.style
 	
 	def isFormat(self,form):
-		return form==Path(name).suffix
+		return form==Path(self.fileStrPath()).suffix
 	
 	def isFile(self):
 		return Path(self.fileStrPath()).is_file()
@@ -71,9 +80,11 @@ class fileElement():
 		name.text=self.name.text
 		return elem
 	
-	def createFileElement(self):
+	def createFileElement(self,show=True,default=False,error=False):
 		elem=ET.Element("Elem")
-		elem.set("show","True")
+		if show==True: elem.set("show","True")
+		if default==True: elem.set("default","True")
+		if error==True: elem.set("error","True")
 		title=ET.SubElement(elem,self.tup[0])
 		dire=ET.SubElement(elem,self.tup[1])
 		name=ET.SubElement(elem,self.tup[2])
