@@ -13,7 +13,7 @@ class styleButton(QAction):
 		self.setMenu(self.styleMenu())
 		self.hovered.connect(self.refreshMenu)
 		self.triggered.connect(self.triggerOpen)
-		
+	
 	def refreshMenu(self):
 		self.setMenu(self.styleMenu())
 	
@@ -27,11 +27,12 @@ class styleButton(QAction):
 			self.actions[index].triggered.connect(self.trigger)
 			Menu.addAction(self.actions[index])
 		index=len(self.actions)
-		self.actions.append(QAction('Base'))
-		self.actions[index].setData(None)
-		self.actions[index].triggered.connect(self.trigger)
-		Menu.addAction(self.actions[index])
+		#self.actions.append(QAction('Base'))
+		#self.actions[index].setData(None)
+		#self.actions[index].triggered.connect(self.trigger)
+		#Menu.addAction(self.actions[index])
 		return Menu
+	
 	def triggerOpen(self,boolean):
 		print("here")
 		home_dir=str(Path.home())
@@ -41,6 +42,7 @@ class styleButton(QAction):
 				if Path(each).is_file() and Path(each).is_file():
 					styleElem=fileElement(each,style=True)
 					self.parent.cwidg.stylize(styleElem)
+	
 	def trigger(self,boolean):
 		styleElem=self.sender().data()
 		self.parent.cwidg.stylize(styleElem)

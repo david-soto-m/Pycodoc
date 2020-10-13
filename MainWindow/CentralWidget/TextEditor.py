@@ -8,7 +8,7 @@ class TextEditor(QTextBrowser):
 		super().__init__(),
 		self.parent=papa
 		self.setAcceptDrops(True)
-		self.setReadOnly(GXML.GConfigRoot.find("Behaviour/AllowEdits").text not in ["Yes","yes","Y","y"])
+		self.setReadOnly(GXML.BehaviourRoot.find("AllowEdits").text not in ["Yes","yes","Y","y"])
 		if files.isFile():
 			with open(files.fileStrPath(), 'r') as f:
 				data = f.read()
@@ -36,8 +36,16 @@ class TextEditor(QTextBrowser):
 				data = f.read()
 				self.setStyleSheet(data)
 		else:
-			self.setStyleSheet('')
-	
+			errstyle=GXML.styleLocsRoot.find("Elem[@error='True']")
+			if errstyle is not None and errstyle:
+				style=fileElement(errstyle,style=True)
+			else:
+				style=fileElement(style=True)
+			if style.isFile():
+				with open(style.fileStrPath(), 'r') as f:
+					data = f.read()
+					self.setStyleSheet(data)
+			
 	def dragEnterEvent(self, e):
 		if e.mimeData().hasUrls():
 			e.accept()

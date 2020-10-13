@@ -21,7 +21,7 @@ class centralWidget(QWidget):
 		TabBar.setTabsClosable(True)
 		TabBar.tabCloseRequested.connect(self.tabDestroyer)
 		TabBar.currentChanged.connect(self.idxactualizer)
-		TabBar.setTabBarAutoHide (GXML.GConfigRoot.find("Behaviour/TabBarAutoHide").text not in ["Remain","remain","R","r"])
+		TabBar.setTabBarAutoHide (GXML.BehaviourRoot.find("TabBarAutoHide").text not in ["Remain","remain","R","r"])
 		return TabBar
 	
 	def idxactualizer(self,index):
@@ -53,7 +53,7 @@ class centralWidget(QWidget):
 			else:
 				self.tabDestroyer(self.lastIdx)
 		elif self.CwidLayout.itemAt(0).widget().count()==1:
-			Behave=GXML.GConfigRoot.find("Behaviour/LastTabRemoved").text
+			Behave=GXML.BehaviourRoot.find("LastTabRemoved").text
 			if (Behave in ["Welcome","welcome","W","w"]):
 				for idx in range(self.CwidLayout.count()):
 					self.CwidLayout.itemAt(idx).widget().removeTab(0)

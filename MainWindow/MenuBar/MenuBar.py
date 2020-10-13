@@ -21,7 +21,9 @@ class MenuBar():
 		
 		editMenu = self.MenuBar.addMenu('&Edit')
 		
+		self.StylesManager=FW.FilesWidget(parent,style=True)
 		self.editStyles=QW.QAction(QG.QIcon().fromTheme("color-management"),'&Manage Styles', parent)
+		self.editStyles.triggered.connect(self.StylesManager.showWind)
 		
 		self.FilesManager=FW.FilesWidget(parent)
 		self.editFiles=QW.QAction(QG.QIcon().fromTheme("kt-queue-manager"),'&Manage Files', parent)
@@ -29,4 +31,3 @@ class MenuBar():
 		
 		editMenu.addAction(self.editFiles)
 		editMenu.addAction(self.editStyles)
-		

@@ -5,11 +5,15 @@ import xml.etree.ElementTree as ET
 from FileManage.fileElement import fileElement
 
 class FilesWidget (QW.QWidget):
-	def __init__(self,parent=None):
+	def __init__(self,parent=None,style=False):
 		super().__init__()
 		self.parent=parent
+		self.style=style
+		if self.style:
+			self.setWindowTitle("Style files settings")
+		else:
+			self.setWindowTitle("Files settings")
 		
-		self.setWindowTitle("Files settings")
 		self.setWindowIcon(QG.QIcon('AppIcon/AppIcon.svg'))
 		
 		self.itemElim=[]
@@ -23,9 +27,12 @@ class FilesWidget (QW.QWidget):
 		self.scrollVert=QW.QVBoxLayout()
 	
 	def showWind(self):
-		self.__init__(self.parent)
+		self.__init__(self.parent,self.style)
 		
-		files=GXML.filesRoot
+		if self.style:
+			files=GXML.styleLocsRoot
+		else:
+			files=GXML.filesRoot
 		
 		vert=QW.QVBoxLayout()
 		horz=QW.QHBoxLayout()
@@ -93,7 +100,10 @@ class FilesWidget (QW.QWidget):
 		self.btnsElim.append(QW.QPushButton(QG.QIcon().fromTheme("list-remove"),'', self))
 		self.titleEdits.append(QW.QLineEdit(title))
 		self.filePathEdits.append(QW.QLineEdit(path))
-		self.showCBoxes.append(QW.QCheckBox("Show on searchbar",self))
+		if self.style:
+			self.showCBoxes.append(QW.QCheckBox("Show on menu",self))
+		else:
+			self.showCBoxes.append(QW.QCheckBox("Show on searchbar",self))
 		self.defaultRBtns.append(QW.QRadioButton("Show on start",self))
 		self.errorRBtns.append(QW.QRadioButton("Show on error",self))
 		
@@ -149,15 +159,25 @@ class FilesWidget (QW.QWidget):
 			self.itemElim[idx]=False
 	
 	def applyHandle(self):
-		GXML.filesRoot.clear()
-		for idx in range(len(self.itemElim)):
-			if self.itemElim[idx]==False:
-				elem=fileElement(self.filePathEdits[idx].text())
-				if elem.isFile():
-					elem.title.text=self.titleEdits[idx].text()
-					xellie=elem.createFileElement(show=self.showCBoxes[idx].isChecked(), default=self.defaultRBtns[idx].isChecked(), error=self.errorRBtns[idx].isChecked())
-					GXML.filesRoot.append(xellie)
-		self.parent.tlb.combosearch.searchMenu()
+		if self.style:
+			GXML.styleLocsRoot.clear()
+			for idx in range(len(self.itemElim)):
+				if self.itemElim[idx]==False:
+					elem=fileElement(self.filePathEdits[idx].text(),style=True)
+					if elem.isFile() and elem.isFormat(".css"):
+						elem.title.text=self.titleEdits[idx].text()
+						xellie=elem.createFileElement(show=self.showCBoxes[idx].isChecked(), default=self.defaultRBtns[idx].isChecked(), error=self.errorRBtns[idx].isChecked())
+						GXML.styleLocsRoot.append(xellie)
+		else:
+			GXML.filesRoot.clear()
+			for idx in range(len(self.itemElim)):
+				if self.itemElim[idx]==False:
+					elem=fileElement(self.filePathEdits[idx].text())
+					if elem.isFile():
+						elem.title.text=self.titleEdits[idx].text()
+						xellie=elem.createFileElement(show=self.showCBoxes[idx].isChecked(), default=self.defaultRBtns[idx].isChecked(), error=self.errorRBtns[idx].isChecked())
+						GXML.filesRoot.append(xellie)
+			self.parent.tlb.combosearch.searchMenu()
 		self.hide()
 	
 	def cancelHandle(self):
