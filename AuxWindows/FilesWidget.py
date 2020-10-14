@@ -5,7 +5,7 @@ import xml.etree.ElementTree as ET
 from FileManage.fileElement import fileElement
 
 class FilesWidget (QW.QWidget):
-	def __init__(self,parent=None,style=False):
+	def __init__(self, parent=None, style=False):
 		super().__init__()
 		self.parent=parent
 		self.style=style
