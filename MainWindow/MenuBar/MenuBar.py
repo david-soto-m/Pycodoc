@@ -2,14 +2,14 @@ import PyQt5.QtWidgets as QW
 import PyQt5.QtGui as QG
 import PyQt5.QtCore as QC
 from AuxWindows.FilesWidget import FilesWidget
-from  AuxWindows.SettingsWidget import SettingsWidget
+from  AuxWindows.BehaviourWidget import BehaviourWidget
+from  AuxWindows.ShortcutsWidget import ShortcutsWidget
 from ..ToolBar import ToolBar as TB
 
-class MenuBar():
+class MenuBar(QW.QMenuBar):
 	def __init__(self,parent):
-		self.MenuBar=QW.QMenuBar(parent)
-		
-		fileMenu = self.MenuBar.addMenu('&File')
+		super().__init__(parent)
+		fileMenu = self.addMenu('&File')
 		
 		#These (↓) actions are remembered in order to be accessed by shortcuts
 		self.exitAct = QW.QAction(QG.QIcon().fromTheme("application-exit"),'&Quit', parent)
@@ -20,20 +20,27 @@ class MenuBar():
 		fileMenu.addAction(self.exitAct)
 		fileMenu.addAction(self.fileopener)
 		
-		editMenu = self.MenuBar.addMenu('&Settings')
+		settingsMenu = self.addMenu('&Settings')
 		
 		self.StylesManager=FilesWidget(parent,style=True)
-		self.editStyles=QW.QAction(QG.QIcon().fromTheme("color-management"),'&Configure Style Files', parent)
+		self.editStyles=QW.QAction(QG.QIcon().fromTheme("color-management"),'Configure St&yle Files', parent)
 		self.editStyles.triggered.connect(self.StylesManager.showWind)
 		
 		self.FilesManager=FilesWidget(parent)
-		self.editFiles=QW.QAction(QG.QIcon().fromTheme("kt-queue-manager"),'&Configure Files', parent)
+		self.editFiles=QW.QAction(QG.QIcon().fromTheme("kt-queue-manager"),'Confi&gure Files', parent)
 		self.editFiles.triggered.connect(self.FilesManager.showWind)
 		
-		self.settingsManager=SettingsWidget(parent)
-		self.editSettings=QW.QAction(QG.QIcon().fromTheme("settings-configure"),'&Configure Pycodoc', parent)
-		self.editSettings.triggered.connect(self.settingsManager.showWid)
+		self.shortcutsManager=ShortcutsWidget(parent)
+		self.shortcutSettings=QW.QAction(QG.QIcon().fromTheme("configure-shortcuts"),'Configure Shortcuts', parent)
+		self.shortcutSettings.triggered.connect(self.shortcutsManager.showWid)
 		
-		editMenu.addAction(self.editFiles)
-		editMenu.addAction(self.editStyles)
-		editMenu.addAction(self.editSettings)
+		self.behaviourManager=BehaviourWidget(parent)
+		self.behaviourSettings=QW.QAction(QG.QIcon().fromTheme("settings-configure"),'Configure Pycodoc', parent)
+		self.behaviourSettings.triggered.connect(self.behaviourManager.showWid)
+		
+		
+		settingsMenu.addAction(self.editFiles)
+		settingsMenu.addAction(self.editStyles)
+		settingsMenu.addSeparator()
+		settingsMenu.addAction(self.shortcutSettings)
+		settingsMenu.addAction(self.behaviourSettings)

@@ -15,7 +15,7 @@ class TextEditor(QTextBrowser):
 				self.setText(data)
 			if not NoHist:
 				GXML.histRoot.insert(0,files.createHistElement())
-				while len(list(GXML.histRoot))>int(GXML.GConfigRoot.find("History/Max").text)>-1:
+				while len(list(GXML.histRoot))>int(GXML.BehaviourRoot.find("HistDepth").text)>-1:
 					GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
 		else:
 			self.setReadOnly(True)

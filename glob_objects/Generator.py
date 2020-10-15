@@ -83,6 +83,9 @@ def behaviourCfgGenerator(string):
 	Behaviour=ET.parse(string)
 	BehaviourRoot=Behaviour.getroot()
 	
+	hdepth=ET.Element("HistDepth")
+	hdepth.text="15"
+	BehaviourRoot.append(hdepth)
 	BehaviourRoot.append(ET.Element("TabBarAutoHide"))
 	BehaviourRoot.append(ET.Element("LastTabRemoved"))
 	BehaviourRoot.append(ET.Element("AllowEdits"))

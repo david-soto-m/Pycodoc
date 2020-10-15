@@ -31,7 +31,7 @@ class history(QAction):
 	
 	def triggerlast(self,boolean=False):
 		self.counter+=1
-		if self.counter>int(GXML.GConfigRoot.find("History/Max").text):
+		if self.counter>int(GXML.BehaviourRoot.find("HistDepth").text):
 			self.counter=1
 		File=fileElement(GXML.histRoot.find("Elem"+"["+str(self.counter)+"]"))
 		self.parent.cwidg.tabAdder(File,NoHist=True)
