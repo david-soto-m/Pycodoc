@@ -37,3 +37,4 @@ class Shortcutter():
 		if shct is not None:
 			self.shcts.append(QW.QShortcut(shct,parent))
 			self.shcts[len(self.shcts)-1].activated.connect(parent.tlb.histmen.triggerlast)
+		

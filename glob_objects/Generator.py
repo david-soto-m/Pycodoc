@@ -60,7 +60,6 @@ def shortCfgGenerator(string):
 	shorts=[]
 	
 	shorts.append(ET.Element("TriggerHistory"))
-	shorts.append(ET.Element("MarkHistory"))
 	shorts.append(ET.Element("NewTab"))
 	shorts.append(ET.Element("Split"))
 	shorts.append(ET.Element("Unsplit"))
@@ -68,8 +67,11 @@ def shortCfgGenerator(string):
 	shorts.append(ET.Element("QuitTab"))
 	shorts.append(ET.Element("OpenFile"))
 	
-	for el in shorts:
-		ShortRoot.append(el)
+	titles=["Trigger History","New Tab","Split View","Unsplit View","Quit Pycodoc", "Quit Tab", "Open Files"]
+	
+	for shortcut,title in zip(shorts,titles):
+		shortcut.set("Title",title)
+		ShortRoot.append(shortcut)#Needa add'em before we print'em
 	Short.write(string)
 
 def behaviourCfgGenerator(string):
