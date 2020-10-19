@@ -36,7 +36,6 @@ class FilesWidget (QW.QWidget):
 		
 		vert=QW.QVBoxLayout()
 		horz=QW.QHBoxLayout()
-		scroll=QW.QScrollArea()
 		
 		self.defaultContainer=QW.QButtonGroup()
 		self.errorContainer=QW.QButtonGroup()
@@ -47,36 +46,17 @@ class FilesWidget (QW.QWidget):
 		
 		globber=QW.QWidget()
 		globber.setLayout(self.scrollVert)
-		globber.resize(globber.sizeHint())
-		expand=QW.QSizePolicy().Policy.Expanding
-		globber.setSizePolicy(expand,expand)
-		
-		scroll.setWidgetResizable(True)
-		scroll.ensureWidgetVisible(globber,xMargin=10)
+		scroll=QW.QScrollArea()
 		scroll.setWidget(globber)
+		scroll.setWidgetResizable(True)
 		
 		vert.addWidget(scroll)
 		
-		newBtn = QW.QPushButton('New', self)
-		newBtn.clicked.connect(self.newHandle)
-		
-		applyBtn = QW.QPushButton('Apply', self)
-		applyBtn.clicked.connect(self.applyHandle)
-		
-		cancelBtn = QW.QPushButton('Cancel', self)
-		cancelBtn.clicked.connect(self.cancelHandle)
-		
-		horz.addWidget(newBtn)
-		horz.addStretch(1)
-		horz.addWidget(applyBtn)
-		horz.addWidget(cancelBtn)
-		
-		vert.addLayout(horz)
+		vert.addLayout(self.bottomBar())
 		
 		self.setLayout(vert)
 		
 		geo=QW.QDesktopWidget().availableGeometry()
-		#self.resize(geo.width()/2,geo.height()/2)
 		self.resize(self.sizeHint())
 		self.move(int(geo.center().x()-self.width()/2),int(geo.center().y()-self.height()/2))
 		
@@ -185,3 +165,18 @@ class FilesWidget (QW.QWidget):
 	
 	def newHandle(self):
 		self.scrollVert.addLayout(self.listAdder())
+	
+	def bottomBar(self):
+		newBtn = QW.QPushButton('New', self)
+		newBtn.clicked.connect(self.newHandle)
+		applyBtn = QW.QPushButton('Apply', self)
+		applyBtn.clicked.connect(self.applyHandle)
+		cancelBtn = QW.QPushButton('Cancel', self)
+		cancelBtn.clicked.connect(self.cancelHandle)
+		
+		horz=QW.QHBoxLayout()
+		horz.addWidget(newBtn)
+		horz.addStretch(1)
+		horz.addWidget(applyBtn)
+		horz.addWidget(cancelBtn)
+		return horz

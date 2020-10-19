@@ -21,38 +21,16 @@ class ShortcutsWidget (QW.QWidget):
 		
 		globber=QW.QWidget()
 		globber.setLayout(scl)
-		#globber.resize(globber.sizeHint())
-		#expand=QW.QSizePolicy().Policy.Expanding
-		#globber.setSizePolicy(expand,expand)
-		
 		scroll=QW.QScrollArea()
-		scroll.setWidgetResizable(True)
-		scroll.ensureWidgetVisible(globber,xMargin=10)
 		scroll.setWidget(globber)
+		scroll.setWidgetResizable(True)
 		
 		L.addWidget(scroll)
-		
-		newBtn = QW.QPushButton('New', self)
-		newBtn.clicked.connect(self.newHandle)
-		
-		applyBtn = QW.QPushButton('Apply', self)
-		applyBtn.clicked.connect(self.applyHandle)
-		
-		cancelBtn = QW.QPushButton('Cancel', self)
-		cancelBtn.clicked.connect(self.cancelHandle)
-		
-		horz=QW.QHBoxLayout()
-		horz.addWidget(newBtn)
-		horz.addStretch(1)
-		horz.addWidget(applyBtn)
-		horz.addWidget(cancelBtn)
-		
-		L.addLayout(horz)
+		L.addLayout(self.bottomBar())
 		
 		self.setLayout(L)
 		
 		geo=QW.QDesktopWidget().availableGeometry()
-		#self.resize(geo.width()/2,geo.height()/2)
 		self.resize(self.sizeHint())
 		self.move(int(geo.center().x()-self.width()/2),int(geo.center().y()-self.height()/2))
 		
@@ -77,7 +55,27 @@ class ShortcutsWidget (QW.QWidget):
 		
 		return hz
 	
+	def bottomBar(self):
+		newBtn = QW.QPushButton('New', self)
+		newBtn.clicked.connect(self.newHandle)
+		applyBtn = QW.QPushButton('Apply', self)
+		applyBtn.clicked.connect(self.applyHandle)
+		cancelBtn = QW.QPushButton('Cancel', self)
+		cancelBtn.clicked.connect(self.cancelHandle)
+		
+		horz=QW.QHBoxLayout()
+		horz.addWidget(newBtn)
+		horz.addStretch(1)
+		horz.addWidget(applyBtn)
+		horz.addWidget(cancelBtn)
+		return horz
+	
 	def applyHandle(self):
+		idx=0
+		for elem in GXML.ShortRoot.findall("*"):
+			elem.text=self.txts[idx].text()
+			idx+=1
+		self.parent.shctobj.refresh()
 		self.hide()
 	
 	def cancelHandle(self):
