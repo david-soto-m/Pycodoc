@@ -14,6 +14,10 @@ class Shortcutter():
 		self.addscht("Unsplit",parent.cwidg.unsplit)
 		self.addscht("NewTab",parent.tlb.combosearch.setFocus)
 		self.addscht("TriggerHistory",parent.tlb.histmen.triggerlast)
+		self.addscht("ConfFiles",parent.mnb.editFiles.trigger)
+		self.addscht("ConfStyle",parent.mnb.editStyles.trigger)
+		self.addscht("ModifyBehaviours",parent.mnb.behaviourSettings.trigger)
+		self.addscht("ModifyShortcuts",parent.mnb.shortcutSettings.trigger)
 	
 	def addscht(self,text,funct):
 		self.shct.append(GXML.ShortRoot.find(text))
@@ -24,6 +28,8 @@ class Shortcutter():
 			self.shct=self.shct[0:-1]
 	def refresh(self):
 		for elem in GXML.ShortRoot.findall("*"):
-			idx=self.shct.find(elem)
-			if idx!=-1:
+			try:
+				idx=self.shct.index(elem)
 				self.shcts[idx].setKey(elem.text)
+			except:
+				pass
