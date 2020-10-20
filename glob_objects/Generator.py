@@ -60,16 +60,22 @@ def shortCfgGenerator(string):
 	shorts=[]
 	
 	shorts.append(ET.Element("TriggerHistory"))
-	shorts.append(ET.Element("MarkHistory"))
 	shorts.append(ET.Element("NewTab"))
 	shorts.append(ET.Element("Split"))
 	shorts.append(ET.Element("Unsplit"))
 	shorts.append(ET.Element("Quit"))
 	shorts.append(ET.Element("QuitTab"))
 	shorts.append(ET.Element("OpenFile"))
+	shorts.append(ET.Element("ModifyShortcuts"))
+	shorts.append(ET.Element("ModifyBehaviours"))
+	shorts.append(ET.Element("ConfFiles"))
+	shorts.append(ET.Element("ConfStyle"))
 	
-	for el in shorts:
-		ShortRoot.append(el)
+	titles=["Trigger History","New Tab","Split View","Unsplit View","Quit Pycodoc", "Quit Tab", "Open Files","Modify Shortcuts","Modify Behaviours","Configure Files","Configure Style Files"]
+	
+	for shortcut,title in zip(shorts,titles):
+		shortcut.set("Title",title)
+		ShortRoot.append(shortcut)#Needa add'em before we print'em
 	Short.write(string)
 
 def behaviourCfgGenerator(string):
@@ -83,6 +89,9 @@ def behaviourCfgGenerator(string):
 	Behaviour=ET.parse(string)
 	BehaviourRoot=Behaviour.getroot()
 	
+	hdepth=ET.Element("HistDepth")
+	hdepth.text="15"
+	BehaviourRoot.append(hdepth)
 	BehaviourRoot.append(ET.Element("TabBarAutoHide"))
 	BehaviourRoot.append(ET.Element("LastTabRemoved"))
 	BehaviourRoot.append(ET.Element("AllowEdits"))

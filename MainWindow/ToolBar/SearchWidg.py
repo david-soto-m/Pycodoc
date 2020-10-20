@@ -21,9 +21,13 @@ class searchWidg(QComboBox):
 		for child in GXML.filesRoot.findall("Elem[@show='True']"):
 			self.Elem.append(fileElement(child))
 		self.Elem.sort(key=lambda indiv: indiv.fileStrPath())
+		pathsep=""
 		for item in self.Elem:
+			if pathsep!=item.direc.text and pathsep!="":
+				self.insertSeparator(self.count())
 			self.addItem(item.title.text, QVariant(item))
-		self.setMaxVisibleItems(len(self.Elem))
+			pathsep=item.direc.text
+		self.setMaxVisibleItems(self.count())
 		self.setCurrentIndex(-1)
 		
 	def comboChanged(self,idx):

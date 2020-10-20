@@ -13,7 +13,10 @@ class GuiApp(QW.QMainWindow):
 		
 		self.defineCentralWidget()
 		
-		self.defineTitleBar()
+		
+		self.setWindowTitle("Pycobrowser")
+		self.setWindowIcon(QG.QIcon('AppIcon/AppIcon.svg'))
+		
 		self.defineMenuBar()
 		
 		self.defineToolBar()
@@ -24,13 +27,9 @@ class GuiApp(QW.QMainWindow):
 		a=auxsz();
 		a.toscalescreen(self,center=False,scale=1)
 	
-	def defineTitleBar(self):
-		self.setWindowTitle("Pycobrowser")
-		self.setWindowIcon(QG.QIcon('AppIcon/AppIcon.svg'))
-	
 	def defineMenuBar(self):
 		self.mnb=MB.MenuBar(self)
-		self.setMenuBar(self.mnb.MenuBar)
+		self.setMenuBar(self.mnb)
 		
 	def defineToolBar(self):
 		self.tlb=TB.toolBar(self)
