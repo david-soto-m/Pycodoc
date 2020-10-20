@@ -56,15 +56,12 @@ class ShortcutsWidget (QW.QWidget):
 		return hz
 	
 	def bottomBar(self):
-		newBtn = QW.QPushButton('New', self)
-		newBtn.clicked.connect(self.newHandle)
 		applyBtn = QW.QPushButton('Apply', self)
 		applyBtn.clicked.connect(self.applyHandle)
 		cancelBtn = QW.QPushButton('Cancel', self)
 		cancelBtn.clicked.connect(self.cancelHandle)
 		
 		horz=QW.QHBoxLayout()
-		horz.addWidget(newBtn)
 		horz.addStretch(1)
 		horz.addWidget(applyBtn)
 		horz.addWidget(cancelBtn)
@@ -80,6 +77,3 @@ class ShortcutsWidget (QW.QWidget):
 	
 	def cancelHandle(self):
 		self.hide()
-	
-	def newHandle(self):
-		pass

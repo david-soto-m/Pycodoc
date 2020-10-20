@@ -19,5 +19,6 @@ def exiter():
 	GXML.Files.write(GXML.GConfigRoot.find("Files/Path").text)
 	GXML.StyleLocs.write(GXML.GConfigRoot.find("StyleLocs/Path").text)
 	GXML.Shortcuts.write(GXML.GConfigRoot.find("Shortcuts/Path").text)
+	GXML.Behaviour.write(GXML.GConfigRoot.find("Behaviour/Path").text)
 if __name__=="__main__":
         main()
