@@ -2,7 +2,7 @@ import glob_objects.globalxml as GXML
 from PyQt5.QtWidgets import QWidget, QTabWidget, QInputDialog, QHBoxLayout, qApp
 from FileManage.fileElement import fileElement
 from .TextEditor import TextEditor
-
+import subprocess
 class centralWidget(QWidget):
 	def __init__(self,parent=None):
 		super().__init__()
@@ -31,9 +31,14 @@ class centralWidget(QWidget):
 		if type(files)==bool or files is None:
 			self.TabList.append(None)
 			for idx in range(self.CwidLayout.count()):
-				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(fileElement(),self,NoHist,self.currentStyle), fileElement().title.text)
+				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor( fileElement(), self, NoHist, self.currentStyle), fileElement().title.text)
 		elif type(files)==fileElement :
+			if (GXML.BehaviourRoot.find("Pandoc").text in ["Yes", "yes", "Y", "y"]) and not(files.isFormat(".html")):
+				res=subprocess.check_output(["pandoc","-s",files.fileStrPath(),"-o",files.htmlize()])
+				files=fileElement(files.htmlize())
+			
 			self.TabList.append(files)
+			
 			if files.isUnique() and files.isFile():
 				text,ok=QInputDialog.getText(self,'Title','Enter the title of:',text=files.title.text)
 				if ok:
@@ -41,7 +46,7 @@ class centralWidget(QWidget):
 					GXML.filesRoot.append(files.createFileElement())
 					self.parent.tlb.combosearch.searchMenu()
 			for idx in range(self.CwidLayout.count()):
-				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor(files,self,NoHist,self.currentStyle), files.title.text)
+				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor( files, self, NoHist, self.currentStyle), files.title.text)
 			self.CwidLayout.itemAt(0).widget().setCurrentIndex(len(self.TabList)-1)
 		
 	def tabDestroyer(self,index=None):
@@ -67,6 +72,7 @@ class centralWidget(QWidget):
 				pass #Not a mistake!!
 			else:
 				qApp.quit()
+	
 	def stylize(self,styleFile):
 		if styleFile is not None and styleFile.isUnique():
 			text,ok=QInputDialog.getText(self,'Title','Enter the title of:',text=styleFile.title.text)
@@ -77,6 +83,7 @@ class centralWidget(QWidget):
 		for idx in range(self.CwidLayout.count()):
 			for  tabidx in range(self.CwidLayout.itemAt(idx).widget().count()):
 				self.CwidLayout.itemAt(idx).widget().widget(tabidx).stylize(styleFile)
+	
 	def defineLayout(self):
 		self.CwidLayout=QHBoxLayout()
 		self.setLayout(self.CwidLayout)

@@ -1,3 +1,4 @@
+import glob_objects.globalxml as GXML
 from PyQt5.QtWidgets import QToolBar
 from .History import history
 from .Opener import opener

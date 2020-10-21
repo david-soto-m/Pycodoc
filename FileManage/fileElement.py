@@ -70,6 +70,10 @@ class fileElement():
 	def fileStrPath(self):
 		return self.direc.text+self.name.text
 	
+	def htmlize(self):
+		a=Path(self.fileStrPath())
+		return str(a.parent)+"/"+a.stem+".html"
+	
 	def createHistElement(self):
 		elem=ET.Element("Elem")
 		title=ET.SubElement(elem,self.tup[0])

@@ -4,11 +4,14 @@ import PyQt5.QtCore as QC
 import glob_objects.globalxml as GXML
 import xml.etree.ElementTree as ET
 from FileManage.fileElement import fileElement 
+from shutil import which
 
 class BehaviourWidget (QW.QWidget):
 	def __init__(self,parent):
 		super().__init__()
 		self.parent=parent
+		self.setWindowTitle("Behaviour settings")
+		self.setWindowIcon(QG.QIcon('AppIcon/AppIcon.svg'))
 	
 	def showWid(self):
 		self.__init__(self.parent)
@@ -36,8 +39,10 @@ class BehaviourWidget (QW.QWidget):
 	
 	def centralLayout(self):
 		lay=QW.QVBoxLayout()
+		lay.addWidget(QW.QLabel("Some changes may need a restart of the application in order to take effect"))
 		lay.addLayout(self.tabBarAHLayout())
-		lay.addLayout(self.allowEditsLayout())
+		if which("pandoc") is not None:
+			lay.addLayout(self.pandocLayout())
 		lay.addLayout(self.lastTabLayout())
 		lay.addLayout(self.behaviourLayout())
 		
@@ -72,6 +77,33 @@ class BehaviourWidget (QW.QWidget):
 		else:
 			self.hiderTB.setText("Remain")
 	
+	def changeHtmlLayoutLabel(self,signal):
+		if signal==False:
+			self.beauHTML.setText("No\t")
+		else:
+			self.beauHTML.setText("Yes\t")
+	
+	
+	def pandocLayout(self):
+		lay=QW.QHBoxLayout()
+		lbl=QW.QLabel("Enable pandoc:")
+		self.pan=QW.QCheckBox("\t\t")
+		self.pan.stateChanged.connect(self.changeLayoutLabel)
+		
+		boool=GXML.BehaviourRoot.find("Pandoc").text  in [["Yes", "yes", "Y", "y"]]
+		self.pan.setChecked(boool)
+		self.changeLayoutLabel(boool)
+		
+		lay.addWidget(lbl)
+		lay.addWidget(self.pan)
+		return lay
+	
+	def changeLayoutLabel(self,signal):
+		if signal==False:
+			self.pan.setText("No\t")
+		else:
+			self.pan.setText("Yes\t")
+		
 	def lastTabLayout(self):
 		lay=QW.QHBoxLayout()
 		lbl=QW.QLabel("When trying to close the last tab")
@@ -98,27 +130,6 @@ class BehaviourWidget (QW.QWidget):
 		lay.addWidget(self.lastTabCB)
 		return lay
 	
-	def allowEditsLayout(self):
-		lay=QW.QHBoxLayout()
-		lbl=QW.QLabel("Allow Edits:")
-		self.AEdits=QW.QCheckBox("\t\t")
-		self.AEdits.stateChanged.connect(self.changeAELabel)
-		
-		boool=GXML.BehaviourRoot.find("AllowEdits").text  in ["Yes","yes","Y","y"]
-		self.AEdits.setChecked(boool)
-		self.changeAELabel(boool)
-		
-		lay.addWidget(lbl)
-		lay.addWidget(self.AEdits)
-		return lay
-	
-	def changeAELabel(self,signal):
-		if signal==False:
-			self.AEdits.setText("No\t")
-		else:
-			self.AEdits.setText("Yes")
-	
-	
 	def bottomBar(self):
 		applyBtn = QW.QPushButton('Apply', self)
 		applyBtn.clicked.connect(self.applyHandle)
@@ -138,13 +149,21 @@ class BehaviourWidget (QW.QWidget):
 		else:
 			stri="H"
 		GXML.BehaviourRoot.find("TabBarAutoHide").text=stri
-		if self.AEdits.isChecked():
+		
+		if self.beauHTML.isChecked():
 			stri="Y"
 		else:
 			stri="N"
-		GXML.BehaviourRoot.find("AllowEdits").text=stri
+		GXML.BehaviourRoot.find("BeautifulHTML").text=stri
+		
 		tr={0:"W",1:"N",2:"P",3:"Q"}
 		GXML.BehaviourRoot.find("LastTabRemoved").text=tr[self.lastTabCB.currentIndex()]
+		
+		if (which("pandoc") is not None) and self.pan.isChecked():
+			stri="Y"
+		else:
+			stri="N"
+		GXML.BehaviourRoot.find("Pandoc").text=stri
 		self.hide()
 	
 	def cancelHandle(self):

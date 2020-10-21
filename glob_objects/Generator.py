@@ -20,7 +20,6 @@ def mainCfgGenerator(string):
 	Files=ET.Element("Files")
 	styleLocs=ET.Element("StyleLocs")
 	
-	
 	HistPath=ET.SubElement(Hist,"Path")
 	HistMax=ET.SubElement(Hist,"Max")
 	HistMax.text=str(10)
@@ -71,7 +70,7 @@ def shortCfgGenerator(string):
 	shorts.append(ET.Element("ConfFiles"))
 	shorts.append(ET.Element("ConfStyle"))
 	
-	titles=["Trigger History","New Tab","Split View","Unsplit View","Quit Pycodoc", "Quit Tab", "Open Files","Modify Shortcuts","Modify Behaviours","Configure Files","Configure Style Files"]
+	titles=["Trigger History", "New Tab", "Split View", "Unsplit View", "Quit Pycodoc", "Quit Tab", "Open Files", "Modify Shortcuts", "Modify Behaviours", "Configure Files", "Configure Style Files"]
 	
 	for shortcut,title in zip(shorts,titles):
 		shortcut.set("Title",title)
@@ -94,8 +93,7 @@ def behaviourCfgGenerator(string):
 	BehaviourRoot.append(hdepth)
 	BehaviourRoot.append(ET.Element("TabBarAutoHide"))
 	BehaviourRoot.append(ET.Element("LastTabRemoved"))
-	BehaviourRoot.append(ET.Element("AllowEdits"))
-	#BehaviourRoot.append(ET.Element("Pandoc"))
+	BehaviourRoot.append(ET.Element("Pandoc"))
 	
 	Behaviour.write(string)
 
@@ -124,14 +122,14 @@ def styleLocsCfgGenerator(string):
 	p.touch(exist_ok=True)
 	with open(string,"w+") as f:
 		f.write("<styleLocs></styleLocs>")
-
+		
 def defaultfileGenerator(string):
 	p=Path(string)
 	direc=p.parent
 	direc.mkdir(exist_ok=True,parents=True)
 	p.touch(exist_ok=True)
 	with open(string,"w+") as f:
-		f.write("This file will contain a short manual in future releases")
+		f.write("<html><body><h1>Some error has ocurred</h1>This file will contain a short manual in future releases</body></html>")
 	defFile=ET.Element("Elem")
 	defFile.set("show","False")
 	defFile.set("default","True")

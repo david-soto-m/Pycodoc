@@ -5,10 +5,11 @@ import xml.etree.ElementTree as ET
 from FileManage.fileElement import fileElement
 
 class FilesWidget (QW.QWidget):
-	def __init__(self, parent=None, style=False):
+	def __init__(self, parent=None, style=False,html=False):
 		super().__init__()
 		self.parent=parent
 		self.style=style
+		self.html=html
 		if self.style:
 			self.setWindowTitle("Style files settings")
 		else:
