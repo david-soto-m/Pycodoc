@@ -141,17 +141,19 @@ class BehaviourWidget (QW.QWidget):
 		self.hpandocCB.addItem("Shortcut to create and show html")
 		
 		
-		tr1={i :0 for i in ["Create and show","create; show","C&S","c&s"]}
+		tr1={i :0 for i in ["Create and show","create; show","CS","cs"]}
 		tr2={i :1 for i in ["Create","create","C","c"]}
 		tr3={i :2 for i in ["Popup","popup","P","p"]}
 		tr4={i :3 for i in ["Shortcut","shortcut","S","s"]}
 		tr1.update(tr2)
 		tr1.update(tr3)
+		tr1.update(tr4)
 		
 		try:
 			state=tr1[GXML.BehaviourRoot.find("Hpandoc").text]
 		except:
 			state=0
+		
 		self.hpandocCB.setCurrentIndex(state)
 		
 		lay.addWidget(lbl)
@@ -180,6 +182,10 @@ class BehaviourWidget (QW.QWidget):
 		
 		tr={0:"W",1:"N",2:"P",3:"Q"}
 		GXML.BehaviourRoot.find("LastTabRemoved").text=tr[self.lastTabCB.currentIndex()]
+		
+		tr={0:"CS",1:"C",2:"P",3:"S"}
+		GXML.BehaviourRoot.find("Hpandoc").text=tr[self.hpandocCB.currentIndex()]
+		
 		
 		if (which("pandoc") is not None) and self.pan.isChecked():
 			stri="Y"

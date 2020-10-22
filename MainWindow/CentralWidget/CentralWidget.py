@@ -73,6 +73,10 @@ class centralWidget(QWidget):
 			else:
 				qApp.quit()
 	
+	def pandocize(self):
+		if GXML.BehaviourRoot.find("Hpandoc").text in ["Shortcut","shortcut","S","s"]:
+			print("He proceeded to piss all over the place before leaving")
+	
 	def stylize(self,styleFile):
 		if styleFile is not None and styleFile.isUnique():
 			text,ok=QInputDialog.getText(self,'Title','Enter the title of:',text=styleFile.title.text)

@@ -18,6 +18,7 @@ class Shortcutter():
 		self.addscht("ConfStyle",parent.mnb.editStyles.trigger)
 		self.addscht("ModifyBehaviours",parent.mnb.behaviourSettings.trigger)
 		self.addscht("ModifyShortcuts",parent.mnb.shortcutSettings.trigger)
+		self.addscht("Pandoc",parent.cwidg.pandocize)
 	
 	def addscht(self,text,funct):
 		self.shct.append(GXML.ShortRoot.find(text))
