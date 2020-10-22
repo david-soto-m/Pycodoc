@@ -1,5 +1,6 @@
 import glob_objects.globalxml as GXML
-from PyQt5.QtWidgets import QWidget, QTabWidget, QInputDialog, QHBoxLayout, qApp
+from PyQt5.QtWidgets import QWidget, QTabWidget, QInputDialog, QHBoxLayout, QMessageBox, qApp
+from PyQt5.QtGui import QIcon
 from FileManage.fileElement import fileElement
 from .TextEditor import TextEditor
 import subprocess
@@ -27,16 +28,30 @@ class centralWidget(QWidget):
 	def idxactualizer(self,index):
 		self.lastIdx=index
 	
-	def tabAdder(self,files=None,NoHist=False):
+	def tabAdder(self,files=None,NoHist=False,pandoc=False):
 		if type(files)==bool or files is None:
 			self.TabList.append(None)
 			for idx in range(self.CwidLayout.count()):
 				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor( fileElement(), self, NoHist, self.currentStyle), fileElement().title.text)
 		elif type(files)==fileElement :
-			if (GXML.BehaviourRoot.find("Pandoc").text in ["Yes", "yes", "Y", "y"]) and not(files.isFormat(".html")):
-				res=subprocess.check_output(["pandoc","-s",files.fileStrPath(),"-o",files.htmlize()])
-				files=fileElement(files.htmlize())
-			
+			if (GXML.BehaviourRoot.find("Pandoc").text in ["Yes", "yes", "Y", "y"] and
+				not files.isFormat(".html")):
+				boool=True
+				if GXML.BehaviourRoot.find("Hpandoc").text in ["Popup","popup","P","p"]:
+					mboxans=QMessageBox.question(self.parent,'Confirmation',
+												'Do you want to see the html file',
+												QMessageBox.Yes|QMessageBox.No,
+												QMessageBox.Yes)
+					if mboxans == QMessageBox.Yes:
+						boool=True
+					else:
+						boool=False
+				if boool:
+					phill=fileElement(files.htmlize())
+					if not phill.isFile():
+						res=subprocess.check_output(["pandoc","-s",files.fileStrPath(),"-o",files.htmlize()])
+					if not (GXML.BehaviourRoot.find("Hpandoc").text in["Create","create","C","c"]):
+						phill=fileElement(files.htmlize())
 			self.TabList.append(files)
 			
 			if files.isUnique() and files.isFile():
@@ -74,8 +89,11 @@ class centralWidget(QWidget):
 				qApp.quit()
 	
 	def pandocize(self):
-		if GXML.BehaviourRoot.find("Hpandoc").text in ["Shortcut","shortcut","S","s"]:
-			print("He proceeded to piss all over the place before leaving")
+		files=self.TabList[self.lastIdx]
+		if (GXML.BehaviourRoot.find("Hpandoc").text in ["Shortcut","shortcut","S","s"] and
+			GXML.BehaviourRoot.find("Pandoc").text in ["Yes", "yes", "Y", "y"] and 
+			not files.isFormat(".html")):
+			self.tabAdder(files,pandoc=True)
 	
 	def stylize(self,styleFile):
 		if styleFile is not None and styleFile.isUnique():

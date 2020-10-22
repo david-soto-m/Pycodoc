@@ -9,6 +9,7 @@ class TextEditor(QTextBrowser):
 		self.parent=papa
 		self.setAcceptDrops(True)
 		self.setReadOnly(True)
+		self.files=files
 		if files.isFile():
 			with open(files.fileStrPath(), 'r') as f:
 				data = f.read()

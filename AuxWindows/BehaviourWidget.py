@@ -91,7 +91,7 @@ class BehaviourWidget (QW.QWidget):
 		self.pan=QW.QCheckBox("\t\t")
 		self.pan.stateChanged.connect(self.changeLayoutLabel)
 		
-		boool=GXML.BehaviourRoot.find("Pandoc").text  in [["Yes", "yes", "Y", "y"]]
+		boool=GXML.BehaviourRoot.find("Pandoc").text  in ["Yes", "yes", "Y", "y"]
 		self.pan.setChecked(boool)
 		self.changeLayoutLabel(boool)
 		
@@ -133,7 +133,7 @@ class BehaviourWidget (QW.QWidget):
 	
 	def pandocbehaveLayout(self):
 		lay=QW.QHBoxLayout()
-		lbl=QW.QLabel("When opening a non html file")
+		lbl=QW.QLabel("If pandoc is enabled non html files")
 		self.hpandocCB=QW.QComboBox()
 		self.hpandocCB.addItem("Create html and show it")
 		self.hpandocCB.addItem("Create html and don't show it")
