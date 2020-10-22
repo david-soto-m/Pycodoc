@@ -43,6 +43,7 @@ class BehaviourWidget (QW.QWidget):
 		lay.addLayout(self.tabBarAHLayout())
 		if which("pandoc") is not None:
 			lay.addLayout(self.pandocLayout())
+			lay.addLayout(self.pandocbehaveLayout())
 		lay.addLayout(self.lastTabLayout())
 		lay.addLayout(self.behaviourLayout())
 		
@@ -130,6 +131,33 @@ class BehaviourWidget (QW.QWidget):
 		lay.addWidget(self.lastTabCB)
 		return lay
 	
+	def pandocbehaveLayout(self):
+		lay=QW.QHBoxLayout()
+		lbl=QW.QLabel("When opening a non html file")
+		self.hpandocCB=QW.QComboBox()
+		self.hpandocCB.addItem("Create html and show it")
+		self.hpandocCB.addItem("Create html and don't show it")
+		self.hpandocCB.addItem("Show a popup to confirm wether")
+		self.hpandocCB.addItem("Shortcut to create and show html")
+		
+		
+		tr1={i :0 for i in ["Create and show","create; show","C&S","c&s"]}
+		tr2={i :1 for i in ["Create","create","C","c"]}
+		tr3={i :2 for i in ["Popup","popup","P","p"]}
+		tr4={i :3 for i in ["Shortcut","shortcut","S","s"]}
+		tr1.update(tr2)
+		tr1.update(tr3)
+		
+		try:
+			state=tr1[GXML.BehaviourRoot.find("Hpandoc").text]
+		except:
+			state=0
+		self.hpandocCB.setCurrentIndex(state)
+		
+		lay.addWidget(lbl)
+		lay.addWidget(self.hpandocCB)
+		return lay
+	
 	def bottomBar(self):
 		applyBtn = QW.QPushButton('Apply', self)
 		applyBtn.clicked.connect(self.applyHandle)
@@ -149,12 +177,6 @@ class BehaviourWidget (QW.QWidget):
 		else:
 			stri="H"
 		GXML.BehaviourRoot.find("TabBarAutoHide").text=stri
-		
-		if self.beauHTML.isChecked():
-			stri="Y"
-		else:
-			stri="N"
-		GXML.BehaviourRoot.find("BeautifulHTML").text=stri
 		
 		tr={0:"W",1:"N",2:"P",3:"Q"}
 		GXML.BehaviourRoot.find("LastTabRemoved").text=tr[self.lastTabCB.currentIndex()]

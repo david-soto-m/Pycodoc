@@ -19,4 +19,4 @@ Still it would be cool to have the zeal documentation stack integrated with this
 
 * python v:3.8
 * pandoc v:2.5 (optional, external)
-* pyqt5 v:5.14 (python, may need installation pyqt3.qtwebkit not necessarily a default but needed)
+* pyqt5 v:5.14 (python, may need installation)

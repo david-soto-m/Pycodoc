@@ -69,8 +69,9 @@ def shortCfgGenerator(string):
 	shorts.append(ET.Element("ModifyBehaviours"))
 	shorts.append(ET.Element("ConfFiles"))
 	shorts.append(ET.Element("ConfStyle"))
+	shorts.append(ET.Element("Pandoc"))
 	
-	titles=["Trigger History", "New Tab", "Split View", "Unsplit View", "Quit Pycodoc", "Quit Tab", "Open Files", "Modify Shortcuts", "Modify Behaviours", "Configure Files", "Configure Style Files"]
+	titles=["Trigger History", "New Tab", "Split View", "Unsplit View", "Quit Pycodoc", "Quit Tab", "Open Files", "Modify Shortcuts", "Modify Behaviours", "Configure Files", "Configure Style Files", "View html (config specific)"]
 	
 	for shortcut,title in zip(shorts,titles):
 		shortcut.set("Title",title)
@@ -94,6 +95,7 @@ def behaviourCfgGenerator(string):
 	BehaviourRoot.append(ET.Element("TabBarAutoHide"))
 	BehaviourRoot.append(ET.Element("LastTabRemoved"))
 	BehaviourRoot.append(ET.Element("Pandoc"))
+	BehaviourRoot.append(ET.Element("Hpandoc"))
 	
 	Behaviour.write(string)
 
