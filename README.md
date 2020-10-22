@@ -13,13 +13,10 @@ Still it would be cool to have the zeal documentation stack integrated with this
 * Style your files (but not too much because it's limited by qt itself)
 * Easily add new docs and style sheets
 <!-- * Create different styles easily-->
-<!-- * Get HTML from other file formats (when pandoc is enabled) -->
+<!-- * View HTML from other file formats (when pandoc is enabled) -->
 
 ## Dependencies
 
-* python 3
-* pandoc (optional, external)
-* pyqt5 (python)
-* xml.etree (python)
-* pathlib.Path (python)
-* chdir from os and exit from sys (python)
+* python v:3.8
+* pandoc v:2.5 (optional, external)
+* pyqt5 v:5.14 (python, may need installation)

@@ -8,7 +8,8 @@ class TextEditor(QTextBrowser):
 		super().__init__(),
 		self.parent=papa
 		self.setAcceptDrops(True)
-		self.setReadOnly(GXML.BehaviourRoot.find("AllowEdits").text not in ["Yes","yes","Y","y"])
+		self.setReadOnly(True)
+		self.files=files
 		if files.isFile():
 			with open(files.fileStrPath(), 'r') as f:
 				data = f.read()

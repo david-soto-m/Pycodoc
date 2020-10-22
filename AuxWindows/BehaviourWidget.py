@@ -4,11 +4,14 @@ import PyQt5.QtCore as QC
 import glob_objects.globalxml as GXML
 import xml.etree.ElementTree as ET
 from FileManage.fileElement import fileElement 
+from shutil import which
 
 class BehaviourWidget (QW.QWidget):
 	def __init__(self,parent):
 		super().__init__()
 		self.parent=parent
+		self.setWindowTitle("Behaviour settings")
+		self.setWindowIcon(QG.QIcon('AppIcon/AppIcon.svg'))
 	
 	def showWid(self):
 		self.__init__(self.parent)
@@ -36,8 +39,11 @@ class BehaviourWidget (QW.QWidget):
 	
 	def centralLayout(self):
 		lay=QW.QVBoxLayout()
+		lay.addWidget(QW.QLabel("Some changes may need a restart of the application in order to take effect"))
 		lay.addLayout(self.tabBarAHLayout())
-		lay.addLayout(self.allowEditsLayout())
+		if which("pandoc") is not None:
+			lay.addLayout(self.pandocLayout())
+			lay.addLayout(self.pandocbehaveLayout())
 		lay.addLayout(self.lastTabLayout())
 		lay.addLayout(self.behaviourLayout())
 		
@@ -72,6 +78,33 @@ class BehaviourWidget (QW.QWidget):
 		else:
 			self.hiderTB.setText("Remain")
 	
+	def changeHtmlLayoutLabel(self,signal):
+		if signal==False:
+			self.beauHTML.setText("No\t")
+		else:
+			self.beauHTML.setText("Yes\t")
+	
+	
+	def pandocLayout(self):
+		lay=QW.QHBoxLayout()
+		lbl=QW.QLabel("Enable pandoc:")
+		self.pan=QW.QCheckBox("\t\t")
+		self.pan.stateChanged.connect(self.changeLayoutLabel)
+		
+		boool=GXML.BehaviourRoot.find("Pandoc").text  in ["Yes", "yes", "Y", "y"]
+		self.pan.setChecked(boool)
+		self.changeLayoutLabel(boool)
+		
+		lay.addWidget(lbl)
+		lay.addWidget(self.pan)
+		return lay
+	
+	def changeLayoutLabel(self,signal):
+		if signal==False:
+			self.pan.setText("No\t")
+		else:
+			self.pan.setText("Yes\t")
+		
 	def lastTabLayout(self):
 		lay=QW.QHBoxLayout()
 		lbl=QW.QLabel("When trying to close the last tab")
@@ -98,26 +131,34 @@ class BehaviourWidget (QW.QWidget):
 		lay.addWidget(self.lastTabCB)
 		return lay
 	
-	def allowEditsLayout(self):
+	def pandocbehaveLayout(self):
 		lay=QW.QHBoxLayout()
-		lbl=QW.QLabel("Allow Edits:")
-		self.AEdits=QW.QCheckBox("\t\t")
-		self.AEdits.stateChanged.connect(self.changeAELabel)
+		lbl=QW.QLabel("If pandoc is enabled non html files")
+		self.hpandocCB=QW.QComboBox()
+		self.hpandocCB.addItem("Create html and show it")
+		self.hpandocCB.addItem("Create html and don't show it")
+		self.hpandocCB.addItem("Show a popup to confirm wether")
+		self.hpandocCB.addItem("Shortcut to create and show html")
 		
-		boool=GXML.BehaviourRoot.find("AllowEdits").text  in ["Yes","yes","Y","y"]
-		self.AEdits.setChecked(boool)
-		self.changeAELabel(boool)
+		
+		tr1={i :0 for i in ["Create and show","create; show","CS","cs"]}
+		tr2={i :1 for i in ["Create","create","C","c"]}
+		tr3={i :2 for i in ["Popup","popup","P","p"]}
+		tr4={i :3 for i in ["Shortcut","shortcut","S","s"]}
+		tr1.update(tr2)
+		tr1.update(tr3)
+		tr1.update(tr4)
+		
+		try:
+			state=tr1[GXML.BehaviourRoot.find("Hpandoc").text]
+		except:
+			state=0
+		
+		self.hpandocCB.setCurrentIndex(state)
 		
 		lay.addWidget(lbl)
-		lay.addWidget(self.AEdits)
+		lay.addWidget(self.hpandocCB)
 		return lay
-	
-	def changeAELabel(self,signal):
-		if signal==False:
-			self.AEdits.setText("No\t")
-		else:
-			self.AEdits.setText("Yes")
-	
 	
 	def bottomBar(self):
 		applyBtn = QW.QPushButton('Apply', self)
@@ -138,13 +179,19 @@ class BehaviourWidget (QW.QWidget):
 		else:
 			stri="H"
 		GXML.BehaviourRoot.find("TabBarAutoHide").text=stri
-		if self.AEdits.isChecked():
+		
+		tr={0:"W",1:"N",2:"P",3:"Q"}
+		GXML.BehaviourRoot.find("LastTabRemoved").text=tr[self.lastTabCB.currentIndex()]
+		
+		tr={0:"CS",1:"C",2:"P",3:"S"}
+		GXML.BehaviourRoot.find("Hpandoc").text=tr[self.hpandocCB.currentIndex()]
+		
+		
+		if (which("pandoc") is not None) and self.pan.isChecked():
 			stri="Y"
 		else:
 			stri="N"
-		GXML.BehaviourRoot.find("AllowEdits").text=stri
-		tr={0:"W",1:"N",2:"P",3:"Q"}
-		GXML.BehaviourRoot.find("LastTabRemoved").text=tr[self.lastTabCB.currentIndex()]
+		GXML.BehaviourRoot.find("Pandoc").text=stri
 		self.hide()
 	
 	def cancelHandle(self):

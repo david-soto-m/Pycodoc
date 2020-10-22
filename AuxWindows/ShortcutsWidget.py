@@ -3,12 +3,14 @@ import PyQt5.QtGui as QG
 import PyQt5.QtCore as QC
 import glob_objects.globalxml as GXML
 import xml.etree.ElementTree as ET
-from FileManage.fileElement import fileElement 
+from FileManage.fileElement import fileElement
 
 class ShortcutsWidget (QW.QWidget):
 	def __init__(self,parent):
 		super().__init__()
 		self.parent=parent
+		self.setWindowTitle("Shortcut settings")
+		self.setWindowIcon(QG.QIcon('AppIcon/AppIcon.svg'))
 	
 	def showWid(self):
 		self.__init__(self.parent)
