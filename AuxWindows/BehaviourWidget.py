@@ -183,9 +183,9 @@ class BehaviourWidget (QW.QWidget):
 		tr={0:"W",1:"N",2:"P",3:"Q"}
 		GXML.BehaviourRoot.find("LastTabRemoved").text=tr[self.lastTabCB.currentIndex()]
 		
-		tr={0:"CS",1:"C",2:"P",3:"S"}
-		GXML.BehaviourRoot.find("Hpandoc").text=tr[self.hpandocCB.currentIndex()]
-		
+		if (which("pandoc") is not None):
+			tr={0:"CS",1:"C",2:"P",3:"S"}
+			GXML.BehaviourRoot.find("Hpandoc").text=tr[self.hpandocCB.currentIndex()]
 		
 		if (which("pandoc") is not None) and self.pan.isChecked():
 			stri="Y"
