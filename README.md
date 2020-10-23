@@ -12,8 +12,8 @@ Still it would be cool to have the zeal documentation stack integrated with this
 * Customizable shortcuts
 * Style your files (but not too much because it's limited by qt itself)
 * Easily add new docs and style sheets
+* View HTML from other file formats (when pandoc is enabled)
 <!-- * Create different styles easily-->
-<!-- * View HTML from other file formats (when pandoc is enabled) -->
 
 ## Dependencies
 
