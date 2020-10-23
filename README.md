@@ -2,6 +2,7 @@
 title: Pycodoc Documentation
 author: David
 ---
+
 # Pycodoc
 
 The idea behind this app is to centralize your documentation. With this app you can easily read the documentation of the projects you have all around your computer.

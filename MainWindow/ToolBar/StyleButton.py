@@ -14,12 +14,13 @@ class styleButton(QAction):
 		self.setMenu(self.styleMenu())
 		self.hovered.connect(self.refreshMenu)
 		self.triggered.connect(self.triggerOpen)
-		self.styleCreator=StyleWidget()
+		
 	
 	def refreshMenu(self):
 		self.setMenu(self.styleMenu())
 	
 	def styleMenu(self):
+		self.styleCreator=StyleWidget()
 		self.actions=[]
 		Menu=QMenu()
 		for child in GXML.styleLocsRoot.findall("Elem[@show='True']"):
@@ -30,7 +31,7 @@ class styleButton(QAction):
 			Menu.addAction(self.actions[-1])
 		
 		self.actions.append(QAction('Create Style'))
-		self.actions[-1].triggered.connect(self.styleCreator.show())
+		self.actions[-1].triggered.connect(self.styleCreator.showWid)
 		Menu.addAction(self.actions[-1])
 		
 		return Menu
