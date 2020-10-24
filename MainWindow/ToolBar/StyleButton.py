@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QAction, QMenu
+from PyQt5.QtWidgets import QAction, QMenu, QFileDialog
 from PyQt5.QtGui import QIcon
 from pathlib import Path
 from FileManage.fileElement import fileElement
