@@ -1,27 +1,24 @@
-import PyQt5.QtWidgets as QW
-import PyQt5.QtGui as QG
-import PyQt5.QtCore as QC
-import glob_objects.globalxml as GXML
-import xml.etree.ElementTree as ET
-from FileManage.fileElement import fileElement 
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QScrollArea, QDesktopWidget, QLabel, QSpinBox, QCheckBox, QComboBox, QPushButton
+from PyQt5.QtGui import QIcon
+from glob_objects.globalxml import BehaviourRoot
 from shutil import which
 
-class BehaviourWidget (QW.QWidget):
+class BehaviourWidget (QWidget):
 	def __init__(self,parent):
 		super().__init__()
 		self.parent=parent
 		self.setWindowTitle("Behaviour settings")
-		self.setWindowIcon(QG.QIcon('AppIcon/AppIcon.svg'))
+		self.setWindowIcon(QIcon('AppIcon/AppIcon.svg'))
 	
 	def showWid(self):
 		self.__init__(self.parent)
-		L=QW.QVBoxLayout()
+		L=QVBoxLayout()
 		
 		scrollLayout=self.centralLayout()
 		
-		globber=QW.QWidget()
+		globber=QWidget()
 		globber.setLayout(scrollLayout)
-		scroll=QW.QScrollArea()
+		scroll=QScrollArea()
 		scroll.setWidget(globber)
 		scroll.setWidgetResizable(True)
 		
@@ -30,7 +27,7 @@ class BehaviourWidget (QW.QWidget):
 		
 		self.setLayout(L)
 		
-		geo=QW.QDesktopWidget().availableGeometry()
+		geo=QDesktopWidget().availableGeometry()
 		self.resize(self.sizeHint())
 		self.move(int(geo.center().x()-self.width()/2),int(geo.center().y()-self.height()/2))
 		
@@ -38,8 +35,8 @@ class BehaviourWidget (QW.QWidget):
 		self.show()
 	
 	def centralLayout(self):
-		lay=QW.QVBoxLayout()
-		lay.addWidget(QW.QLabel("Some changes may need a restart of the application in order to take effect"))
+		lay=QVBoxLayout()
+		lay.addWidget(QLabel("Some changes may need a restart of the application in order to take effect"))
 		lay.addLayout(self.tabBarAHLayout())
 		if which("pandoc") is not None:
 			lay.addLayout(self.pandocLayout())
@@ -50,21 +47,21 @@ class BehaviourWidget (QW.QWidget):
 		return lay
 	
 	def behaviourLayout(self):
-		lay=QW.QHBoxLayout()
-		lbl=QW.QLabel("History Depth:")
-		self.depth=QW.QSpinBox()
-		self.depth.setValue(int(GXML.BehaviourRoot.find("HistDepth").text))
+		lay=QHBoxLayout()
+		lbl=QLabel("History Depth:")
+		self.depth=QSpinBox()
+		self.depth.setValue(int(BehaviourRoot.find("HistDepth").text))
 		lay.addWidget(lbl)
 		lay.addWidget(self.depth)
 		return lay
 	
 	def tabBarAHLayout(self):
-		lay=QW.QHBoxLayout()
-		lbl=QW.QLabel("Automatically hide tab bar:")
-		self.hiderTB=QW.QCheckBox("\t\t")
+		lay=QHBoxLayout()
+		lbl=QLabel("Automatically hide tab bar:")
+		self.hiderTB=QCheckBox("\t\t")
 		self.hiderTB.stateChanged.connect(self.changeTBAHLabel)
 		
-		boool=GXML.BehaviourRoot.find("TabBarAutoHide").text  in ["Remain","remain","R","r"]
+		boool=BehaviourRoot.find("TabBarAutoHide").text  in ["Remain","remain","R","r"]
 		self.hiderTB.setChecked(boool)
 		self.changeTBAHLabel(boool)
 		
@@ -84,14 +81,13 @@ class BehaviourWidget (QW.QWidget):
 		else:
 			self.beauHTML.setText("Yes\t")
 	
-	
 	def pandocLayout(self):
-		lay=QW.QHBoxLayout()
-		lbl=QW.QLabel("Enable pandoc:")
-		self.pan=QW.QCheckBox("\t\t")
+		lay=QHBoxLayout()
+		lbl=QLabel("Enable pandoc:")
+		self.pan=QCheckBox("\t\t")
 		self.pan.stateChanged.connect(self.changeLayoutLabel)
 		
-		boool=GXML.BehaviourRoot.find("Pandoc").text  in ["Yes", "yes", "Y", "y"]
+		boool=BehaviourRoot.find("Pandoc").text  in ["Yes", "yes", "Y", "y"]
 		self.pan.setChecked(boool)
 		self.changeLayoutLabel(boool)
 		
@@ -106,9 +102,9 @@ class BehaviourWidget (QW.QWidget):
 			self.pan.setText("Yes\t")
 		
 	def lastTabLayout(self):
-		lay=QW.QHBoxLayout()
-		lbl=QW.QLabel("When trying to close the last tab")
-		self.lastTabCB=QW.QComboBox()
+		lay=QHBoxLayout()
+		lbl=QLabel("When trying to close the last tab")
+		self.lastTabCB=QComboBox()
 		self.lastTabCB.addItem("show Welcome tab")
 		self.lastTabCB.addItem("show no tab")
 		self.lastTabCB.addItem("don't")
@@ -122,7 +118,7 @@ class BehaviourWidget (QW.QWidget):
 		tr1.update(tr3)
 		
 		try:
-			state=tr1[GXML.BehaviourRoot.find("LastTabRemoved").text]
+			state=tr1[BehaviourRoot.find("LastTabRemoved").text]
 		except:
 			state=3
 		self.lastTabCB.setCurrentIndex(state)
@@ -132,9 +128,9 @@ class BehaviourWidget (QW.QWidget):
 		return lay
 	
 	def pandocbehaveLayout(self):
-		lay=QW.QHBoxLayout()
-		lbl=QW.QLabel("If pandoc is enabled non html files")
-		self.hpandocCB=QW.QComboBox()
+		lay=QHBoxLayout()
+		lbl=QLabel("If pandoc is enabled non html files")
+		self.hpandocCB=QComboBox()
 		self.hpandocCB.addItem("Create html and show it")
 		self.hpandocCB.addItem("Create html and don't show it")
 		self.hpandocCB.addItem("Show a popup to confirm wether")
@@ -150,7 +146,7 @@ class BehaviourWidget (QW.QWidget):
 		tr1.update(tr4)
 		
 		try:
-			state=tr1[GXML.BehaviourRoot.find("Hpandoc").text]
+			state=tr1[BehaviourRoot.find("Hpandoc").text]
 		except:
 			state=0
 		
@@ -161,37 +157,37 @@ class BehaviourWidget (QW.QWidget):
 		return lay
 	
 	def bottomBar(self):
-		applyBtn = QW.QPushButton('Apply', self)
+		applyBtn = QPushButton('Apply', self)
 		applyBtn.clicked.connect(self.applyHandle)
-		cancelBtn = QW.QPushButton('Cancel', self)
+		cancelBtn = QPushButton('Cancel', self)
 		cancelBtn.clicked.connect(self.cancelHandle)
 		
-		horz=QW.QHBoxLayout()
+		horz=QHBoxLayout()
 		horz.addStretch(1)
 		horz.addWidget(applyBtn)
 		horz.addWidget(cancelBtn)
 		return horz
 	
 	def applyHandle(self):
-		GXML.BehaviourRoot.find("HistDepth").text=str(self.depth.value())
+		BehaviourRoot.find("HistDepth").text=str(self.depth.value())
 		if self.hiderTB.isChecked():
 			stri="R"
 		else:
 			stri="H"
-		GXML.BehaviourRoot.find("TabBarAutoHide").text=stri
+		BehaviourRoot.find("TabBarAutoHide").text=stri
 		
 		tr={0:"W",1:"N",2:"P",3:"Q"}
-		GXML.BehaviourRoot.find("LastTabRemoved").text=tr[self.lastTabCB.currentIndex()]
+		BehaviourRoot.find("LastTabRemoved").text=tr[self.lastTabCB.currentIndex()]
 		
 		if (which("pandoc") is not None):
 			tr={0:"CS",1:"C",2:"P",3:"S"}
-			GXML.BehaviourRoot.find("Hpandoc").text=tr[self.hpandocCB.currentIndex()]
+			BehaviourRoot.find("Hpandoc").text=tr[self.hpandocCB.currentIndex()]
 		
 		if (which("pandoc") is not None) and self.pan.isChecked():
 			stri="Y"
 		else:
 			stri="N"
-		GXML.BehaviourRoot.find("Pandoc").text=stri
+		BehaviourRoot.find("Pandoc").text=stri
 		self.hide()
 	
 	def cancelHandle(self):

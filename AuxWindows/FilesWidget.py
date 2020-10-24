@@ -1,10 +1,9 @@
-import PyQt5.QtWidgets as QW
-import PyQt5.QtGui as QG
-import glob_objects.globalxml as GXML
-import xml.etree.ElementTree as ET
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QScrollArea, QDesktopWidget, QSizePolicy, QButtonGroup, QLineEdit, QPushButton, QRadioButton, QCheckBox, QLabel
+from PyQt5.QtGui import QIcon
+from glob_objects.globalxml import styleLocsRoot, filesRoot
 from FileManage.fileElement import fileElement
 
-class FilesWidget (QW.QWidget):
+class FilesWidget (QWidget):
 	def __init__(self, parent=None, style=False):
 		super().__init__()
 		self.parent=parent
@@ -14,7 +13,7 @@ class FilesWidget (QW.QWidget):
 		else:
 			self.setWindowTitle("Files settings")
 		
-		self.setWindowIcon(QG.QIcon('AppIcon/AppIcon.svg'))
+		self.setWindowIcon(QIcon('AppIcon/AppIcon.svg'))
 		
 		self.itemElim=[]
 		self.btnsElim=[]
@@ -24,29 +23,29 @@ class FilesWidget (QW.QWidget):
 		self.errorRBtns=[]
 		self.defaultRBtns=[]
 		
-		self.scrollVert=QW.QVBoxLayout()
+		self.scrollVert=QVBoxLayout()
 	
 	def showWind(self):
 		self.__init__(self.parent,self.style)
 		
 		if self.style:
-			files=GXML.styleLocsRoot
+			files=styleLocsRoot
 		else:
-			files=GXML.filesRoot
+			files=filesRoot
 		
-		vert=QW.QVBoxLayout()
-		horz=QW.QHBoxLayout()
+		vert=QVBoxLayout()
+		horz=QHBoxLayout()
 		
-		self.defaultContainer=QW.QButtonGroup()
-		self.errorContainer=QW.QButtonGroup()
+		self.defaultContainer=QButtonGroup()
+		self.errorContainer=QButtonGroup()
 		
 		for child,index in zip(files,range(len(files))):
 			Elem=fileElement(child)
 			self.scrollVert.addLayout(self.listAdder(title=Elem.title.text, path=Elem.fileStrPath(), child=child))
 		
-		globber=QW.QWidget()
+		globber=QWidget()
 		globber.setLayout(self.scrollVert)
-		scroll=QW.QScrollArea()
+		scroll=QScrollArea()
 		scroll.setWidget(globber)
 		scroll.setWidgetResizable(True)
 		
@@ -56,19 +55,19 @@ class FilesWidget (QW.QWidget):
 		
 		self.setLayout(vert)
 		
-		geo=QW.QDesktopWidget().availableGeometry()
+		geo=QDesktopWidget().availableGeometry()
 		self.resize(self.sizeHint())
 		self.move(int(geo.center().x()-self.width()/2),int(geo.center().y()-self.height()/2))
 		
 		self.show()
 	
 	def listAdder(self,path="",title="",child=None):
-		exppol=QW.QSizePolicy().Policy.Expanding
-		minpol=QW.QSizePolicy().Policy.Fixed
+		exppol=QSizePolicy().Policy.Expanding
+		minpol=QSizePolicy().Policy.Fixed
 		
-		filelbl=QW.QLabel("File: ")
-		titlelbl=QW.QLabel("Title: ")
-		pathlbl=QW.QLabel("Path: ")
+		filelbl=QLabel("File: ")
+		titlelbl=QLabel("Title: ")
+		pathlbl=QLabel("Path: ")
 		
 		filelbl.setSizePolicy(minpol,minpol)
 		titlelbl.setSizePolicy(minpol,minpol)
@@ -77,15 +76,15 @@ class FilesWidget (QW.QWidget):
 		index=len(self.itemElim)
 		
 		self.itemElim.append(False)
-		self.btnsElim.append(QW.QPushButton(QG.QIcon().fromTheme("list-remove"),'', self))
-		self.titleEdits.append(QW.QLineEdit(title))
-		self.filePathEdits.append(QW.QLineEdit(path))
+		self.btnsElim.append(QPushButton(QIcon().fromTheme("list-remove"),'', self))
+		self.titleEdits.append(QLineEdit(title))
+		self.filePathEdits.append(QLineEdit(path))
 		if self.style:
-			self.showCBoxes.append(QW.QCheckBox("Show on menu",self))
+			self.showCBoxes.append(QCheckBox("Show on menu",self))
 		else:
-			self.showCBoxes.append(QW.QCheckBox("Show on searchbar",self))
-		self.defaultRBtns.append(QW.QRadioButton("Show on start",self))
-		self.errorRBtns.append(QW.QRadioButton("Show on error",self))
+			self.showCBoxes.append(QCheckBox("Show on searchbar",self))
+		self.defaultRBtns.append(QRadioButton("Show on start",self))
+		self.errorRBtns.append(QRadioButton("Show on error",self))
 		
 		self.showCBoxes[index].setTristate(on=False)
 		
@@ -105,9 +104,9 @@ class FilesWidget (QW.QWidget):
 		self.defaultRBtns[index].setSizePolicy(minpol,minpol)
 		self.errorRBtns[index].setSizePolicy(minpol,minpol)
 		
-		h1=QW.QHBoxLayout()
-		h2=QW.QHBoxLayout()
-		h3=QW.QHBoxLayout()
+		h1=QHBoxLayout()
+		h2=QHBoxLayout()
+		h3=QHBoxLayout()
 		
 		h1.addWidget(titlelbl)
 		h1.addWidget(self.titleEdits[index])
@@ -120,7 +119,7 @@ class FilesWidget (QW.QWidget):
 		h3.addWidget(self.errorRBtns[index])
 		h3.addWidget(self.btnsElim[index])
 		
-		microvert=QW.QVBoxLayout()
+		microvert=QVBoxLayout()
 		
 		microvert.addWidget(filelbl)
 		microvert.addLayout(h1)
@@ -140,23 +139,23 @@ class FilesWidget (QW.QWidget):
 	
 	def applyHandle(self):
 		if self.style:
-			GXML.styleLocsRoot.clear()
+			styleLocsRoot.clear()
 			for idx in range(len(self.itemElim)):
 				if self.itemElim[idx]==False:
 					elem=fileElement(self.filePathEdits[idx].text(),style=True)
 					if elem.isFile() and elem.isFormat(".css"):
 						elem.title.text=self.titleEdits[idx].text()
 						xellie=elem.createFileElement(show=self.showCBoxes[idx].isChecked(), default=self.defaultRBtns[idx].isChecked(), error=self.errorRBtns[idx].isChecked())
-						GXML.styleLocsRoot.append(xellie)
+						styleLocsRoot.append(xellie)
 		else:
-			GXML.filesRoot.clear()
+			filesRoot.clear()
 			for idx in range(len(self.itemElim)):
 				if self.itemElim[idx]==False:
 					elem=fileElement(self.filePathEdits[idx].text())
 					if elem.isFile():
 						elem.title.text=self.titleEdits[idx].text()
 						xellie=elem.createFileElement(show=self.showCBoxes[idx].isChecked(), default=self.defaultRBtns[idx].isChecked(), error=self.errorRBtns[idx].isChecked())
-						GXML.filesRoot.append(xellie)
+						filesRoot.append(xellie)
 			self.parent.tlb.combosearch.searchMenu()
 		self.hide()
 	
@@ -167,14 +166,14 @@ class FilesWidget (QW.QWidget):
 		self.scrollVert.addLayout(self.listAdder())
 	
 	def bottomBar(self):
-		newBtn = QW.QPushButton('New', self)
+		newBtn = QPushButton('New', self)
 		newBtn.clicked.connect(self.newHandle)
-		applyBtn = QW.QPushButton('Apply', self)
+		applyBtn = QPushButton('Apply', self)
 		applyBtn.clicked.connect(self.applyHandle)
-		cancelBtn = QW.QPushButton('Cancel', self)
+		cancelBtn = QPushButton('Cancel', self)
 		cancelBtn.clicked.connect(self.cancelHandle)
 		
-		horz=QW.QHBoxLayout()
+		horz=QHBoxLayout()
 		horz.addWidget(newBtn)
 		horz.addStretch(1)
 		horz.addWidget(applyBtn)

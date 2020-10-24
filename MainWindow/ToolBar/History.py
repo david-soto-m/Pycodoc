@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMenu, QAction
 from PyQt5.QtGui import QIcon
 from FileManage.fileElement import fileElement
-import glob_objects.globalxml as GXML
+from glob_objects.globalxml import histRoot, BehaviourRoot
 
 class history(QAction):
 	def __init__(self,parent):
@@ -21,7 +21,7 @@ class history(QAction):
 	def histMenu(self):
 		self.actions=[]
 		Menu=QMenu()
-		for child,index in zip(GXML.histRoot,range(len(GXML.histRoot))):
+		for child,index in zip(histRoot,range(len(histRoot))):
 			Elem=fileElement(child)
 			self.actions.append(QAction(Elem.title.text))
 			self.actions[index].setData(Elem)
@@ -31,9 +31,9 @@ class history(QAction):
 	
 	def triggerlast(self,boolean=False):
 		self.counter+=1
-		if self.counter>int(GXML.BehaviourRoot.find("HistDepth").text):
+		if self.counter>int(BehaviourRoot.find("HistDepth").text):
 			self.counter=1
-		File=fileElement(GXML.histRoot.find("Elem"+"["+str(self.counter)+"]"))
+		File=fileElement(histRoot.find("Elem"+"["+str(self.counter)+"]"))
 		self.parent.cwidg.tabAdder(File,NoHist=True)
 	
 	def trigger(self,boolean=False):

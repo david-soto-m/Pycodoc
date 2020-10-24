@@ -1,4 +1,4 @@
-import glob_objects.globalxml as GXML
+from glob_objects.globalxml import histRoot, BehaviourRoot, filesRoot, styleLocsRoot
 from PyQt5.QtWidgets import QTextBrowser
 from FileManage.fileElement import fileElement
 from pathlib import Path
@@ -15,12 +15,12 @@ class TextEditor(QTextBrowser):
 				data = f.read()
 				self.setText(data)
 			if not NoHist:
-				GXML.histRoot.insert(0,files.createHistElement())
-				while len(list(GXML.histRoot))>int(GXML.BehaviourRoot.find("HistDepth").text)>-1:
-					GXML.histRoot.remove(GXML.histRoot.find("Elem[last()]"))
+				histRoot.insert(0,files.createHistElement())
+				while len(list(histRoot))>int(BehaviourRoot.find("HistDepth").text)>-1:
+					histRoot.remove(histRoot.find("Elem[last()]"))
 		else:
 			self.setReadOnly(True)
-			errfile=GXML.filesRoot.find("Elem[@error='True']")
+			errfile=filesRoot.find("Elem[@error='True']")
 			if errfile is not None and errfile:
 				files=fileElement(errfile)
 			else:
@@ -37,7 +37,7 @@ class TextEditor(QTextBrowser):
 				data = f.read()
 				self.setStyleSheet(data)
 		else:
-			errstyle=GXML.styleLocsRoot.find("Elem[@error='True']")
+			errstyle=styleLocsRoot.find("Elem[@error='True']")
 			if errstyle is not None and errstyle:
 				style=fileElement(errstyle,style=True)
 			else:

@@ -15,5 +15,5 @@ void draw(){
 	fill(214,2,112,255);
 	triangle(0,height,width/2,0,width/4,height/6);
 // 	save("AppIconWhiteBackground.png");
-	save("AppIconBlackBackground.png");
+//	save("AppIconBlackBackground.png");
 }
