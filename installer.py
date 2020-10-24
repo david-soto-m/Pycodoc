@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-#A CLI for pycodoc, providing access and modification capacity to config files.
+# An installer that will create a dektop file and try to add it to your apps menu
 import sys
 def main ():
     pass

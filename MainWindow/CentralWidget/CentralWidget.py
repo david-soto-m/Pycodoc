@@ -51,7 +51,7 @@ class centralWidget(QWidget):
 					if not phill.isFile():
 						res=subprocess.check_output(["pandoc","-s",files.fileStrPath(),"-o",files.htmlize()])
 					if not (GXML.BehaviourRoot.find("Hpandoc").text in["Create","create","C","c"]):
-						phill=fileElement(files.htmlize())
+						files=fileElement(files.htmlize())
 			self.TabList.append(files)
 			
 			if files.isUnique() and files.isFile():

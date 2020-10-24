@@ -1,22 +1,39 @@
+---
+title: Pycodoc Documentation
+author: David
+---
+
 # Pycodoc
 
-A documentation reading tool developed by an idiot. Probably it won't ever be finished because zeal does a good enough job. Still I think this project could bring some new things to the table, mainly in adding your documentation easily from local git repos (which is mainly in markdown and normally end up all over your system), and in having a friendly(er), customizable interface.
+The idea behind this app is to centralize your documentation. With this app you can easily read the documentation of the projects you have all around your computer.
 
-Still it would be cool to have the zeal documentation stack integrated with this. You should really try zeal instead of this if you are planning on having loads of *official* documentation 
+This tool was developed by an idiot. You should really try zeal instead of this if you are planning on having loads of *official* documentation 
 
 ## Features
-
 
 * Tabbing and splitting
 * History
 * Customizable shortcuts
 * Style your files (but not too much because it's limited by qt itself)
 * Easily add new docs and style sheets
+* View HTML from other file formats (when pandoc is enabled)
 <!-- * Create different styles easily-->
-<!-- * View HTML from other file formats (when pandoc is enabled) -->
 
 ## Dependencies
 
+We divide the dependencies on hard and soft. Hard dependencies are ones that affect the functionality of the program and soft dependencies affect the aesthetics.
+
+### Hard
 * python v:3.8
 * pandoc v:2.5 (optional, external)
 * pyqt5 v:5.14 (python, may need installation)
+
+### Soft
+
+A set of icons similar to breeze dark. Also, it probably only looks not quite native in a qt based environment, but elsewhere it will just look hideous.
+
+## Short tutorial
+
+Drag and drop your files onto the app or to the search bar. You can also describe a path in the search bar or in the files configuration.
+
+Do checkout the settings if you want to enable pandoc-associated functionality, or describe your shortcuts.
