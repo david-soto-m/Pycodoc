@@ -20,7 +20,7 @@ class styleButton(QAction):
 		self.setMenu(self.styleMenu())
 	
 	def styleMenu(self):
-		self.styleCreator=StyleWidget()
+		self.styleCreator=StyleWidget(self.parent)
 		self.actions=[]
 		Menu=QMenu()
 		for child in GXML.styleLocsRoot.findall("Elem[@show='True']"):

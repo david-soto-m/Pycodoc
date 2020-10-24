@@ -1,5 +1,6 @@
 from glob_objects import globalxml as GXML
 import PyQt5.QtWidgets as QW
+from AuxWindows.StyleWidget import StyleWidget
 
 class Shortcutter():
 	def __init__(self,parent):
@@ -19,6 +20,8 @@ class Shortcutter():
 		self.addscht("ModifyBehaviours",parent.mnb.behaviourSettings.trigger)
 		self.addscht("ModifyShortcuts",parent.mnb.shortcutSettings.trigger)
 		self.addscht("Pandoc",parent.cwidg.pandocize)
+		self.sty=StyleWidget(self.parent)
+		self.addscht("AddStyle",self.sty.showWid)
 	
 	def addscht(self,text,funct):
 		self.shct.append(GXML.ShortRoot.find(text))
