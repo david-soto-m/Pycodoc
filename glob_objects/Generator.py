@@ -70,8 +70,9 @@ def shortCfgGenerator(string):
 	shorts.append(ET.Element("ConfFiles"))
 	shorts.append(ET.Element("ConfStyle"))
 	shorts.append(ET.Element("Pandoc"))
+	shorts.append(ET.Element("AddStyle"))
 	
-	titles=["Trigger History", "New Tab", "Split View", "Unsplit View", "Quit Pycodoc", "Quit Tab", "Open Files", "Modify Shortcuts", "Modify Behaviours", "Configure Files", "Configure Style Files", "View html (config specific)"]
+	titles=["Trigger History", "New Tab", "Split View", "Unsplit View", "Quit Pycodoc", "Quit Tab", "Open Files", "Modify Shortcuts", "Modify Behaviours", "Configure Files", "Configure Style Files", "View html (config specific)","Create a style file"]
 	
 	for shortcut,title in zip(shorts,titles):
 		shortcut.set("Title",title)
