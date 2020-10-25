@@ -3,7 +3,7 @@ from PyQt5.QtGui import QIcon
 from pathlib import Path
 from FileManage.fileElement import fileElement
 from AuxWindows.StyleWidget import StyleWidget
-import glob_objects.globalxml as GXML
+from glob_objects.globalxml import styleLocsRoot
 
 class styleButton(QAction):
 	def __init__(self,parent):
@@ -23,7 +23,7 @@ class styleButton(QAction):
 		self.styleCreator=StyleWidget(self.parent)
 		self.actions=[]
 		Menu=QMenu()
-		for child in GXML.styleLocsRoot.findall("Elem[@show='True']"):
+		for child in styleLocsRoot.findall("Elem[@show='True']"):
 			Elem=fileElement(child,style=True)
 			self.actions.append(QAction(Elem.title.text))
 			self.actions[-1].setData(Elem)

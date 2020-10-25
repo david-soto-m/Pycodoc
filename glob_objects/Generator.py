@@ -1,4 +1,4 @@
-import xml.etree.ElementTree as ET
+from xml.etree.ElementTree import Element, SubElement, parse
 from pathlib import Path
 import glob_objects.globalxml as GXML
 
@@ -11,30 +11,30 @@ def mainCfgGenerator(string):
 		f.write("<Root></Root>")
 	location=str(Path.home())+"/.config/Pycodoc/"
 	
-	Config=ET.parse(string)
+	Config=parse(string)
 	ConfigRoot=Config.getroot()
 	
-	Hist=ET.Element("History")
-	Behaviour=ET.Element("Behaviour")
-	Shortcuts=ET.Element("Shortcuts")
-	Files=ET.Element("Files")
-	styleLocs=ET.Element("StyleLocs")
+	Hist=Element("History")
+	Behaviour=Element("Behaviour")
+	Shortcuts=Element("Shortcuts")
+	Files=Element("Files")
+	styleLocs=Element("StyleLocs")
 	
-	HistPath=ET.SubElement(Hist,"Path")
-	HistMax=ET.SubElement(Hist,"Max")
+	HistPath=SubElement(Hist,"Path")
+	HistMax=SubElement(Hist,"Max")
 	HistMax.text=str(10)
 	HistPath.text=location+"History.xml"
 	
-	FilesPath=ET.SubElement(Files,"Path")
+	FilesPath=SubElement(Files,"Path")
 	FilesPath.text=location+"Files.xml"
 	
-	BehaviourPath=ET.SubElement(Behaviour,"Path")
+	BehaviourPath=SubElement(Behaviour,"Path")
 	BehaviourPath.text=location+"Behaviour.xml"
 	
-	ShortcutsPath=ET.SubElement(Shortcuts,"Path")
+	ShortcutsPath=SubElement(Shortcuts,"Path")
 	ShortcutsPath.text=location+"Shortcuts.xml"
 	
-	styleLocsPath=ET.SubElement(styleLocs,"Path")
+	styleLocsPath=SubElement(styleLocs,"Path")
 	styleLocsPath.text=location+"StyleLoc.xml"
 	
 	
@@ -53,24 +53,24 @@ def shortCfgGenerator(string):
 	with open(string,"w+") as f:
 		f.write("<Shortcuts></Shortcuts>")
 	
-	Short=ET.parse(string)
+	Short=parse(string)
 	ShortRoot=Short.getroot()
 	
 	shorts=[]
 	
-	shorts.append(ET.Element("TriggerHistory"))
-	shorts.append(ET.Element("NewTab"))
-	shorts.append(ET.Element("Split"))
-	shorts.append(ET.Element("Unsplit"))
-	shorts.append(ET.Element("Quit"))
-	shorts.append(ET.Element("QuitTab"))
-	shorts.append(ET.Element("OpenFile"))
-	shorts.append(ET.Element("ModifyShortcuts"))
-	shorts.append(ET.Element("ModifyBehaviours"))
-	shorts.append(ET.Element("ConfFiles"))
-	shorts.append(ET.Element("ConfStyle"))
-	shorts.append(ET.Element("Pandoc"))
-	shorts.append(ET.Element("AddStyle"))
+	shorts.append(Element("TriggerHistory"))
+	shorts.append(Element("NewTab"))
+	shorts.append(Element("Split"))
+	shorts.append(Element("Unsplit"))
+	shorts.append(Element("Quit"))
+	shorts.append(Element("QuitTab"))
+	shorts.append(Element("OpenFile"))
+	shorts.append(Element("ModifyShortcuts"))
+	shorts.append(Element("ModifyBehaviours"))
+	shorts.append(Element("ConfFiles"))
+	shorts.append(Element("ConfStyle"))
+	shorts.append(Element("Pandoc"))
+	shorts.append(Element("AddStyle"))
 	
 	titles=["Trigger History", "New Tab", "Split View", "Unsplit View", "Quit Pycodoc", "Quit Tab", "Open Files", "Modify Shortcuts", "Modify Behaviours", "Configure Files", "Configure Style Files", "View html (config specific)","Create a style file"]
 	
@@ -87,16 +87,16 @@ def behaviourCfgGenerator(string):
 	with open(string,"w+") as f:
 		f.write("<Behaviour></Behaviour>")
 	
-	Behaviour=ET.parse(string)
+	Behaviour=parse(string)
 	BehaviourRoot=Behaviour.getroot()
 	
-	hdepth=ET.Element("HistDepth")
+	hdepth=Element("HistDepth")
 	hdepth.text="15"
 	BehaviourRoot.append(hdepth)
-	BehaviourRoot.append(ET.Element("TabBarAutoHide"))
-	BehaviourRoot.append(ET.Element("LastTabRemoved"))
-	BehaviourRoot.append(ET.Element("Pandoc"))
-	BehaviourRoot.append(ET.Element("Hpandoc"))
+	BehaviourRoot.append(Element("TabBarAutoHide"))
+	BehaviourRoot.append(Element("LastTabRemoved"))
+	BehaviourRoot.append(Element("Pandoc"))
+	BehaviourRoot.append(Element("Hpandoc"))
 	
 	Behaviour.write(string)
 
@@ -107,7 +107,7 @@ def filesCfgGenerator(string):
 	p.touch(exist_ok=True)
 	with open(string,"w+") as f:
 		f.write("<Files></Files>")
-	Files=ET.parse(string)
+	Files=parse(string)
 	FilesRoot=Files.getroot()
 
 def historyCfgGenerator(string):
@@ -133,15 +133,15 @@ def defaultfileGenerator(string):
 	p.touch(exist_ok=True)
 	with open(string,"w+") as f:
 		f.write("<html><body><h1>Some error has ocurred</h1>This file will contain a short manual in future releases</body></html>")
-	defFile=ET.Element("Elem")
+	defFile=Element("Elem")
 	defFile.set("show","False")
 	defFile.set("default","True")
 	defFile.set("error","True")
-	path=ET.SubElement(defFile,"dir")
+	path=SubElement(defFile,"dir")
 	path.text=str(direc)+"/"
-	name=ET.SubElement(defFile,"name")
+	name=SubElement(defFile,"name")
 	name.text=p.name
-	title=ET.SubElement(defFile,"title")
+	title=SubElement(defFile,"title")
 	title.text=p.stem
 	
 	GXML.filesRoot.append(defFile)
@@ -154,15 +154,15 @@ def defaultStyleGenerator(string):
 	p.touch(exist_ok=True)
 	with open(string,"w+") as f:
 		f.write(" ")
-	defFile=ET.Element("Elem")
+	defFile=Element("Elem")
 	defFile.set("show","True")
 	defFile.set("default","True")
 	defFile.set("error","True")
-	path=ET.SubElement(defFile,"dir")
+	path=SubElement(defFile,"dir")
 	path.text=str(direc)+"/"
-	name=ET.SubElement(defFile,"name")
+	name=SubElement(defFile,"name")
 	name.text=p.name
-	title=ET.SubElement(defFile,"title")
+	title=SubElement(defFile,"title")
 	title.text="System Theme"
 	
 	GXML.styleLocsRoot.append(defFile)

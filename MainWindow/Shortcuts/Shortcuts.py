@@ -1,5 +1,5 @@
-from glob_objects import globalxml as GXML
-import PyQt5.QtWidgets as QW
+from glob_objects.globalxml import ShortRoot
+from PyQt5.QtWidgets import QShortcut
 from AuxWindows.StyleWidget import StyleWidget
 
 class Shortcutter():
@@ -24,14 +24,14 @@ class Shortcutter():
 		self.addscht("AddStyle",self.sty.showWid)
 	
 	def addscht(self,text,funct):
-		self.shct.append(GXML.ShortRoot.find(text))
+		self.shct.append(ShortRoot.find(text))
 		if self.shct[-1].text is not None:
-			self.shcts.append(QW.QShortcut(self.shct[-1].text,self.parent))
+			self.shcts.append(QShortcut(self.shct[-1].text,self.parent))
 			self.shcts[-1].activated.connect(funct)
 		else:
 			self.shct=self.shct[0:-1]
 	def refresh(self):
-		for elem in GXML.ShortRoot.findall("*"):
+		for elem in ShortRoot.findall("*"):
 			try:
 				idx=self.shct.index(elem)
 				self.shcts[idx].setKey(elem.text)

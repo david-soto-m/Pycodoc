@@ -17,7 +17,7 @@ This tool was developed by an idiot. You should really try zeal instead of this 
 * Style your files (but not too much because it's limited by qt itself)
 * Easily add new docs and style sheets
 * View HTML from other file formats (when pandoc is enabled)
-<!-- * Create different styles easily-->
+* Create different styles easily
 
 ## Dependencies
 

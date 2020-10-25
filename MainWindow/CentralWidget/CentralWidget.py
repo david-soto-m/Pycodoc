@@ -1,9 +1,8 @@
-import glob_objects.globalxml as GXML
+from glob_objects.globalxml import BehaviourRoot, filesRoot, styleLocsRoot
 from PyQt5.QtWidgets import QWidget, QTabWidget, QInputDialog, QHBoxLayout, QMessageBox, qApp
-from PyQt5.QtGui import QIcon
 from FileManage.fileElement import fileElement
 from .TextEditor import TextEditor
-import subprocess
+from subprocess import check_output
 class centralWidget(QWidget):
 	def __init__(self,parent=None):
 		super().__init__()
@@ -22,7 +21,7 @@ class centralWidget(QWidget):
 		TabBar.setTabsClosable(True)
 		TabBar.tabCloseRequested.connect(self.tabDestroyer)
 		TabBar.currentChanged.connect(self.idxactualizer)
-		TabBar.setTabBarAutoHide (GXML.BehaviourRoot.find("TabBarAutoHide").text not in ["Remain","remain","R","r"])
+		TabBar.setTabBarAutoHide (BehaviourRoot.find("TabBarAutoHide").text not in ["Remain","remain","R","r"])
 		return TabBar
 	
 	def idxactualizer(self,index):
@@ -34,23 +33,22 @@ class centralWidget(QWidget):
 			for idx in range(self.CwidLayout.count()):
 				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor( fileElement(), self, NoHist, self.currentStyle), fileElement().title.text)
 		elif type(files)==fileElement :
-			if (GXML.BehaviourRoot.find("Pandoc").text in ["Yes", "yes", "Y", "y"] and
+			if (BehaviourRoot.find("Pandoc").text in ["Yes", "yes", "Y", "y"] and
 				not files.isFormat(".html")):
 				boool=True
-				if GXML.BehaviourRoot.find("Hpandoc").text in ["Popup","popup","P","p"]:
+				if BehaviourRoot.find("Hpandoc").text in ["Shortcut","shortcut","S","s"] and not pandoc:
+					boool=False
+				if BehaviourRoot.find("Hpandoc").text in ["Popup","popup","P","p"]:
 					mboxans=QMessageBox.question(self.parent,'Confirmation',
 												'Do you want to see the html file',
 												QMessageBox.Yes|QMessageBox.No,
 												QMessageBox.Yes)
-					if mboxans == QMessageBox.Yes:
-						boool=True
-					else:
-						boool=False
+					boool=(mboxans==QMessageBox.Yes)
 				if boool:
 					phill=fileElement(files.htmlize())
 					if not phill.isFile():
-						res=subprocess.check_output(["pandoc","-s",files.fileStrPath(),"-o",files.htmlize()])
-					if not (GXML.BehaviourRoot.find("Hpandoc").text in["Create","create","C","c"]):
+						res=check_output(["pandoc","-s",files.fileStrPath(),"-o",files.htmlize()])
+					if not (BehaviourRoot.find("Hpandoc").text in["Create","create","C","c"]):
 						files=fileElement(files.htmlize())
 			self.TabList.append(files)
 			
@@ -58,7 +56,7 @@ class centralWidget(QWidget):
 				text,ok=QInputDialog.getText(self,'Title','Enter the title of:',text=files.title.text)
 				if ok:
 					files.title.text=str(text)
-					GXML.filesRoot.append(files.createFileElement())
+					filesRoot.append(files.createFileElement())
 					self.parent.tlb.combosearch.searchMenu()
 			for idx in range(self.CwidLayout.count()):
 				self.CwidLayout.itemAt(idx).widget().addTab(TextEditor( files, self, NoHist, self.currentStyle), files.title.text)
@@ -73,7 +71,7 @@ class centralWidget(QWidget):
 			else:
 				self.tabDestroyer(self.lastIdx)
 		elif self.CwidLayout.itemAt(0).widget().count()==1:
-			Behave=GXML.BehaviourRoot.find("LastTabRemoved").text
+			Behave=BehaviourRoot.find("LastTabRemoved").text
 			if (Behave in ["Welcome","welcome","W","w"]):
 				for idx in range(self.CwidLayout.count()):
 					self.CwidLayout.itemAt(idx).widget().removeTab(0)
@@ -90,8 +88,8 @@ class centralWidget(QWidget):
 	
 	def pandocize(self):
 		files=self.TabList[self.lastIdx]
-		if (GXML.BehaviourRoot.find("Hpandoc").text in ["Shortcut","shortcut","S","s"] and
-			GXML.BehaviourRoot.find("Pandoc").text in ["Yes", "yes", "Y", "y"] and 
+		if (BehaviourRoot.find("Hpandoc").text in ["Shortcut","shortcut","S","s"] and
+			BehaviourRoot.find("Pandoc").text in ["Yes", "yes", "Y", "y"] and 
 			not files.isFormat(".html")):
 			self.tabAdder(files,pandoc=True)
 	
@@ -100,7 +98,7 @@ class centralWidget(QWidget):
 			text,ok=QInputDialog.getText(self,'Title','Enter the title of:',text=styleFile.title.text)
 			if ok:
 				styleFile.title.text=str(text)
-				GXML.styleLocsRoot.append(styleFile.createFileElement())
+				styleLocsRoot.append(styleFile.createFileElement())
 		self.currentStyle=styleFile
 		for idx in range(self.CwidLayout.count()):
 			for  tabidx in range(self.CwidLayout.itemAt(idx).widget().count()):

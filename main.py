@@ -4,7 +4,6 @@ import sys
 from PyQt5.QtWidgets import QApplication
 from MainWindow.MainWindow import GuiApp
 import glob_objects.globalxml as GXML
-import xml.etree.ElementTree as ET
 from pathlib import Path
 
 def main():

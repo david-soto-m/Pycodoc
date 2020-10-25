@@ -1,6 +1,6 @@
 from PyQt5.QtWidgets import QComboBox, QSizePolicy 
 from PyQt5.QtCore import QVariant
-import glob_objects.globalxml as GXML
+from glob_objects.globalxml import filesRoot
 from FileManage.fileElement import fileElement
 
 class searchWidg(QComboBox):
@@ -18,7 +18,7 @@ class searchWidg(QComboBox):
 	def searchMenu(self):
 		self.clear()
 		self.Elem=[]
-		for child in GXML.filesRoot.findall("Elem[@show='True']"):
+		for child in filesRoot.findall("Elem[@show='True']"):
 			self.Elem.append(fileElement(child))
 		self.Elem.sort(key=lambda indiv: indiv.fileStrPath())
 		pathsep=""

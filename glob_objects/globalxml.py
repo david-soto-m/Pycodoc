@@ -1,10 +1,10 @@
-import xml.etree.ElementTree as ET
+from xml.etree.ElementTree import parse
 from pathlib import Path
 import glob_objects.Generator as GEN
 
 def metaConfig(configloc,generator=None):
 	if Path(configloc).is_file():
-		config=ET.parse(configloc)
+		config=parse(configloc)
 		configRoot=config.getroot()
 		return(config,configRoot)
 	elif generator is not None:
