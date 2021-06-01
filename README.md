@@ -37,3 +37,7 @@ A set of icons similar to breeze dark. Also, it probably only looks not quite na
 Drag and drop your files onto the app or to the search bar. You can also describe a path in the search bar or in the files configuration.
 
 Do checkout the settings if you want to enable pandoc-associated functionality, or describe your shortcuts.
+
+# This proyect is abandoned
+
+If you write me I will offer some help if I can. It might recieve some maintenance this summer (2021) but it's unlikely. The possible maintenance will be focused on running things from a virtual environment.
