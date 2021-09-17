@@ -1,7 +1,19 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QScrollArea, QDesktopWidget, QLabel, QSpinBox, QCheckBox, QComboBox, QPushButton
+from PyQt5.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QHBoxLayout,
+    QScrollArea,
+    QDesktopWidget,
+    QLabel,
+    QSpinBox,
+    QCheckBox,
+    QComboBox,
+    QPushButton,
+)
 from PyQt5.QtGui import QIcon
 from glob_objects.globalxml import BehaviourRoot
 from shutil import which
+
 
 class BehaviourWidget (QWidget):
     def __init__(self, parent):
@@ -29,14 +41,26 @@ class BehaviourWidget (QWidget):
 
         geo = QDesktopWidget().availableGeometry()
         self.resize(self.sizeHint())
-        self.move(int(geo.center().x() - self.width()/2), int(geo.center().y() - self.height()/2))
-
+        self.move(
+            int(
+                geo.center().x()
+                - self.width()/2
+            ),
+            int(
+                geo.center().y()
+                - self.height()/2
+            )
+        )
 
         self.show()
 
     def centralLayout(self):
         lay = QVBoxLayout()
-        lay.addWidget(QLabel('Some changes may need a restart of the application in order to take effect'))
+        lay.addWidget(
+            QLabel('''\
+Some changes may need a restart of the application in order to take effect\
+            ''')
+        )
         lay.addLayout(self.tabBarAHLayout())
         if which('pandoc') is not None:
             lay.addLayout(self.pandocLayout())
@@ -61,7 +85,14 @@ class BehaviourWidget (QWidget):
         self.hiderTB = QCheckBox('\t\t')
         self.hiderTB.stateChanged.connect(self.changeTBAHLabel)
 
-        boool = BehaviourRoot.find('TabBarAutoHide').text  in ['Remain', 'remain', 'R', 'r']
+        boool = BehaviourRoot.find(
+            'TabBarAutoHide'
+            ).text in [
+                'Remain',
+                'remain',
+                'R',
+                'r'
+            ]
         self.hiderTB.setChecked(boool)
         self.changeTBAHLabel(boool)
 
@@ -70,13 +101,13 @@ class BehaviourWidget (QWidget):
         return lay
 
     def changeTBAHLabel(self, signal):
-        if signal == False:
+        if not signal:
             self.hiderTB.setText('Hide\t')
         else:
             self.hiderTB.setText('Remain')
 
     def changeHtmlLayoutLabel(self, signal):
-        if signal == False:
+        if not signal:
             self.beauHTML.setText('No\t')
         else:
             self.beauHTML.setText('Yes\t')
@@ -87,7 +118,7 @@ class BehaviourWidget (QWidget):
         self.pan = QCheckBox('\t\t')
         self.pan.stateChanged.connect(self.changeLayoutLabel)
 
-        boool = BehaviourRoot.find('Pandoc').text  in ['Yes', 'yes', 'Y', 'y']
+        boool = BehaviourRoot.find('Pandoc').text in ['Yes', 'yes', 'Y', 'y']
         self.pan.setChecked(boool)
         self.changeLayoutLabel(boool)
 
@@ -96,7 +127,7 @@ class BehaviourWidget (QWidget):
         return lay
 
     def changeLayoutLabel(self, signal):
-        if signal == False:
+        if not signal:
             self.pan.setText('No\t')
         else:
             self.pan.setText('Yes\t')
@@ -109,7 +140,6 @@ class BehaviourWidget (QWidget):
         self.lastTabCB.addItem('show no tab')
         self.lastTabCB.addItem('don\'t')
         self.lastTabCB.addItem('quit app')
-
 
         tr1 = {i: 0 for i in ['Welcome', 'welcome', 'W', 'w']}
         tr2 = {i: 1 for i in ['None', 'none', 'N', 'n']}
@@ -135,7 +165,6 @@ class BehaviourWidget (QWidget):
         self.hpandocCB.addItem('Create html and don\'t show it')
         self.hpandocCB.addItem('Show a popup to confirm wether')
         self.hpandocCB.addItem('Shortcut to create and show html')
-
 
         tr1 = {i: 0 for i in ['Create and show', 'create; show', 'CS', 'cs']}
         tr2 = {i: 1 for i in ['Create', 'create', 'C', 'c']}
@@ -177,11 +206,19 @@ class BehaviourWidget (QWidget):
         BehaviourRoot.find('TabBarAutoHide').text = stri
 
         tr = {0: 'W', 1: 'N', 2: 'P', 3: 'Q'}
-        BehaviourRoot.find('LastTabRemoved').text = tr[self.lastTabCB.currentIndex()]
+        BehaviourRoot.find(
+            'LastTabRemoved'
+            ).text = tr[
+                self.lastTabCB.currentIndex()
+            ]
 
         if (which('pandoc') is not None):
             tr = {0: 'CS', 1: 'C', 2: 'P', 3: 'S'}
-            BehaviourRoot.find('Hpandoc').text = tr[self.hpandocCB.currentIndex()]
+            BehaviourRoot.find(
+                'Hpandoc'
+                ).text = tr[
+                    self.hpandocCB.currentIndex()
+                ]
 
         if (which('pandoc') is not None) and self.pan.isChecked():
             stri = 'Y'

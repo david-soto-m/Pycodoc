@@ -1,10 +1,24 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QScrollArea, QDesktopWidget, QSizePolicy, QButtonGroup, QLineEdit, QPushButton, QRadioButton, QCheckBox, QLabel
+from PyQt5.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QHBoxLayout,
+    QScrollArea,
+    QDesktopWidget,
+    QSizePolicy,
+    QButtonGroup,
+    QLineEdit,
+    QPushButton,
+    QRadioButton,
+    QCheckBox,
+    QLabel
+)
 from PyQt5.QtGui import QIcon
 from glob_objects.globalxml import styleLocsRoot, filesRoot
 from FileManage.fileElement import fileElement
 
+
 class FilesWidget (QWidget):
-    def __init__(self, parent = None, style = False):
+    def __init__(self, parent=None, style=False):
         super().__init__()
         self.parent = parent
         self.style = style
@@ -34,14 +48,19 @@ class FilesWidget (QWidget):
             files = filesRoot
 
         vert = QVBoxLayout()
-        horz = QHBoxLayout()
 
         self.defaultContainer = QButtonGroup()
         self.errorContainer = QButtonGroup()
 
         for child, index in zip(files, range(len(files))):
             Elem = fileElement(child)
-            self.scrollVert.addLayout(self.listAdder(title = Elem.title.text, path = Elem.fileStrPath(), child = child))
+            self.scrollVert.addLayout(
+                self.listAdder(
+                    title=Elem.title.text,
+                    path=Elem.fileStrPath(),
+                    child=child
+                )
+            )
 
         globber = QWidget()
         globber.setLayout(self.scrollVert)
@@ -57,11 +76,14 @@ class FilesWidget (QWidget):
 
         geo = QDesktopWidget().availableGeometry()
         self.resize(self.sizeHint())
-        self.move(int(geo.center().x() - self.width()/2), int(geo.center().y() - self.height()/2))
+        self.move(
+            int(geo.center().x() - self.width()/2),
+            int(geo.center().y() - self.height()/2)
+        )
 
         self.show()
 
-    def listAdder(self, path = '', title = '', child = None):
+    def listAdder(self, path='', title='', child=None):
         exppol = QSizePolicy().Policy.Expanding
         minpol = QSizePolicy().Policy.Fixed
 
@@ -76,7 +98,13 @@ class FilesWidget (QWidget):
         index = len(self.itemElim)
 
         self.itemElim.append(False)
-        self.btnsElim.append(QPushButton(QIcon().fromTheme('list - remove'), '', self))
+        self.btnsElim.append(
+            QPushButton(
+                QIcon().fromTheme('list - remove'),
+                '',
+                self
+            )
+        )
         self.titleEdits.append(QLineEdit(title))
         self.filePathEdits.append(QLineEdit(path))
         if self.style:
@@ -86,7 +114,7 @@ class FilesWidget (QWidget):
         self.defaultRBtns.append(QRadioButton('Show on start', self))
         self.errorRBtns.append(QRadioButton('Show on error', self))
 
-        self.showCBoxes[index].setTristate(on = False)
+        self.showCBoxes[index].setTristate(on=False)
 
         self.defaultContainer.addButton(self.defaultRBtns[index])
         self.errorContainer.addButton(self.errorRBtns[index])
@@ -130,8 +158,10 @@ class FilesWidget (QWidget):
 
     def elimHandler(self):
         idx = self.btnsElim.index(self.sender())
-        if self.itemElim[idx] == False:
-            self.btnsElim[idx].setStyleSheet('QWidget { background-color: red}')
+        if not self.itemElim[idx]:
+            self.btnsElim[idx].setStyleSheet(
+                'QWidget { background-color: red}'
+            )
             self.itemElim[idx] = True
         else:
             self.btnsElim[idx].setStyleSheet('QWidget { background-color:}')
@@ -141,20 +171,31 @@ class FilesWidget (QWidget):
         if self.style:
             styleLocsRoot.clear()
             for idx in range(len(self.itemElim)):
-                if self.itemElim[idx] == False:
-                    elem = fileElement(self.filePathEdits[idx].text(), style = True)
+                if not self.itemElim[idx]:
+                    elem = fileElement(
+                        self.filePathEdits[idx].text(),
+                        style=True
+                    )
                     if elem.isFile() and elem.isFormat('.css'):
                         elem.title.text = self.titleEdits[idx].text()
-                        xellie = elem.createFileElement(show=self.showCBoxes[idx].isChecked(), default=self.defaultRBtns[idx].isChecked(), error=self.errorRBtns[idx].isChecked())
+                        xellie = elem.createFileElement(
+                            show=self.showCBoxes[idx].isChecked(),
+                            default=self.defaultRBtns[idx].isChecked(),
+                            error=self.errorRBtns[idx].isChecked()
+                        )
                         styleLocsRoot.append(xellie)
         else:
             filesRoot.clear()
             for idx in range(len(self.itemElim)):
-                if self.itemElim[idx] == False:
+                if not self.itemElim[idx]:
                     elem = fileElement(self.filePathEdits[idx].text())
                     if elem.isFile():
                         elem.title.text = self.titleEdits[idx].text()
-                        xellie = elem.createFileElement(show=self.showCBoxes[idx].isChecked(), default=self.defaultRBtns[idx].isChecked(), error=self.errorRBtns[idx].isChecked())
+                        xellie = elem.createFileElement(
+                            show=self.showCBoxes[idx].isChecked(),
+                            default=self.defaultRBtns[idx].isChecked(),
+                            error=self.errorRBtns[idx].isChecked()
+                        )
                         filesRoot.append(xellie)
             self.parent.tlb.combosearch.searchMenu()
         self.hide()

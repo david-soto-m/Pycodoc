@@ -1,6 +1,17 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QHBoxLayout, QScrollArea, QDesktopWidget, QSizePolicy, QPushButton, QLabel, QLineEdit
+from PyQt5.QtWidgets import (
+    QWidget,
+    QVBoxLayout,
+    QHBoxLayout,
+    QScrollArea,
+    QDesktopWidget,
+    QSizePolicy,
+    QPushButton,
+    QLabel,
+    QLineEdit
+)
 from PyQt5.QtGui import QIcon
 from glob_objects.globalxml import ShortRoot
+
 
 class ShortcutsWidget (QWidget):
     def __init__(self, parent):
@@ -31,7 +42,15 @@ class ShortcutsWidget (QWidget):
 
         geo = QDesktopWidget().availableGeometry()
         self.resize(self.sizeHint())
-        self.move(int(geo.center().x()-self.width()/2), int(geo.center().y()-self.height()/2))
+        self.move(
+            int(
+                geo.center().x()
+                - self.width()/2
+            ),
+            int(
+                geo.center().y()
+                - self.height()/2)
+            )
 
         self.show()
 

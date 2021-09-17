@@ -2,12 +2,13 @@ from xml.etree.ElementTree import Element, SubElement, parse
 from pathlib import Path
 import glob_objects.globalxml as GXML
 
+
 def mainCfgGenerator(string):
     p = Path(string)
     direc = p.parent
-    direc.mkdir(exist_ok = True, parents = True)
-    p.touch(exist_ok = True)
-    with open(string, 'w + ') as f:
+    direc.mkdir(exist_ok=True, parents=True)
+    p.touch(exist_ok=True)
+    with open(string, 'w+') as f:
         f.write('<Root></Root>')
     location = str(Path.home()) + '/.config/Pycodoc/'
 
@@ -37,7 +38,6 @@ def mainCfgGenerator(string):
     styleLocsPath = SubElement(styleLocs, 'Path')
     styleLocsPath.text = location + 'StyleLoc.xml'
 
-
     ConfigRoot.append(Shortcuts)
     ConfigRoot.append(Behaviour)
     ConfigRoot.append(Files)
@@ -45,12 +45,13 @@ def mainCfgGenerator(string):
     ConfigRoot.append(Hist)
     Config.write(string)
 
+
 def shortCfgGenerator(string):
     p = Path(string)
     direc = p.parent
-    direc.mkdir(exist_ok = True, parents = True)
-    p.touch(exist_ok = True)
-    with open(string, 'w + ') as f:
+    direc.mkdir(exist_ok=True, parents=True)
+    p.touch(exist_ok=True)
+    with open(string, 'w+') as f:
         f.write('<Shortcuts></Shortcuts>')
 
     Short = parse(string)
@@ -72,19 +73,34 @@ def shortCfgGenerator(string):
     shorts.append(Element('Pandoc'))
     shorts.append(Element('AddStyle'))
 
-    titles = ['Trigger History', 'New Tab', 'Split View', 'Unsplit View', 'Quit Pycodoc', 'Quit Tab', 'Open Files', 'Modify Shortcuts', 'Modify Behaviours', 'Configure Files', 'Configure Style Files', 'View html (config specific)', 'Create a style file']
+    titles = [
+        'Trigger History',
+        'New Tab',
+        'Split View',
+        'Unsplit View',
+        'Quit Pycodoc',
+        'Quit Tab',
+        'Open Files',
+        'Modify Shortcuts',
+        'Modify Behaviours',
+        'Configure Files',
+        'Configure Style Files',
+        'View html (config specific)',
+        'Create a style file'
+    ]
 
     for shortcut, title in zip(shorts, titles):
         shortcut.set('Title', title)
-        ShortRoot.append(shortcut)#Needa add'em before we print'em
+        ShortRoot.append(shortcut)  # Needa add'em before we print'em
     Short.write(string)
+
 
 def behaviourCfgGenerator(string):
     p = Path(string)
     direc = p.parent
-    direc.mkdir(exist_ok = True, parents = True)
-    p.touch(exist_ok = True)
-    with open(string, 'w + ') as f:
+    direc.mkdir(exist_ok=True, parents=True)
+    p.touch(exist_ok=True)
+    with open(string, 'w+') as f:
         f.write('<Behaviour></Behaviour>')
 
     Behaviour = parse(string)
@@ -100,39 +116,50 @@ def behaviourCfgGenerator(string):
 
     Behaviour.write(string)
 
+
 def filesCfgGenerator(string):
     p = Path(string)
     direc = p.parent
-    direc.mkdir(exist_ok = True, parents = True)
-    p.touch(exist_ok = True)
-    with open(string, 'w + ') as f:
+    direc.mkdir(exist_ok=True, parents=True)
+    p.touch(exist_ok=True)
+    with open(string, 'w+') as f:
         f.write('<Files></Files>')
     Files = parse(string)
     FilesRoot = Files.getroot()
+    return FilesRoot
+
 
 def historyCfgGenerator(string):
     p = Path(string)
     direc = p.parent
-    direc.mkdir(exist_ok = True, parents = True)
-    p.touch(exist_ok = True)
-    with open(string, 'w + ') as f:
+    direc.mkdir(exist_ok=True, parents=True)
+    p.touch(exist_ok=True)
+    with open(string, 'w+') as f:
         f.write('<Hist></Hist>')
+
 
 def styleLocsCfgGenerator(string):
     p = Path(string)
     direc = p.parent
-    direc.mkdir(exist_ok = True, parents = True)
-    p.touch(exist_ok = True)
-    with open(string, 'w + ') as f:
+    direc.mkdir(exist_ok=True, parents=True)
+    p.touch(exist_ok=True)
+    with open(string, 'w+') as f:
         f.write('<styleLocs></styleLocs>')
+
 
 def defaultfileGenerator(string):
     p = Path(string)
     direc = p.parent
-    direc.mkdir(exist_ok = True, parents = True)
-    p.touch(exist_ok = True)
-    with open(string, 'w + ') as f:
-        f.write('<html><body><h1>Some error has ocurred</h1>This file will contain a short manual in future releases</body></html>')
+    direc.mkdir(exist_ok=True, parents=True)
+    p.touch(exist_ok=True)
+    with open(string, 'w+') as f:
+        f.write('''\
+<html>
+    <body>
+        <h1>Some error has ocurred</h1>
+        This file will contain a short manual in future releases
+    </body>
+</html>''')
     defFile = Element('Elem')
     defFile.set('show', 'False')
     defFile.set('default', 'True')
@@ -147,12 +174,13 @@ def defaultfileGenerator(string):
     GXML.filesRoot.append(defFile)
     GXML.Files.write(GXML.GConfigRoot.find('Files/Path').text)
 
+
 def defaultStyleGenerator(string):
     p = Path(string)
     direc = p.parent
-    direc.mkdir(exist_ok = True, parents = True)
-    p.touch(exist_ok = True)
-    with open(string, 'w + ') as f:
+    direc.mkdir(exist_ok=True, parents=True)
+    p.touch(exist_ok=True)
+    with open(string, 'w+') as f:
         f.write(' ')
     defFile = Element('Elem')
     defFile.set('show', 'True')
@@ -167,4 +195,3 @@ def defaultStyleGenerator(string):
 
     GXML.styleLocsRoot.append(defFile)
     GXML.StyleLocs.write(GXML.GConfigRoot.find('StyleLocs/Path').text)
-

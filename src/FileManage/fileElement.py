@@ -79,11 +79,11 @@ class fileElement():
         else:
             searchBasket = filesRoot
         a = searchBasket.findall(
-            'Elem[name = '
+            'Elem[name = \''
             + self.name.text
-            + '][dir = '
+            + '\'][dir = \''
             + self.direc.text
-            + ']'
+            + '\']'
         )
         return len(a) == 0
 
