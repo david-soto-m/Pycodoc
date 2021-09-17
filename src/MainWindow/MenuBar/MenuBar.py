@@ -11,10 +11,10 @@ class MenuBar(QMenuBar):
         fileMenu = self.addMenu('&File')
 
         #These (↓) actions are remembered in order to be accessed by shortcuts
-        self.exitAct = QAction(QIcon().fromTheme("application-exit"), 'Quit', parent)
+        self.exitAct = QAction(QIcon().fromTheme('application-exit'), 'Quit', parent)
         self.exitAct.triggered.connect(qApp.quit)
 
-        self.fileopener=opener(parent=parent, string="Open")#DRY AF
+        self.fileopener=opener(parent=parent, string='Open')#DRY AF
 
         fileMenu.addAction(self.exitAct)
         fileMenu.addAction(self.fileopener)
@@ -22,19 +22,19 @@ class MenuBar(QMenuBar):
         settingsMenu = self.addMenu('&Settings')
 
         self.FilesManager=FilesWidget(parent)
-        self.editFiles=QAction(QIcon().fromTheme("kt-queue-manager"), 'Configure Files', parent)
+        self.editFiles=QAction(QIcon().fromTheme('kt-queue-manager'), 'Configure Files', parent)
         self.editFiles.triggered.connect(self.FilesManager.showWind)
 
         self.StylesManager=FilesWidget(parent, style=True)
-        self.editStyles=QAction(QIcon().fromTheme("color-management"), 'Configure Style Files', parent)
+        self.editStyles=QAction(QIcon().fromTheme('color-management'), 'Configure Style Files', parent)
         self.editStyles.triggered.connect(self.StylesManager.showWind)
 
         self.shortcutsManager=ShortcutsWidget(parent)
-        self.shortcutSettings=QAction(QIcon().fromTheme("configure-shortcuts"), 'Configure Shortcuts', parent)
+        self.shortcutSettings=QAction(QIcon().fromTheme('configure-shortcuts'), 'Configure Shortcuts', parent)
         self.shortcutSettings.triggered.connect(self.shortcutsManager.showWid)
 
         self.behaviourManager=BehaviourWidget(parent)
-        self.behaviourSettings=QAction(QIcon().fromTheme("settings-configure"), 'Configure Pycodoc', parent)
+        self.behaviourSettings=QAction(QIcon().fromTheme('settings-configure'), 'Configure Pycodoc', parent)
         self.behaviourSettings.triggered.connect(self.behaviourManager.showWid)
 
 

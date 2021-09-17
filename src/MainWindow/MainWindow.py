@@ -12,8 +12,8 @@ class GuiApp(QMainWindow):
         self.defineCentralWidget()
 
 
-        self.setWindowTitle("Pycobrowser")
-        self.setWindowIcon(QIcon('AppIcon/AppIcon.svg'))
+        self.setWindowTitle('Pycobrowser')
+        self.setWindowIcon(QIcon('../data/AppIcon/AppIcon.svg'))
 
         self.defineMenuBar()
 

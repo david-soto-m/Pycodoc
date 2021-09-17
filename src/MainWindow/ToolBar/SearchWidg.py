@@ -18,12 +18,12 @@ class searchWidg(QComboBox):
     def searchMenu(self):
         self.clear()
         self.Elem=[]
-        for child in filesRoot.findall("Elem[@show='True']"):
+        for child in filesRoot.findall('Elem[@show=\'True\']'):
             self.Elem.append(fileElement(child))
         self.Elem.sort(key=lambda indiv: indiv.fileStrPath())
-        pathsep=""
+        pathsep=''
         for item in self.Elem:
-            if pathsep!=item.direc.text and pathsep!="":
+            if pathsep!=item.direc.text and pathsep!='':
                 self.insertSeparator(self.count())
             self.addItem(item.title.text, QVariant(item))
             pathsep=item.direc.text

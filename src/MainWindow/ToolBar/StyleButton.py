@@ -9,8 +9,8 @@ class styleButton(QAction):
     def __init__(self, parent):
         super().__init__()
         self.parent=parent
-        self.setIcon(QIcon().fromTheme("text-css"))
-        self.setToolTip("Style")
+        self.setIcon(QIcon().fromTheme('text-css'))
+        self.setToolTip('Style')
         self.setMenu(self.styleMenu())
         self.hovered.connect(self.refreshMenu)
         self.triggered.connect(self.triggerOpen)
@@ -23,7 +23,7 @@ class styleButton(QAction):
         self.styleCreator=StyleWidget(self.parent)
         self.actions=[]
         Menu=QMenu()
-        for child in styleLocsRoot.findall("Elem[@show='True']"):
+        for child in styleLocsRoot.findall('Elem[@show=\'True\']'):
             Elem=fileElement(child, style=True)
             self.actions.append(QAction(Elem.title.text))
             self.actions[-1].setData(Elem)

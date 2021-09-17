@@ -6,8 +6,8 @@ class ShortcutsWidget (QWidget):
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
-        self.setWindowTitle("Shortcut settings")
-        self.setWindowIcon(QIcon('AppIcon/AppIcon.svg'))
+        self.setWindowTitle('Shortcut settings')
+        self.setWindowIcon(QIcon('../data/AppIcon/AppIcon.svg'))
 
     def showWid(self):
         self.__init__(self.parent)
@@ -15,7 +15,7 @@ class ShortcutsWidget (QWidget):
         scl = QVBoxLayout()
         self.txts = []
 
-        for elem in ShortRoot.findall("*"):
+        for elem in ShortRoot.findall('*'):
             scl.addLayout(self.shctLayout(elem))
 
         globber = QWidget()
@@ -36,7 +36,7 @@ class ShortcutsWidget (QWidget):
         self.show()
 
     def shctLayout(self, elem):
-        lbl = QLabel(elem.get("Title")+":")
+        lbl = QLabel(elem.get('Title')+':')
         txt = QLineEdit(elem.text)
 
         exppol = QSizePolicy().Policy.Expanding
@@ -68,7 +68,7 @@ class ShortcutsWidget (QWidget):
 
     def applyHandle(self):
         idx = 0
-        for elem in ShortRoot.findall("*"):
+        for elem in ShortRoot.findall('*'):
             elem.text = self.txts[idx].text()
             idx += 1
         self.parent.shctobj.refresh()

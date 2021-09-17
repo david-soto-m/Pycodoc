@@ -9,11 +9,11 @@ class FilesWidget (QWidget):
         self.parent = parent
         self.style = style
         if self.style:
-            self.setWindowTitle("Style files settings")
+            self.setWindowTitle('Style files settings')
         else:
-            self.setWindowTitle("Files settings")
+            self.setWindowTitle('Files settings')
 
-        self.setWindowIcon(QIcon('AppIcon/AppIcon.svg'))
+        self.setWindowIcon(QIcon('../data/AppIcon/AppIcon.svg'))
 
         self.itemElim = []
         self.btnsElim = []
@@ -61,13 +61,13 @@ class FilesWidget (QWidget):
 
         self.show()
 
-    def listAdder(self, path = "", title = "", child = None):
+    def listAdder(self, path = '', title = '', child = None):
         exppol = QSizePolicy().Policy.Expanding
         minpol = QSizePolicy().Policy.Fixed
 
-        filelbl = QLabel("File: ")
-        titlelbl = QLabel("Title: ")
-        pathlbl = QLabel("Path: ")
+        filelbl = QLabel('File: ')
+        titlelbl = QLabel('Title: ')
+        pathlbl = QLabel('Path: ')
 
         filelbl.setSizePolicy(minpol, minpol)
         titlelbl.setSizePolicy(minpol, minpol)
@@ -76,15 +76,15 @@ class FilesWidget (QWidget):
         index = len(self.itemElim)
 
         self.itemElim.append(False)
-        self.btnsElim.append(QPushButton(QIcon().fromTheme("list - remove"), '', self))
+        self.btnsElim.append(QPushButton(QIcon().fromTheme('list - remove'), '', self))
         self.titleEdits.append(QLineEdit(title))
         self.filePathEdits.append(QLineEdit(path))
         if self.style:
-            self.showCBoxes.append(QCheckBox("Show on menu", self))
+            self.showCBoxes.append(QCheckBox('Show on menu', self))
         else:
-            self.showCBoxes.append(QCheckBox("Show on searchbar", self))
-        self.defaultRBtns.append(QRadioButton("Show on start", self))
-        self.errorRBtns.append(QRadioButton("Show on error", self))
+            self.showCBoxes.append(QCheckBox('Show on searchbar', self))
+        self.defaultRBtns.append(QRadioButton('Show on start', self))
+        self.errorRBtns.append(QRadioButton('Show on error', self))
 
         self.showCBoxes[index].setTristate(on = False)
 
@@ -93,9 +93,9 @@ class FilesWidget (QWidget):
 
         self.btnsElim[index].clicked.connect(self.elimHandler)
         if child is not None:
-            self.showCBoxes[index].setChecked(child.get("show") == "True")
-            self.defaultRBtns[index].setChecked(child.get("default") == "True")
-            self.errorRBtns[index].setChecked(child.get("error") == "True")
+            self.showCBoxes[index].setChecked(child.get('show') == 'True')
+            self.defaultRBtns[index].setChecked(child.get('default') == 'True')
+            self.errorRBtns[index].setChecked(child.get('error') == 'True')
 
         self.btnsElim[index].setSizePolicy(minpol, minpol)
         self.titleEdits[index].setSizePolicy(exppol, minpol)
@@ -143,7 +143,7 @@ class FilesWidget (QWidget):
             for idx in range(len(self.itemElim)):
                 if self.itemElim[idx] == False:
                     elem = fileElement(self.filePathEdits[idx].text(), style = True)
-                    if elem.isFile() and elem.isFormat(".css"):
+                    if elem.isFile() and elem.isFormat('.css'):
                         elem.title.text = self.titleEdits[idx].text()
                         xellie = elem.createFileElement(show=self.showCBoxes[idx].isChecked(), default=self.defaultRBtns[idx].isChecked(), error=self.errorRBtns[idx].isChecked())
                         styleLocsRoot.append(xellie)

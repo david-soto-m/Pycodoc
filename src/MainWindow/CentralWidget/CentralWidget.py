@@ -21,7 +21,7 @@ class centralWidget(QWidget):
         TabBar.setTabsClosable(True)
         TabBar.tabCloseRequested.connect(self.tabDestroyer)
         TabBar.currentChanged.connect(self.idxactualizer)
-        TabBar.setTabBarAutoHide (BehaviourRoot.find("TabBarAutoHide").text not in ["Remain", "remain", "R", "r"])
+        TabBar.setTabBarAutoHide (BehaviourRoot.find('TabBarAutoHide').text not in ['Remain', 'remain', 'R', 'r'])
         return TabBar
 
     def idxactualizer(self, index):
@@ -33,12 +33,12 @@ class centralWidget(QWidget):
             for idx in range(self.CwidLayout.count()):
                 self.CwidLayout.itemAt(idx).widget().addTab(TextEditor( fileElement(), self, NoHist, self.currentStyle), fileElement().title.text)
         elif type(files)==fileElement:
-            if (BehaviourRoot.find("Pandoc").text in ["Yes", "yes", "Y", "y"] and
-                not files.isFormat(".html")):
+            if (BehaviourRoot.find('Pandoc').text in ['Yes', 'yes', 'Y', 'y'] and
+                not files.isFormat('.html')):
                 boool=True
-                if BehaviourRoot.find("Hpandoc").text in ["Shortcut", "shortcut", "S", "s"] and not pandoc:
+                if BehaviourRoot.find('Hpandoc').text in ['Shortcut', 'shortcut', 'S', 's'] and not pandoc:
                     boool=False
-                if BehaviourRoot.find("Hpandoc").text in ["Popup", "popup", "P", "p"]:
+                if BehaviourRoot.find('Hpandoc').text in ['Popup', 'popup', 'P', 'p']:
                     mboxans=QMessageBox.question(self.parent, 'Confirmation',
                                                 'Do you want to see the html file',
                                                 QMessageBox.Yes|QMessageBox.No,
@@ -47,8 +47,8 @@ class centralWidget(QWidget):
                 if boool:
                     phill=fileElement(files.htmlize())
                     if not phill.isFile():
-                        res=check_output(["pandoc", "-s", files.fileStrPath(), "-o", files.htmlize()])
-                    if not (BehaviourRoot.find("Hpandoc").text in["Create", "create", "C", "c"]):
+                        res=check_output(['pandoc', '-s', files.fileStrPath(), '-o', files.htmlize()])
+                    if not (BehaviourRoot.find('Hpandoc').text in['Create', 'create', 'C', 'c']):
                         files=fileElement(files.htmlize())
             self.TabList.append(files)
 
@@ -71,26 +71,26 @@ class centralWidget(QWidget):
             else:
                 self.tabDestroyer(self.lastIdx)
         elif self.CwidLayout.itemAt(0).widget().count()==1:
-            Behave=BehaviourRoot.find("LastTabRemoved").text
-            if (Behave in ["Welcome", "welcome", "W", "w"]):
+            Behave=BehaviourRoot.find('LastTabRemoved').text
+            if (Behave in ['Welcome', 'welcome', 'W', 'w']):
                 for idx in range(self.CwidLayout.count()):
                     self.CwidLayout.itemAt(idx).widget().removeTab(0)
                 self.TabList.pop(0)
                 self.tabAdder()
-            elif (Behave in ["None", "none", "N", "n"]):
+            elif (Behave in ['None', 'none', 'N', 'n']):
                 for idx in range(self.CwidLayout.count()):
                     self.CwidLayout.itemAt(idx).widget().removeTab(0)
                 self.TabList.pop(0)
-            elif (Behave in ["Persist", "persist", "P", "p"]):
+            elif (Behave in ['Persist', 'persist', 'P', 'p']):
                 pass #Not a mistake!!
             else:
                 qApp.quit()
 
     def pandocize(self):
         files=self.TabList[self.lastIdx]
-        if (BehaviourRoot.find("Hpandoc").text in ["Shortcut", "shortcut", "S", "s"] and
-            BehaviourRoot.find("Pandoc").text in ["Yes", "yes", "Y", "y"] and
-            not files.isFormat(".html")):
+        if (BehaviourRoot.find('Hpandoc').text in ['Shortcut', 'shortcut', 'S', 's'] and
+            BehaviourRoot.find('Pandoc').text in ['Yes', 'yes', 'Y', 'y'] and
+            not files.isFormat('.html')):
             self.tabAdder(files, pandoc=True)
 
     def stylize(self, styleFile):

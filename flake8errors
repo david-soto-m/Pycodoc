@@ -1,0 +1,338 @@
+. venv/bin/activate;\
+flake8
+./src/FileManage/fileElement.py:11:5: C901 'fileElement.__init__' is too complex (11)
+./src/FileManage/fileElement.py:40:13: E722 do not use bare 'except'
+./src/FileManage/fileElement.py:56:13: E722 do not use bare 'except'
+./src/glob_objects/globalxml.py:5:1: E302 expected 2 blank lines, found 1
+./src/glob_objects/globalxml.py:7:15: E225 missing whitespace around operator
+./src/glob_objects/globalxml.py:8:19: E225 missing whitespace around operator
+./src/glob_objects/globalxml.py:14:1: E305 expected 2 blank lines after class or function definition, found 1
+./src/glob_objects/globalxml.py:14:21: E225 missing whitespace around operator
+./src/glob_objects/globalxml.py:14:80: E501 line too long (107 > 79 characters)
+./src/glob_objects/globalxml.py:15:21: E225 missing whitespace around operator
+./src/glob_objects/globalxml.py:15:80: E501 line too long (95 > 79 characters)
+./src/glob_objects/globalxml.py:16:25: E225 missing whitespace around operator
+./src/glob_objects/globalxml.py:16:80: E501 line too long (103 > 79 characters)
+./src/glob_objects/globalxml.py:17:17: E225 missing whitespace around operator
+./src/glob_objects/globalxml.py:17:80: E501 line too long (87 > 79 characters)
+./src/glob_objects/globalxml.py:18:18: E225 missing whitespace around operator
+./src/glob_objects/globalxml.py:18:80: E501 line too long (92 > 79 characters)
+./src/glob_objects/globalxml.py:19:25: E225 missing whitespace around operator
+./src/glob_objects/globalxml.py:19:80: E501 line too long (103 > 79 characters)
+./src/glob_objects/__init__.py:1:1: W293 blank line contains whitespace
+./src/glob_objects/Generator.py:5:1: E302 expected 2 blank lines, found 1
+./src/glob_objects/Generator.py:8:25: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:8:27: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:8:41: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:8:43: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:9:21: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:9:23: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:41:5: E303 too many blank lines (2)
+./src/glob_objects/Generator.py:48:1: E302 expected 2 blank lines, found 1
+./src/glob_objects/Generator.py:51:25: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:51:27: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:51:41: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:51:43: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:52:21: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:52:23: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:75:80: E501 line too long (254 > 79 characters)
+./src/glob_objects/Generator.py:79:35: E261 at least two spaces before inline comment
+./src/glob_objects/Generator.py:79:35: E262 inline comment should start with '# '
+./src/glob_objects/Generator.py:82:1: E302 expected 2 blank lines, found 1
+./src/glob_objects/Generator.py:85:25: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:85:27: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:85:41: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:85:43: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:86:21: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:86:23: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:103:1: E302 expected 2 blank lines, found 1
+./src/glob_objects/Generator.py:106:25: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:106:27: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:106:41: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:106:43: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:107:21: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:107:23: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:111:5: F841 local variable 'FilesRoot' is assigned to but never used
+./src/glob_objects/Generator.py:113:1: E302 expected 2 blank lines, found 1
+./src/glob_objects/Generator.py:116:25: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:116:27: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:116:41: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:116:43: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:117:21: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:117:23: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:121:1: E302 expected 2 blank lines, found 1
+./src/glob_objects/Generator.py:124:25: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:124:27: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:124:41: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:124:43: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:125:21: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:125:23: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:129:1: E302 expected 2 blank lines, found 1
+./src/glob_objects/Generator.py:132:25: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:132:27: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:132:41: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:132:43: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:133:21: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:133:23: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:135:80: E501 line too long (132 > 79 characters)
+./src/glob_objects/Generator.py:150:1: E302 expected 2 blank lines, found 1
+./src/glob_objects/Generator.py:153:25: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:153:27: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:153:41: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:153:43: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:154:21: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:154:23: E251 unexpected spaces around keyword / parameter equals
+./src/glob_objects/Generator.py:170:1: W391 blank line at end of file
+./src/AuxWindows/ShortcutsWidget.py:1:80: E501 line too long (135 > 79 characters)
+./src/AuxWindows/ShortcutsWidget.py:5:1: E302 expected 2 blank lines, found 1
+./src/AuxWindows/ShortcutsWidget.py:34:80: E501 line too long (94 > 79 characters)
+./src/AuxWindows/BehaviourWidget.py:1:80: E501 line too long (143 > 79 characters)
+./src/AuxWindows/BehaviourWidget.py:6:1: E302 expected 2 blank lines, found 1
+./src/AuxWindows/BehaviourWidget.py:32:80: E501 line too long (98 > 79 characters)
+./src/AuxWindows/BehaviourWidget.py:35:9: E303 too many blank lines (2)
+./src/AuxWindows/BehaviourWidget.py:39:80: E501 line too long (107 > 79 characters)
+./src/AuxWindows/BehaviourWidget.py:64:58: E272 multiple spaces before keyword
+./src/AuxWindows/BehaviourWidget.py:64:80: E501 line too long (92 > 79 characters)
+./src/AuxWindows/BehaviourWidget.py:73:19: E712 comparison to False should be 'if cond is False:' or 'if not cond:'
+./src/AuxWindows/BehaviourWidget.py:79:19: E712 comparison to False should be 'if cond is False:' or 'if not cond:'
+./src/AuxWindows/BehaviourWidget.py:90:50: E272 multiple spaces before keyword
+./src/AuxWindows/BehaviourWidget.py:99:19: E712 comparison to False should be 'if cond is False:' or 'if not cond:'
+./src/AuxWindows/BehaviourWidget.py:114:9: E303 too many blank lines (2)
+./src/AuxWindows/BehaviourWidget.py:122:9: E722 do not use bare 'except'
+./src/AuxWindows/BehaviourWidget.py:140:9: E303 too many blank lines (2)
+./src/AuxWindows/BehaviourWidget.py:150:9: E722 do not use bare 'except'
+./src/AuxWindows/BehaviourWidget.py:180:80: E501 line too long (85 > 79 characters)
+./src/AuxWindows/BehaviourWidget.py:184:80: E501 line too long (82 > 79 characters)
+./src/AuxWindows/StyleWidget.py:1:80: E501 line too long (173 > 79 characters)
+./src/AuxWindows/StyleWidget.py:7:1: E302 expected 2 blank lines, found 1
+./src/AuxWindows/StyleWidget.py:32:80: E501 line too long (940 > 79 characters)
+./src/AuxWindows/StyleWidget.py:70:80: E501 line too long (94 > 79 characters)
+./src/AuxWindows/StyleWidget.py:78:80: E501 line too long (94 > 79 characters)
+./src/AuxWindows/StyleWidget.py:78:82: E225 missing whitespace around operator
+./src/AuxWindows/StyleWidget.py:84:80: E501 line too long (105 > 79 characters)
+./src/AuxWindows/StyleWidget.py:84:93: E225 missing whitespace around operator
+./src/AuxWindows/StyleWidget.py:90:80: E501 line too long (104 > 79 characters)
+./src/AuxWindows/StyleWidget.py:90:92: E225 missing whitespace around operator
+./src/AuxWindows/StyleWidget.py:96:80: E501 line too long (115 > 79 characters)
+./src/AuxWindows/StyleWidget.py:96:103: E225 missing whitespace around operator
+./src/AuxWindows/StyleWidget.py:105:80: E501 line too long (146 > 79 characters)
+./src/AuxWindows/StyleWidget.py:108:13: E722 do not use bare 'except'
+./src/AuxWindows/StyleWidget.py:115:13: E722 do not use bare 'except'
+./src/AuxWindows/StyleWidget.py:129:80: E501 line too long (112 > 79 characters)
+./src/AuxWindows/StyleWidget.py:133:38: E228 missing whitespace around modulo operator
+./src/AuxWindows/StyleWidget.py:135:80: E501 line too long (108 > 79 characters)
+./src/AuxWindows/StyleWidget.py:136:47: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/StyleWidget.py:136:49: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/StyleWidget.py:150:5: E303 too many blank lines (2)
+./src/AuxWindows/FilesWidget.py:1:80: E501 line too long (174 > 79 characters)
+./src/AuxWindows/FilesWidget.py:6:1: E302 expected 2 blank lines, found 1
+./src/AuxWindows/FilesWidget.py:7:30: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:7:32: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:7:44: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:7:46: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:37:9: F841 local variable 'horz' is assigned to but never used
+./src/AuxWindows/FilesWidget.py:44:59: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:44:61: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:44:80: E501 line too long (120 > 79 characters)
+./src/AuxWindows/FilesWidget.py:44:83: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:44:85: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:44:111: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:44:113: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:60:80: E501 line too long (98 > 79 characters)
+./src/AuxWindows/FilesWidget.py:64:29: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:64:31: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:64:41: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:64:43: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:64:53: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:64:55: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:79:80: E501 line too long (87 > 79 characters)
+./src/AuxWindows/FilesWidget.py:89:46: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:89:48: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:133:31: E712 comparison to False should be 'if cond is False:' or 'if not cond:'
+./src/AuxWindows/FilesWidget.py:134:80: E501 line too long (80 > 79 characters)
+./src/AuxWindows/FilesWidget.py:144:39: E712 comparison to False should be 'if cond is False:' or 'if not cond:'
+./src/AuxWindows/FilesWidget.py:145:77: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:145:79: E251 unexpected spaces around keyword / parameter equals
+./src/AuxWindows/FilesWidget.py:145:80: E501 line too long (84 > 79 characters)
+./src/AuxWindows/FilesWidget.py:148:80: E501 line too long (178 > 79 characters)
+./src/AuxWindows/FilesWidget.py:153:39: E712 comparison to False should be 'if cond is False:' or 'if not cond:'
+./src/AuxWindows/FilesWidget.py:157:80: E501 line too long (178 > 79 characters)
+./src/MainWindow/__init__.py:1:1: W293 blank line contains whitespace
+./src/MainWindow/MainWindow.py:8:1: E302 expected 2 blank lines, found 1
+./src/MainWindow/MainWindow.py:15:9: E303 too many blank lines (2)
+./src/MainWindow/MainWindow.py:25:10: E225 missing whitespace around operator
+./src/MainWindow/MainWindow.py:25:18: E703 statement ends with a semicolon
+./src/MainWindow/MainWindow.py:29:17: E225 missing whitespace around operator
+./src/MainWindow/MainWindow.py:33:17: E225 missing whitespace around operator
+./src/MainWindow/MainWindow.py:37:19: E225 missing whitespace around operator
+./src/MainWindow/MainWindow.py:41:21: E225 missing whitespace around operator
+./src/MainWindow/MainWindow.py:43:1: E302 expected 2 blank lines, found 1
+./src/MainWindow/MainWindow.py:45:80: E501 line too long (106 > 79 characters)
+./src/MainWindow/MainWindow.py:46:17: E225 missing whitespace around operator
+./src/MainWindow/MainWindow.py:47:17: E225 missing whitespace around operator
+./src/MainWindow/MainWindow.py:51:5: E301 expected 1 blank line, found 0
+./src/MainWindow/MainWindow.py:53:13: E225 missing whitespace around operator
+./src/MainWindow/MainWindow.py:54:14: E225 missing whitespace around operator
+./src/MainWindow/MainWindow.py:55:80: E501 line too long (80 > 79 characters)
+./src/MainWindow/MenuBar/MenuBar.py:4:5: E271 multiple spaces after keyword
+./src/MainWindow/MenuBar/MenuBar.py:5:5: E271 multiple spaces after keyword
+./src/MainWindow/MenuBar/MenuBar.py:8:1: E302 expected 2 blank lines, found 1
+./src/MainWindow/MenuBar/MenuBar.py:13:9: E265 block comment should start with '# '
+./src/MainWindow/MenuBar/MenuBar.py:14:80: E501 line too long (85 > 79 characters)
+./src/MainWindow/MenuBar/MenuBar.py:17:24: E225 missing whitespace around operator
+./src/MainWindow/MenuBar/MenuBar.py:17:61: E261 at least two spaces before inline comment
+./src/MainWindow/MenuBar/MenuBar.py:17:61: E262 inline comment should start with '# '
+./src/MainWindow/MenuBar/MenuBar.py:24:26: E225 missing whitespace around operator
+./src/MainWindow/MenuBar/MenuBar.py:25:23: E225 missing whitespace around operator
+./src/MainWindow/MenuBar/MenuBar.py:25:80: E501 line too long (96 > 79 characters)
+./src/MainWindow/MenuBar/MenuBar.py:28:27: E225 missing whitespace around operator
+./src/MainWindow/MenuBar/MenuBar.py:29:24: E225 missing whitespace around operator
+./src/MainWindow/MenuBar/MenuBar.py:29:80: E501 line too long (103 > 79 characters)
+./src/MainWindow/MenuBar/MenuBar.py:32:30: E225 missing whitespace around operator
+./src/MainWindow/MenuBar/MenuBar.py:33:30: E225 missing whitespace around operator
+./src/MainWindow/MenuBar/MenuBar.py:33:80: E501 line too long (110 > 79 characters)
+./src/MainWindow/MenuBar/MenuBar.py:36:30: E225 missing whitespace around operator
+./src/MainWindow/MenuBar/MenuBar.py:37:31: E225 missing whitespace around operator
+./src/MainWindow/MenuBar/MenuBar.py:37:80: E501 line too long (108 > 79 characters)
+./src/MainWindow/MenuBar/MenuBar.py:41:9: E303 too many blank lines (2)
+./src/MainWindow/ToolBar/ToolBar.py:8:1: E302 expected 2 blank lines, found 1
+./src/MainWindow/ToolBar/ToolBar.py:13:21: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/ToolBar.py:14:24: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/ToolBar.py:15:25: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/ToolBar.py:16:21: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/ToolBar.py:17:20: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/StyleButton.py:8:1: E302 expected 2 blank lines, found 1
+./src/MainWindow/ToolBar/StyleButton.py:11:20: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/StyleButton.py:19:5: E303 too many blank lines (2)
+./src/MainWindow/ToolBar/StyleButton.py:23:26: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/StyleButton.py:24:21: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/StyleButton.py:25:13: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/StyleButton.py:27:17: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/StyleButton.py:40:17: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/StyleButton.py:41:14: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/StyleButton.py:41:80: E501 line too long (83 > 79 characters)
+./src/MainWindow/ToolBar/StyleButton.py:45:30: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/StyleButton.py:49:18: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/SearchWidg.py:1:51: W291 trailing whitespace
+./src/MainWindow/ToolBar/SearchWidg.py:6:1: E302 expected 2 blank lines, found 1
+./src/MainWindow/ToolBar/SearchWidg.py:9:20: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/SearchWidg.py:10:15: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/SearchWidg.py:20:18: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/SearchWidg.py:24:16: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/SearchWidg.py:26:23: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/SearchWidg.py:26:52: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/SearchWidg.py:29:20: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/SearchWidg.py:34:15: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/SearchWidg.py:38:19: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/Opener.py:6:1: E302 expected 2 blank lines, found 1
+./src/MainWindow/ToolBar/Opener.py:9:20: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/Opener.py:18:80: E501 line too long (85 > 79 characters)
+./src/MainWindow/ToolBar/Opener.py:22:27: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/SplitButton.py:4:1: E302 expected 2 blank lines, found 1
+./src/MainWindow/ToolBar/SplitButton.py:6:19: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/SplitButton.py:11:21: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/History.py:6:1: E302 expected 2 blank lines, found 1
+./src/MainWindow/ToolBar/History.py:9:21: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/History.py:10:20: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/History.py:18:21: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/History.py:22:21: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/History.py:23:13: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/History.py:25:17: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/History.py:33:21: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/History.py:34:24: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/History.py:35:25: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/History.py:36:13: E225 missing whitespace around operator
+./src/MainWindow/ToolBar/History.py:40:13: E225 missing whitespace around operator
+./src/MainWindow/Shortcuts/Shortcuts.py:5:1: E302 expected 2 blank lines, found 1
+./src/MainWindow/Shortcuts/Shortcuts.py:7:20: E225 missing whitespace around operator
+./src/MainWindow/Shortcuts/Shortcuts.py:8:19: E225 missing whitespace around operator
+./src/MainWindow/Shortcuts/Shortcuts.py:9:18: E225 missing whitespace around operator
+./src/MainWindow/Shortcuts/Shortcuts.py:23:17: E225 missing whitespace around operator
+./src/MainWindow/Shortcuts/Shortcuts.py:32:22: E225 missing whitespace around operator
+./src/MainWindow/Shortcuts/Shortcuts.py:33:5: E301 expected 1 blank line, found 0
+./src/MainWindow/Shortcuts/Shortcuts.py:36:20: E225 missing whitespace around operator
+./src/MainWindow/Shortcuts/Shortcuts.py:38:13: E722 do not use bare 'except'
+./src/MainWindow/CentralWidget/TextEditor.py:1:80: E501 line too long (84 > 79 characters)
+./src/MainWindow/CentralWidget/TextEditor.py:6:1: E302 expected 2 blank lines, found 1
+./src/MainWindow/CentralWidget/TextEditor.py:9:20: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/TextEditor.py:12:19: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/TextEditor.py:19:42: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/TextEditor.py:19:80: E501 line too long (87 > 79 characters)
+./src/MainWindow/CentralWidget/TextEditor.py:19:84: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/TextEditor.py:23:20: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/TextEditor.py:25:22: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/TextEditor.py:27:22: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/TextEditor.py:40:21: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/TextEditor.py:42:22: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/TextEditor.py:44:22: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/TextEditor.py:58:9: E265 block comment should start with '# '
+./src/MainWindow/CentralWidget/TextEditor.py:58:80: E501 line too long (92 > 79 characters)
+./src/MainWindow/CentralWidget/TextEditor.py:59:9: E265 block comment should start with '# '
+./src/MainWindow/CentralWidget/TextEditor.py:59:80: E501 line too long (92 > 79 characters)
+./src/MainWindow/CentralWidget/TextEditor.py:64:23: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:2:80: E501 line too long (93 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:6:1: E302 expected 2 blank lines, found 0
+./src/MainWindow/CentralWidget/CentralWidget.py:9:20: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:10:21: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:12:21: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:14:26: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:20:15: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:24:33: E211 whitespace before '('
+./src/MainWindow/CentralWidget/CentralWidget.py:24:80: E501 line too long (114 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:28:21: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:30:5: C901 'centralWidget.tabAdder' is too complex (13)
+./src/MainWindow/CentralWidget/CentralWidget.py:31:23: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:34:72: E201 whitespace after '('
+./src/MainWindow/CentralWidget/CentralWidget.py:34:80: E501 line too long (146 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:35:25: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:36:80: E501 line too long (81 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:37:5: E129 visually indented line with same indent as next logical line
+./src/MainWindow/CentralWidget/CentralWidget.py:38:22: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:39:80: E501 line too long (107 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:40:26: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:41:80: E501 line too long (86 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:42:28: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:43:49: E128 continuation line under-indented for visual indent
+./src/MainWindow/CentralWidget/CentralWidget.py:43:80: E501 line too long (83 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:44:49: E128 continuation line under-indented for visual indent
+./src/MainWindow/CentralWidget/CentralWidget.py:44:64: E227 missing whitespace around bitwise or shift operator
+./src/MainWindow/CentralWidget/CentralWidget.py:45:49: E128 continuation line under-indented for visual indent
+./src/MainWindow/CentralWidget/CentralWidget.py:46:26: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:46:35: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:48:26: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:50:25: F841 local variable 'res' is assigned to but never used
+./src/MainWindow/CentralWidget/CentralWidget.py:50:28: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:50:80: E501 line too long (102 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:51:66: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:51:80: E501 line too long (97 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:52:30: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:56:25: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:56:80: E501 line too long (106 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:58:37: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:62:72: E201 whitespace after '('
+./src/MainWindow/CentralWidget/CentralWidget.py:62:80: E501 line too long (130 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:63:80: E501 line too long (83 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:66:11: E271 multiple spaces after keyword
+./src/MainWindow/CentralWidget/CentralWidget.py:66:55: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:73:56: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:74:19: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:85:21: E261 at least two spaces before inline comment
+./src/MainWindow/CentralWidget/CentralWidget.py:85:22: E262 inline comment should start with '# '
+./src/MainWindow/CentralWidget/CentralWidget.py:90:14: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:91:80: E501 line too long (88 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:93:13: E129 visually indented line with same indent as next logical line
+./src/MainWindow/CentralWidget/CentralWidget.py:98:21: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:98:80: E501 line too long (106 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:100:37: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:102:26: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:104:16: E271 multiple spaces after keyword
+./src/MainWindow/CentralWidget/CentralWidget.py:105:80: E501 line too long (86 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:108:24: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:114:13: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:117:21: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:118:80: E501 line too long (126 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:119:28: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:120:80: E501 line too long (126 > 79 characters)
+./src/MainWindow/CentralWidget/CentralWidget.py:123:13: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:124:16: E225 missing whitespace around operator
+./src/MainWindow/CentralWidget/CentralWidget.py:127:1: W391 blank line at end of file

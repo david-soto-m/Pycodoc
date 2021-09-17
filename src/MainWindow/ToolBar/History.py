@@ -8,8 +8,8 @@ class history(QAction):
         super().__init__()
         self.counter=0
         self.parent=parent
-        self.setIcon(QIcon().fromTheme("shallow-history"))
-        self.setToolTip("History")
+        self.setIcon(QIcon().fromTheme('shallow-history'))
+        self.setToolTip('History')
         self.setMenu(self.histMenu())
         self.hovered.connect(self.refreshMenu)
         self.triggered.connect(self.triggerlast)
@@ -31,9 +31,9 @@ class history(QAction):
 
     def triggerlast(self, boolean=False):
         self.counter+=1
-        if self.counter>int(BehaviourRoot.find("HistDepth").text):
+        if self.counter>int(BehaviourRoot.find('HistDepth').text):
             self.counter=1
-        File=fileElement(histRoot.find("Elem"+"["+str(self.counter)+"]"))
+        File=fileElement(histRoot.find('Elem'+'['+str(self.counter)+']'))
         self.parent.cwidg.tabAdder(File, NoHist=True)
 
     def trigger(self, boolean=False):

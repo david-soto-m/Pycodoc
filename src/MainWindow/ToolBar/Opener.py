@@ -7,8 +7,8 @@ class opener(QAction):
     def __init__(self, parent, string=None):
         super().__init__()
         self.parent=parent
-        self.setIcon(QIcon().fromTheme("document-open"))
-        self.setToolTip("Open a file")
+        self.setIcon(QIcon().fromTheme('document-open'))
+        self.setToolTip('Open a file')
         self.triggered.connect(self.OpenWidget)
         if type(string) is str:
             self.setText(string)

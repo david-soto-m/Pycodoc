@@ -8,20 +8,20 @@ class Shortcutter():
         self.shcts=[]
         self.shct=[]
 
-        self.addscht("QuitTab", parent.cwidg.tabDestroyer)
-        self.addscht("Quit", parent.mnb.exitAct.trigger)
-        self.addscht("OpenFile", parent.tlb.fileopener.trigger)
-        self.addscht("Split", parent.cwidg.split)
-        self.addscht("Unsplit", parent.cwidg.unsplit)
-        self.addscht("NewTab", parent.tlb.combosearch.setFocus)
-        self.addscht("TriggerHistory", parent.tlb.histmen.triggerlast)
-        self.addscht("ConfFiles", parent.mnb.editFiles.trigger)
-        self.addscht("ConfStyle", parent.mnb.editStyles.trigger)
-        self.addscht("ModifyBehaviours", parent.mnb.behaviourSettings.trigger)
-        self.addscht("ModifyShortcuts", parent.mnb.shortcutSettings.trigger)
-        self.addscht("Pandoc", parent.cwidg.pandocize)
+        self.addscht('QuitTab', parent.cwidg.tabDestroyer)
+        self.addscht('Quit', parent.mnb.exitAct.trigger)
+        self.addscht('OpenFile', parent.tlb.fileopener.trigger)
+        self.addscht('Split', parent.cwidg.split)
+        self.addscht('Unsplit', parent.cwidg.unsplit)
+        self.addscht('NewTab', parent.tlb.combosearch.setFocus)
+        self.addscht('TriggerHistory', parent.tlb.histmen.triggerlast)
+        self.addscht('ConfFiles', parent.mnb.editFiles.trigger)
+        self.addscht('ConfStyle', parent.mnb.editStyles.trigger)
+        self.addscht('ModifyBehaviours', parent.mnb.behaviourSettings.trigger)
+        self.addscht('ModifyShortcuts', parent.mnb.shortcutSettings.trigger)
+        self.addscht('Pandoc', parent.cwidg.pandocize)
         self.sty=StyleWidget(self.parent)
-        self.addscht("AddStyle", self.sty.showWid)
+        self.addscht('AddStyle', self.sty.showWid)
 
     def addscht(self, text, funct):
         self.shct.append(ShortRoot.find(text))
@@ -31,7 +31,7 @@ class Shortcutter():
         else:
             self.shct=self.shct[0:-1]
     def refresh(self):
-        for elem in ShortRoot.findall("*"):
+        for elem in ShortRoot.findall('*'):
             try:
                 idx=self.shct.index(elem)
                 self.shcts[idx].setKey(elem.text)
