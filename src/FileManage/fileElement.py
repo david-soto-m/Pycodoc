@@ -3,9 +3,12 @@ from glob_objects.globalxml import filesRoot, styleLocsRoot
 from glob_objects.Generator import defaultfileGenerator, defaultStyleGenerator
 from pathlib import Path
 
+
 class fileElement():
-    tup = ("title", "dir", "name")
-    def __init__(self, singleElement = None, style = False):
+    '''Docstring for the class'''
+    tup = ('title', 'dir', 'name')
+
+    def __init__(self, singleElement=None, style=False):
         self.style = style
         if type(singleElement) is Element:
             self.title = singleElement.find(self.tup[0])
@@ -13,39 +16,53 @@ class fileElement():
             self.name = singleElement.find(self.tup[2])
         elif type(singleElement) is str:
             singleElement = singleElement.lstrip()
-            if singleElement[0:7] == "file://":
+            if singleElement[0:7] == 'file://':
                 singleElement = singleElement[7:]
-            if singleElement[0] == "~":
+            if singleElement[0] == '~':
                 singleElement = str(Path.home()) + singleElement[1:]
             p = Path(singleElement)
-            elem = Element("Elem")
+            elem = Element('Elem')
             title = SubElement(elem, self.tup[0])
             direc = SubElement(elem, self.tup[1])
             name = SubElement(elem, self.tup[2])
             title.text = p.stem
-            direc.text = str(p.parent) + "/"
+            direc.text = str(p.parent) + '/'
             name.text = p.name
             self.title = title
             self.direc = direc
             self.name = name
-        elif type(singleElement) == type(None)and style == False:
-            defaultElement = filesRoot.find("Elem[@default = 'True']")
+        elif singleElement is None and not style:
+            defaultElement = filesRoot.find('Elem[@default = \'True\']')
             try:
                 self.title = defaultElement.find(self.tup[0])
                 self.direc = defaultElement.find(self.tup[1])
                 self.name = defaultElement.find(self.tup[2])
             except:
-                defaultfileGenerator(str(Path.home()) + "/.config/Pycodoc/Default")
+                defaultfileGenerator(
+                    str(
+                        Path.home()
+                        / '.config'
+                        / 'Pycodoc'
+                        / 'Default'
+                    )
+                )
                 self.__init__()
-        elif type(singleElement) == type(None)and style == True:
-            defaultElement = styleLocsRoot.find("Elem[@default = 'True']")
+        elif singleElement is None and style:
+            defaultElement = styleLocsRoot.find('Elem[@default = \'True\']')
             try:
                 self.title = defaultElement.find(self.tup[0])
                 self.direc = defaultElement.find(self.tup[1])
                 self.name = defaultElement.find(self.tup[2])
             except:
-                defaultStyleGenerator(str(Path.home()) + "/.config/Pycodoc/System_Theme.css")
-                self.__init__(style = True)
+                defaultStyleGenerator(
+                    str(
+                        Path.home()
+                        / '.config'
+                        / 'Pycodoc'
+                        / 'System_Theme.css'
+                    )
+                )
+                self.__init__(style=True)
 
     def isstyle(self):
         return self.style
@@ -61,7 +78,13 @@ class fileElement():
             searchBasket = styleLocsRoot
         else:
             searchBasket = filesRoot
-        a = searchBasket.findall("Elem[name = '" + self.name.text + "'][dir = '" + self.direc.text + "']")
+        a = searchBasket.findall(
+            'Elem[name = \''
+            + self.name.text
+            + '\'][dir = \''
+            + self.direc.text
+            + '\']'
+        )
         return len(a) == 0
 
     def asUrl(self):
@@ -72,10 +95,10 @@ class fileElement():
 
     def htmlize(self):
         a = Path(self.fileStrPath())
-        return str(a.parent) + "/" + a.stem + ".html"
+        return str(a.parent) + '/' + a.stem + '.html'
 
     def createHistElement(self):
-        elem = Element("Elem")
+        elem = Element('Elem')
         title = SubElement(elem, self.tup[0])
         dire = SubElement(elem, self.tup[1])
         name = SubElement(elem, self.tup[2])
@@ -84,11 +107,14 @@ class fileElement():
         name.text = self.name.text
         return elem
 
-    def createFileElement(self, show = True, default = False, error = False):
-        elem = Element("Elem")
-        if show == True: elem.set("show", "True")
-        if default == True: elem.set("default", "True")
-        if error == True: elem.set("error", "True")
+    def createFileElement(self, show=True, default=False, error=False):
+        elem = Element('Elem')
+        if show:
+            elem.set('show', 'True')
+        if default:
+            elem.set('default', 'True')
+        if error:
+            elem.set('error', 'True')
         title = SubElement(elem, self.tup[0])
         dire = SubElement(elem, self.tup[1])
         name = SubElement(elem, self.tup[2])
